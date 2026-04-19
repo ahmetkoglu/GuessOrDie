@@ -7,6 +7,7 @@ public class QuestionData
     public string question;
     public string[] options;
     public int answer;
+    public string questionImage; // YENİ: JSON'daki görsel adını tutacak
 }
 
 [System.Serializable]
