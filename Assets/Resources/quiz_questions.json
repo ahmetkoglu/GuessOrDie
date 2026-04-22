@@ -7,7 +7,7 @@
       "id": "beyoglu",
       "name": "Beyoğlu",
       "description": "Galata'dan Taksim'e, İstiklal'den Tünel'e genel Beyoğlu konsepti.",
-      "unlockCost": 500,
+      "unlockCost": 50,
       "is_unlocked": false,
       "questions": [
         {
@@ -163,7 +163,7 @@
       "id": "fatih",
       "name": "Fatih",
       "description": "Ayasofya, Kapalıçarşı, Mısır Çarşısı ve Balat dahil.",
-      "unlockCost": 500,
+      "unlockCost": 50,
       "is_unlocked": true,
       "questions": [
         {
@@ -320,7 +320,7 @@
       "id": "besiktas",
       "name": "Beşiktaş",
       "description": "Dolmabahçe, Ortaköy, Bebek ve Boğaz kıyısı.",
-      "unlockCost": 500,
+      "unlockCost": 50,
       "is_unlocked": false,
       "questions": [
         {
@@ -470,153 +470,253 @@
       ]
     },
     {
-      "id": "beykoz",
-      "name": "Beykoz",
-      "description": "Anadolu Yakası - Yenilenen bölge.",
-      "unlockCost": 500,
+      "id": "sisli",
+      "name": "Şişli",
       "is_unlocked": false,
+      "unlockCost": 50,
       "questions": [
         {
           "id": 1,
-          "question": "Beykoz'un en meşhur ve tescilli yiyeceği hangisidir?",
-          "options": ["Yoğurt", "Paça Çorbası", "Kanlıca Yoğurdu", "Beykoz Peyniri"],
-          "answer": 2,
-          "questionImage": "Beykoz_1.png"
+          "questionImage": "Sisli_1.png",
+          "question": "Şişli’deki Atatürk Evi’nde, Mustafa Kemal Atatürk hangi önemli sürece hazırlık yapmıştır?",
+          "options": [
+            "Kurtuluş Savaşı",
+            "Balkan Savaşları",
+            "II. Dünya Savaşı",
+            "Lozan Antlaşması"
+          ],
+          "answer": 0
         },
         {
           "id": 2,
-          "question": "Beykoz'da yer alan ve cam işçiliğiyle ünlenen bölgenin adı nedir?",
-          "options": ["Paşabahçe", "Çubuklu", "Kanlıca", "Anadoluhisarı"],
-          "answer": 0,
-          "questionImage": "Beykoz_2.png"
+          "questionImage": "Sisli_2.png",
+          "question": "Bomonti’de kurulan ilk bira fabrikası Osmanlı’da hangi dönüşümün simgesidir?",
+          "options": [
+            "Tarım ekonomisi",
+            "Denizcilik",
+            "Sanayileşme",
+            "Madencilik"
+          ],
+          "answer": 2
         },
         {
           "id": 3,
-          "question": "Boğaz'ın en dar noktasına Yıldırım Bayezid tarafından yaptırılan hisar hangisidir?",
-          "options": ["Rumeli Hisarı", "Anadoluhisarı", "Yoros Kalesi", "Riva Kalesi"],
-          "answer": 1,
-          "questionImage": "Beykoz_3.png"
+          "questionImage": "Sisli_3.png",
+          "question": "Nişantaşı’ndaki nişan taşları genellikle neyi ölçmek için kullanılırdı?",
+          "options": [
+            "Okun hedefe isabet oranını",
+            "Okun ulaştığı maksimum mesafeyi",
+            "Atış hızını",
+            "Rüzgar yönünü"
+          ],
+          "answer": 1
         },
         {
           "id": 4,
-          "question": "Beykoz'un Karadeniz kıyısında yer alan popüler plaj semti hangisidir?",
-          "options": ["Riva", "Poyrazköy", "Anadolu Kavağı", "Tokatköy"],
-          "answer": 0,
-          "questionImage": "Beykoz_4.png"
+          "questionImage": "Sisli_4.png",
+          "question": "Bomonti adını veren Bomonti kardeşler hangi kökene sahiptir?",
+          "options": [
+            "Fransız",
+            "Alman",
+            "İtalyan",
+            "İsviçreli"
+          ],
+          "answer": 3
         },
         {
           "id": 5,
-          "question": "Boğaz'ın Karadeniz'e açıldığı noktada, tepede yer alan tarihi kale hangisidir?",
-          "options": ["Galata Kalesi", "Yoros Kalesi", "Rumeli Feneri", "Şile Kalesi"],
-          "answer": 1,
-          "questionImage": "Beykoz_5.png"
+          "questionImage": "Sisli_5.png",
+          "question": "Kurtuluş semtinin eski adı Tatavla, Osmanlı’da en çok hangi toplulukla özdeşleşmiştir?",
+          "options": [
+            "Ermeniler",
+            "Rumlar",
+            "Yahudiler",
+            "Araplar"
+          ],
+          "answer": 1
         },
         {
           "id": 6,
-          "question": "Beykoz'da yer alan ve eskiden \"Eski Kundura Fabrikası\" olan yer bugün ne amaçla kullanılır?",
-          "options": ["AVM", "Dizi/Film Platosu", "Üniversite", "Hastane"],
-          "answer": 1,
-          "questionImage": "Beykoz_6.png"
+          "questionImage": "Sisli_6.png",
+          "question": "Abide-i Hürriyet Anıtı doğrudan hangi olayla ilişkilidir?",
+          "options": [
+            "31 Mart Vakası",
+            "Tanzimat Fermanı",
+            "İstanbul’un Fethi",
+            "Çanakkale Savaşı"
+          ],
+          "answer": 0
         },
         {
           "id": 7,
-          "question": "Beykoz sahilinde bulunan ve mimarisiyle dikkat çeken \"Hidiv Kasrı\" hangi ülkenin yöneticisi için yapılmıştır?",
-          "options": ["Suriye", "Mısır", "Fas", "Tunus"],
-          "answer": 1,
-          "questionImage": "Beykoz_7.png"
+          "questionImage": "Sisli_7.png",
+          "question": "Teşvikiye Camii’nin adı hangi devlet politikasını yansıtır?",
+          "options": [
+            "Askeri reform",
+            "Vergi düzeni",
+            "Yerleşimi teşvik",
+            "Ticaret geliştirme"
+          ],
+          "answer": 2
         },
         {
           "id": 8,
-          "question": "Beykoz'da Polonyalılar tarafından kurulan köyün adı nedir?",
-          "options": ["Polonezköy", "Cumhuriyet Köyü", "Akbaba", "İshaklı"],
-          "answer": 0,
-          "questionImage": "Beykoz_8.png"
+          "questionImage": "Sisli_8.png",
+          "question": "Harbiye bölgesinin Osmanlı dönemindeki temel işlevi neydi?",
+          "options": [
+            "Askeri eğitim ve kışla",
+            "Tarım alanı",
+            "Liman",
+            "Pazar yeri"
+          ],
+          "answer": 0
         },
         {
           "id": 9,
-          "question": "Yuşa Tepesi'nde bulunan türbenin uzunluğu yaklaşık kaç metredir?",
-          "options": ["5", "10", "17", "30"],
-          "answer": 2,
-          "questionImage": "Beykoz_9.png"
+          "questionImage": "Sisli_9.png",
+          "question": "Şişli’nin 19. yüzyılda gelişmesinin temel nedeni nedir?",
+          "options": [
+            "Tarım faaliyetleri",
+            "Deniz ticareti",
+            "Madencilik",
+            "Batılılaşma ve şehirleşme"
+          ],
+          "answer": 3
         },
         {
           "id": 10,
-          "question": "Anadoluhisarı hangi dere üzerine kurulmuştur?",
-          "options": ["Göksu Deresi", "Kurbağalıdere", "Kağıthane Deresi", "Ayamama Deresi"],
-          "answer": 0,
-          "questionImage": "Beykoz_10.png"
+          "questionImage": "Sisli_10.png",
+          "question": "Mecidiyeköy ismini hangi Osmanlı padişahından alır?",
+          "options": [
+            "Abdülmecid",
+            "II. Mahmud",
+            "Abdülaziz",
+            "II. Abdülhamid"
+          ],
+          "answer": 0
         },
         {
           "id": 11,
-          "question": "Beykoz'da Boğaz manzarasına hakim en ünlü koru hangisidir?",
-          "options": ["Emirgan", "Mihrabat Korusu", "Fethi Paşa", "Gülhane"],
-          "answer": 1,
-          "questionImage": "Beykoz_11.png"
+          "questionImage": "Sisli_11.png",
+          "question": "Darülaceze’nin kuruluşunda hedeflenen ana sosyal yaklaşım nedir?",
+          "options": [
+            "Sadece yaşlılara bakım",
+            "Din temelli hizmet",
+            "Kimsesiz ve ihtiyaç sahiplerine kapsayıcı destek",
+            "Askeri rehabilitasyon"
+          ],
+          "answer": 2
         },
         {
           "id": 12,
-          "question": "Beykoz'da bulunan ve cam/kristal sanatıyla özdeşleşen müze hangisidir?",
-          "options": ["Deniz Müzesi", "Cam ve Billur Müzesi", "Sabancı Müzesi", "Rahmi Koç Müzesi"],
-          "answer": 1,
-          "questionImage": "Beykoz_12.png"
+          "questionImage": "Sisli_12.png",
+          "question": "Bomonti bölgesinin günümüzdeki dönüşümü en iyi hangi kavramla açıklanır?",
+          "options": [
+            "Kırsallaşma",
+            "Endüstriyel dönüşüm",
+            "Tarım gelişimi",
+            "Göç azalması"
+          ],
+          "answer": 1
         },
         {
           "id": 13,
-          "question": "Anadolu Kavağı semti neyi ile meşhurdur?",
-          "options": ["Tekstil", "Balık restoranları", "Mobilya", "Deri işçiliği"],
-          "answer": 1,
-          "questionImage": "Beykoz_13.png"
+          "questionImage": "Sisli_13.png",
+          "question": "Harbiye Cemil Topuzlu Açıkhava Tiyatrosu’nun ismini aldığı Cemil Topuzlu hangi meslekle tanınır?",
+          "options": [
+            "Mimar",
+            "Doktor ve belediye başkanı",
+            "Asker",
+            "Şair"
+          ],
+          "answer": 1
         },
         {
           "id": 14,
-          "question": "Beykoz'da bulunan Türk-Alman Üniversitesi hangi yıl kurulmuştur?",
-          "options": ["1990", "2000", "2010", "2015"],
-          "answer": 2,
-          "questionImage": "Beykoz_14.png"
+          "questionImage": "Sisli_14.png",
+          "question": "Osmanlı döneminde Maçka ve çevresi daha çok hangi amaçla kullanılmıştır?",
+          "options": [
+            "Saray bahçeleri ve mesire alanı",
+            "Sanayi üretimi",
+            "Liman faaliyetleri",
+            "Ticaret merkezi"
+          ],
+          "answer": 0
         },
         {
           "id": 15,
-          "question": "Beykoz sahilindeki \"Küçüksu Kasrı\" hangi dönemde inşa edilmiştir?",
-          "options": ["Bizans", "Erken Osmanlı", "Tanzimat", "Cumhuriyet"],
-          "answer": 2,
-          "questionImage": "Beykoz_15.png"
+          "questionImage": "Sisli_15.png",
+          "question": "Darülaceze hangi padişah döneminde kurulmuştur?",
+          "options": [
+            "Abdülmecid",
+            "Abdülaziz",
+            "II. Abdülhamid",
+            "V. Mehmed"
+          ],
+          "answer": 2
         },
         {
           "id": 16,
-          "question": "Hangisi Beykoz sınırları içinde yer alan bir semttir?",
-          "options": ["Çengelköy", "Kandilli", "Çubuklu", "Kuzguncuk"],
-          "answer": 2,
-          "questionImage": "Beykoz_16.png"
+          "questionImage": "Sisli_16.png",
+          "question": "Aşağıdakilerden hangisi Şişli ilçesine bağlı semtlerden biridir?",
+          "options": [
+            "Levent",
+            "Etiler",
+            "Okmeydanı",
+            "Kabataş"
+          ],
+          "answer": 2
         },
         {
           "id": 17,
-          "question": "Beykoz'un futbol takımı olan Beykozspor'un renkleri nedir?",
-          "options": ["Sarı-Lacivert", "Sarı-Siyah", "Yeşil-Beyaz", "Kırmızı-Sarı"],
-          "answer": 1,
-          "questionImage": "Beykoz_17.png"
+          "questionImage": "Sisli_17.png",
+          "question": "Şişli’de bulunan Atatürk Evi’nde, Mustafa Kemal Atatürk hangi yıl yaşamıştır?",
+          "options": [
+            "1917",
+            "1918",
+            "1919",
+            "1920"
+          ],
+          "answer": 1
         },
         {
           "id": 18,
-          "question": "Polonezköy'de her yıl düzenlenen meşhur festivalin adı nedir?",
-          "options": ["Elma Festivali", "Kiraz Festivali", "Arıcılık Festivali", "Kış Festivali"],
-          "answer": 1,
-          "questionImage": "Beykoz_18.png"
+          "questionImage": "Sisli_18.png",
+          "question": "Şişli’de yer alan Şişli Camii’nin mimarı kimdir?",
+          "options": [
+            "Mimar Sinan",
+            "Sedad Hakkı Eldem",
+            "Vasfi Egeli",
+            "Vedat Tek"
+          ],
+          "answer": 2
         },
         {
           "id": 19,
-          "question": "Beykoz'da yer alan \"Otağtepe\" parkının tam adı nedir?",
-          "options": ["Fatih Korusu", "Kanuni Parkı", "Mihrabat Parkı", "Beykoz Sahili"],
-          "answer": 0,
-          "questionImage": "Beykoz_19.png"
+          "questionImage": "Sisli_19.png",
+          "question": "Şişli’de bulunan ve 19. yüzyılda İstanbul’daki en büyük Protestan mezarlıklarından biri olarak kullanılan alan aşağıdakilerden hangisidir?",
+          "options": [
+            "Karacaahmet Mezarlığı",
+            "Zincirlikuyu Mezarlığı",
+            "Pangaltı Ermeni Mezarlığı",
+            "Feriköy Mezarlığı"
+          ],
+          "answer": 3
         },
         {
           "id": 20,
-          "question": "Beykoz'da Karadeniz'e dökülen en büyük dere hangisidir?",
-          "options": ["Göksu", "Riva Deresi", "Küçüksu", "Kurbağalıdere"],
-          "answer": 1,
-          "questionImage": "Beykoz_20.png"
+          "questionImage": "Sisli_20.png",
+          "question": "Şişli’de bulunan Pangaltı semti adını aşağıdakilerden hangisinden alır?",
+          "options": [
+            "Osmanlı paşası Pangaltı Mehmet Paşa’dan",
+            "Bölgede bulunan bir manastırdan",
+            "İtalyanca “Pangaltus” kelimesinden",
+            "Ermenice bir yer adından"
+          ],
+          "answer": 1
         }
-      ],
+      ]
+    ,
       "penalty_animations": [
         "Karakter dev bir Kanlıca yoğurdu kasesinin içine gömülür, sadece kafası dışarıda kalır",
         "Yoros Kalesi'nden atılan hayali bir gülle karakteri Karadeniz'e fırlatır",
@@ -627,7 +727,7 @@
       "id": "uskudar",
       "name": "Üsküdar",
       "description": "Kız Kulesi, Çamlıca ve Boğaz'ın Anadolu kıyısı.",
-      "unlockCost": 500,
+      "unlockCost": 50,
       "is_unlocked": false,
       "questions": [
         {
@@ -661,7 +761,7 @@
         {
           "id": 5,
           "question": "Kız Kulesi hakkında en çok bilinen efsane nedir?",
-          "options": ["Ejderha efsanesi", "Kralın kızını yılan ısırmasın diye kuleye kapattığı efsane", "Korsanlar tarafından inşa edildiği", "Uçan adamın oradan atladığı"],
+          "options": ["Ejderha efsanesi", "Kralın kızını yılan ısırmasın diye kuleye kapattığı", "Korsanlar tarafından inşa edildiği", "Uçan adamın oradan atladığı"],
           "answer": 1,
           "questionImage": "Uskudar_5.png"
         },
@@ -783,7 +883,7 @@
       "id": "kadikoy",
       "name": "Kadıköy",
       "description": "Moda, Bağdat Caddesi, Haydarpaşa ve Anadolu Yakası'nın kalbi.",
-      "unlockCost": 500,
+      "unlockCost": 50,
       "is_unlocked": false,
       "questions": [
         {
@@ -824,7 +924,7 @@
         {
           "id": 6,
           "question": "Kadıköy sınırları içinde bulunan ünlü futbol stadyumu hangisidir?",
-          "options": ["Ali Sami Yen Spor Kompleksi", "Vodafone Park", "Ülker Stadyumu", "Atatürk Olimpiyat Stadı"],
+          "options": ["Ali Sami Yen Spor Kompleksi", "Vodafone Park", "Chobani Stadyumu", "Atatürk Olimpiyat Stadı"],
           "answer": 2,
           "questionImage": "Kadikoy_6.png"
         },
@@ -893,35 +993,35 @@
         },
         {
           "id": 16,
-          "question": "Kadıköy'deki Fenerbahçe Yarımadası'nda bulunan ve İstanbul'un en eski deniz fenerlerinden biri olan Fenerbahçe Feneri hangi padişah döneminde (1857) yapılmıştır?",
+          "question": "İstanbul'un en eski deniz fenerlerinden biri olan Fenerbahçe Feneri hangi padişah döneminde (1857) yapılmıştır?",
           "options": ["Sultan Abdülaziz", "Sultan Abdülmecid", "II. Abdülhamid", "II. Mahmud"],
           "answer": 1,
           "questionImage": "Kadikoy_16.png"
         },
         {
           "id": 17,
-          "question": "Kadıköy ile Karaköy/Eminönü hattında çalışan ve İstanbul vapurlarının simgelerinden biri olan tarihi Paşabahçe vapuru hangi yıl inşa edilmiştir?",
+          "question": "Kadıköy ile Karaköy hattında çalışan ve İstanbul simgelerinden biri olan Paşabahçe vapuru hangi yıl inşa edilmiştir?",
           "options": ["1937", "1962", "1952", "1974"],
           "answer": 2,
           "questionImage": "Kadikoy_17.png"
         },
         {
           "id": 18,
-          "question": "Dünyaca ünlü sanatçı Barış Manço'nun müze haline getirilen ve ziyaretçilere açık olan tarihi evi Kadıköy'ün hangi semtinde yer alır?",
+          "question": "Barış Manço'nun müze haline getirilen ve ziyaretçilere açık olan tarihi evi Kadıköy'ün hangi semtinde yer alır?",
           "options": ["Moda", "Fenerbahçe", "Bostancı", "Erenköy"],
           "answer": 0,
           "questionImage": "Kadikoy_18.png"
         },
         {
           "id": 19,
-          "question": "Kadıköy'de bulunan ve 19. yüzyılda Fransız rahipler tarafından kurulan, günümüzde de eğitim vermeye devam eden tarihi özel lise hangisidir?",
+          "question": "Kadıköy'de 19. yüzyılda Fransız rahipler tarafından kurulan, günümüzde de eğitim vermeye devam eden özel lise hangisidir?",
           "options": ["Robert Kolej", "Galatasaray Lisesi", "Alman Lisesi", "Saint Joseph Fransız Lisesi"],
           "answer": 3,
           "questionImage": "Kadikoy_19.png"
         },
         {
           "id": 20,
-          "question": "Kadıköy sahilinde yer alan ve 1917 yılında mimar Vedat Tek tarafından inşa edilen Neo-Klasik üsluptaki tarihi iskele binası hangisidir?",
+          "question": "Kadıköy sahilinde 1917 yılında mimar Vedat Tek tarafından inşa edilen tarihi iskele binası hangisidir?",
           "options": ["Kadıköy İskelesi", "Moda İskelesi", "Beşiktaş İskelesi", "Adalar İskelesi"],
           "answer": 0,
           "questionImage": "Kadikoy_20.png"
@@ -943,7 +1043,7 @@
       "id": "new_york",
       "name": "New York",
       "description": "Manhattan, Brooklyn, Times Square ve Big Apple.",
-      "unlockCost": 500,
+      "unlockCost": 50,
       "is_unlocked": false,
       "questions": [
         {
@@ -1098,7 +1198,7 @@
       "id": "london",
       "name": "London",
       "description": "Big Ben, Thames, Buckingham Palace ve klasik İngiliz kültürü.",
-      "unlockCost": 500,
+      "unlockCost": 50,
       "is_unlocked": false,
       "questions": [
         {

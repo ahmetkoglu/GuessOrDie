@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 8ea9c855c39ce224e8f0a617f503e085
+guid: 20d70d0b800c0c14b8ada904d9c153ab
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5526962394869603735
-    second: istanbulmap_0
+      213: -2871081323971016496
+    second: Sisli_17_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -72,10 +72,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 8192
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -97,7 +97,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: WebGL
+    buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -110,7 +110,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: Android
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: istanbulmap_0
+      name: Sisli_17_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 25
-        width: 6395
-        height: 6564
+        y: 0
+        width: 1024
+        height: 1024
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 79d1529d307b3bc40800000000000000
-      internalID: 5526962394869603735
+      spriteID: 0d8037b5fbed728d0800000000000000
+      internalID: -2871081323971016496
       vertices: []
       indices: 
       edges: []
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      istanbulmap_0: 5526962394869603735
+      Sisli_17_0: -2871081323971016496
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -11,6 +11,11 @@ public class DataManager : MonoBehaviour
 
     private void Awake()
     {
+        // 1. VSync'i (Dikey Senkronizasyon) kapat ki cihazın ekran yenileme hızıyla çatışmasın
+        QualitySettings.vSyncCount = 0;
+
+        // 2. Oyunu 60 FPS'ye zorla!
+        Application.targetFrameRate = 60;
         if (Instance == null)
         {
             Instance = this;
@@ -21,7 +26,7 @@ public class DataManager : MonoBehaviour
         }
         else { Destroy(gameObject); }
     }
-
+    
     private void LoadJsonData()
     {
         TextAsset jsonAsset = Resources.Load<TextAsset>("quiz_questions");

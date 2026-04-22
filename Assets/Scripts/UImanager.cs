@@ -74,6 +74,7 @@ public int rewardPerQuestion = 50;  // Her doğru cevap kaç puan?
             RectTransform btnRect = optionTextsUI[i].transform.parent.GetComponent<RectTransform>();
             originalOptionPositions[i] = btnRect.anchoredPosition;
         }
+        
     }
     public void OnPlayButtonClicked()
     {
@@ -232,8 +233,22 @@ public int rewardPerQuestion = 50;  // Her doğru cevap kaç puan?
         if (currentQuestion != null)
         {
             if (selectedIndex == currentQuestion.answer)
-            {
-                optionButtonsImage[selectedIndex].color = correctColor;
+            {   
+                // 2. DOTWEEN ANİMASYONU (Mega Kombo)
+                Image btnImage = optionButtonsImage[selectedIndex];
+                Transform btnTransform = btnImage.transform; // Butonun fiziksel konumu
+
+                Sequence correctSeq = DOTween.Sequence();
+                
+                // Küt diye değil, 0.2 saniyede yumuşakça senin belirlediğin 'correctColor' rengine dönsün
+                correctSeq.Append(btnImage.DOColor(correctColor, 0.2f));
+                
+                // Aynı anda hem biraz büyüsün hem de sevinçle yukarı zıplasın
+                correctSeq.Join(btnTransform.DOScale(1.1f, 0.2f));
+                correctSeq.Join(btnTransform.DOPunchPosition(Vector3.up * 10f, 0.4f, 5, 0.5f));
+                
+                // Son olarak eski orijinal boyutuna yavaşça geri dönsün
+                correctSeq.Append(btnTransform.DOScale(1f, 0.2f));
                 DataManager.Instance.AddCoins(rewardPerQuestion); // PARAYI EKLE!
                 UpdateCoinDisplay(); // EKRANI GÜNCELLE
                 StartCoroutine(WaitAndLoadNextQuestion(1f));
@@ -310,15 +325,22 @@ public void UpdateCoinDisplay()
     }
 
     private IEnumerator WaitAndLoadNextQuestion(float waitTime)
+{
+    yield return new WaitForSeconds(waitTime);
+    if (currentLives > 0)
     {
-        yield return new WaitForSeconds(waitTime);
-        if (currentLives > 0)
-        {
-            currentQuestionIndex++;
-            LoadQuestion(); 
-        }
+        currentQuestionIndex++;
+        
+        // --- YÖNTEM 2 BURADA ÇALIŞIR ---
+        if (btnJoker50 != null) btnJoker50.interactable = true;
+        if (btnJokerTime != null) btnJokerTime.interactable = true;
+        // (Eğer boolean değişkenlerin varsa onları da burada false yapabilirsin)
+        isFiftyFiftyUsedThisQuestion = false;
+        
+        
+        LoadQuestion(); 
     }
-
+}
     private IEnumerator WaitAndReturnToMenu(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
@@ -481,4 +503,20 @@ public void UpdateCoinDisplay()
             btnJokerTime.transform.DOShakePosition(0.3f, new Vector3(10f, 0, 0), 20);
         }
     }
+    public void ReturnToMainMenu()
+{
+    // 1. Eğer oyunu durdurduysan (Pause) zamanı tekrar başlat
+    Time.timeScale = 1f;
+
+    // 2. Soru panelini kapat, Ana Menü panelini aç
+    // (Panel isimlerin farklıysa kendi değişkenlerinle değiştir)
+    if (questionPanel != null) questionPanel.SetActive(false);
+    if (mainMenuPanel != null) mainMenuPanel.SetActive(true);
+
+    // 3. (Opsiyonel) Eğer her şeyi sıfırlayıp tertemiz dönmek istersen 
+    // sahneyi baştan da yükletebilirsin:
+    // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+    Debug.Log("🏠 Ana menüye dönüldü.");
+}
 }
