@@ -3,10 +3,19 @@ using TMPro;
 using UnityEngine.UI;
 using System.Collections;
 using DG.Tweening; // YENİ: DOTween kütüphanesini ekledik
+using Solo.MOST_IN_ONE;
 
 public class UIManager : MonoBehaviour
 {
-    [Header("Animasyon Hafızası")]
+    [Header("Oyun Sonu Paneli")]
+public GameObject resultPanel;
+public Sprite successSprite;   // Yeşil (Tebrikler) görseli
+public Sprite failureSprite;   // Kırmızı (Üzgünüz) görseli
+    [Header("Ses Ayarları")]
+public AudioSource sfxSource; // Sesleri çalacak olan kaynak
+public AudioClip correctSound; // Doğru cevap sesi
+public AudioClip wrongSound;   // Yanlış cevap sesi
+public AudioClip quizCompleteSound;
     private Vector2[] originalOptionPositions;
     [Header("Joker Sistemi")]
     public int jokerCost = 100; // Her bir jokerin fiyatı
@@ -193,9 +202,10 @@ public int rewardPerQuestion = 50;  // Her doğru cevap kaç puan?
         }
         else
         {
+            ShowResult(true);
             Debug.Log("🎉 TEBRİKLER! BÖLÜM BİTTİ!");
             isTimerRunning = false; 
-            StartCoroutine(WaitAndReturnToMenu(2f));
+            StartCoroutine(WaitAndReturnToMenu(15f));
         }
         
         UpdateCoinDisplay();
@@ -234,6 +244,12 @@ public int rewardPerQuestion = 50;  // Her doğru cevap kaç puan?
         {
             if (selectedIndex == currentQuestion.answer)
             {   
+                if (sfxSource != null && correctSound != null)
+        {
+            sfxSource.PlayOneShot(correctSound);
+        }   
+            MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.Success);
+            Debug.Log("<color=green>Haptik Tetiklendi: SUCCESS</color>");
                 // 2. DOTWEEN ANİMASYONU (Mega Kombo)
                 Image btnImage = optionButtonsImage[selectedIndex];
                 Transform btnTransform = btnImage.transform; // Butonun fiziksel konumu
@@ -255,6 +271,12 @@ public int rewardPerQuestion = 50;  // Her doğru cevap kaç puan?
             }
             else
             {
+                if (sfxSource != null && wrongSound != null)
+        {
+            sfxSource.PlayOneShot(wrongSound);
+        }
+        MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.Failure);
+        Debug.Log("<color=red>Haptik Tetiklendi: FAILURE</color>");
                 HandleWrongAnswer(selectedIndex);
             }
         }
@@ -283,8 +305,9 @@ public int rewardPerQuestion = 50;  // Her doğru cevap kaç puan?
 
         if (currentLives <= 0)
         {
+            ShowResult(false);
             Debug.Log("💀 OYUN BİTTİ!");
-            StartCoroutine(WaitAndReturnToMenu(2f));
+            StartCoroutine(WaitAndReturnToMenu(15f));
         }
         else
         {
@@ -343,6 +366,7 @@ public void UpdateCoinDisplay()
 }
     private IEnumerator WaitAndReturnToMenu(float waitTime)
     {
+        
         yield return new WaitForSeconds(waitTime);
         questionPanel.SetActive(false);
         mainMenuPanel.SetActive(true);
@@ -376,6 +400,7 @@ public void UpdateCoinDisplay()
             unlockPopupPanel.SetActive(true); // Arka planı aç
             popupBox.transform.localScale = Vector3.zero; // Kutuyu önce 0'a küçült
             popupBox.transform.DOScale(1f, 0.4f).SetEase(Ease.OutBack); // 0.4 saniyede yaylanarak 1 boyutuna getir
+            MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.Selection);
         }
     }
 
@@ -392,6 +417,7 @@ public void UpdateCoinDisplay()
         {
             if (DataManager.Instance.totalCoins >= pendingDistrictToUnlock.unlockCost)
             {
+                MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.HeavyImpact);
                 DataManager.Instance.totalCoins -= pendingDistrictToUnlock.unlockCost;
                 pendingDistrictToUnlock.is_unlocked = true;
                 DataManager.Instance.SaveProgress();
@@ -410,6 +436,7 @@ public void UpdateCoinDisplay()
                 // Parası yetmiyorsa kutuyu hafifçe sars (Shake efekti)
                 popupMessageText.text = "Yetersiz bakiye!";
                 popupBox.transform.DOShakePosition(0.3f, new Vector3(15f, 0, 0), 10, 0, false, true);
+                MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.Failure);
             }
         }
     }
@@ -434,6 +461,7 @@ public void UpdateCoinDisplay()
 
         if (DataManager.Instance.totalCoins >= jokerCost)
         {
+            MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.MediumImpact);
             // Parayı kes ve altın animasyonunu tetikle
             DataManager.Instance.totalCoins -= jokerCost;
             UpdateCoinDisplay();
@@ -484,6 +512,7 @@ public void UpdateCoinDisplay()
 
         if (DataManager.Instance.totalCoins >= jokerCost)
         {
+            MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.MediumImpact);
             DataManager.Instance.totalCoins -= jokerCost;
             UpdateCoinDisplay();
 
@@ -518,5 +547,45 @@ public void UpdateCoinDisplay()
     // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
     Debug.Log("🏠 Ana menüye dönüldü.");
+}
+public void ShowResult(bool isWin)
+{
+    resultPanel.SetActive(true);
+    
+    // DOTween ile yaylanma efekti
+    resultPanel.transform.localScale = Vector3.zero;
+    resultPanel.transform.DOScale(1f, 0.4f).SetEase(Ease.OutBack);
+
+    if (isWin)
+    {
+        // Kazandığında yeşil görseli tak
+        resultPanel.GetComponent<Image>().sprite = successSprite;
+        MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.Success);
+        // --- YENİ: Başarı Sesi Çal ---
+        if (sfxSource != null && quizCompleteSound != null)
+        {
+            // PlayOneShot yerine Play kullanabilirsin eğer ses uzunsa (müzik gibiyse)
+            sfxSource.PlayOneShot(quizCompleteSound); 
+        }
+    }
+    else
+    {
+        // Kaybettiğinde kırmızı görseli tak
+        resultPanel.GetComponent<Image>().sprite = failureSprite;
+        MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.Failure);
+    }
+}
+public void CloseResultPanel()
+{
+    // 1. Haptik Geri Bildirimi (Hafif bir tıklama hissi)
+    MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.Selection);
+
+    // 2. Paneli Kapatma (Veya animasyonla küçültüp sonra kapatabilirsin)
+    resultPanel.transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).OnComplete(() => {
+        resultPanel.SetActive(false);
+        
+        // 3. Opsiyonel: Harita paneline geri dönmek için
+        // mapPanel.SetActive(true); 
+    });
 }
 }
