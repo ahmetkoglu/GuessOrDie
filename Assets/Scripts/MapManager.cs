@@ -1,10 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement; // En üste bu kütüphaneyi eklemelisin
+using UnityEngine.SceneManagement; 
+using System;
 
+/// <summary> Manages Map UI pins, lock icons, and hard resetting game data. </summary>
 public class MapManager : MonoBehaviour
 {
-    [System.Serializable]
+    [Serializable]
     public class DistrictUI
     {
         public string districtId;      
@@ -14,13 +16,14 @@ public class MapManager : MonoBehaviour
     }
 
     public DistrictUI[] districtButtons;
-    public string selectedDistrictId = ""; // Hangi ilçenin seçili olduğunu aklında tutacak
+    public string selectedDistrictId = ""; 
 
     private void OnEnable()
     {
         RefreshMap(); 
     }
 
+    /// <summary> Updates visually which district is selected and unlocked based on Singleton Data. </summary>
     public void RefreshMap()
     {
         foreach (var item in districtButtons)
@@ -31,10 +34,8 @@ public class MapManager : MonoBehaviour
             {
                 if (data.is_unlocked)
                 {
-                    // 1. Bölge AÇIKSA: Kilidi kesinlikle gizle
                     if(item.lockIcon) item.lockIcon.SetActive(false);
                     
-                    // 2. Eğer bu ilçe SEÇİLİYSE pini göster, değilse pini de gizle
                     if (item.districtId == selectedDistrictId)
                     {
                         if(item.pinIcon) item.pinIcon.SetActive(true);
@@ -46,30 +47,28 @@ public class MapManager : MonoBehaviour
                 }
                 else
                 {
-                    // Bölge KİLİTLİYSE: Sadece kilidi göster
                     if(item.lockIcon) item.lockIcon.SetActive(true);
                     if(item.pinIcon) item.pinIcon.SetActive(false);
                 }
             }
         }
     }
+
+    /// <summary> Hard destroys all player progress and reloads scene. </summary>
     public void ResetAllGameData()
-{
-    Debug.Log("🔴 Hard Reset Başladı: Disk ve RAM tamamen yok ediliyor..."); 
-
-    // 1. DİSKİ SİL (Editördeki tuşun aynısı)
-    PlayerPrefs.DeleteAll();
-    PlayerPrefs.Save();
-
-    // 2. RAM'İ SİL (Ölümsüz DataManager'ı acımasızca yok et!)
-    if (DataManager.Instance != null)
     {
-        Destroy(DataManager.Instance.gameObject);
-        DataManager.Instance = null; // Bağlantıyı tamamen kopar
-    }
+        Debug.Log("🔴 Hard Reset Başladı: Disk ve RAM tamamen yok ediliyor..."); 
 
-    // 3. Zamanı düzelt ve sahneyi baştan yükle
-    Time.timeScale = 1f;
-    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-}
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+
+        if (DataManager.Instance != null)
+        {
+            Destroy(DataManager.Instance.gameObject);
+            // We cannot set Instance = null here because of private set, but Destroying the GO works.
+        }
+
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 }

@@ -1,16 +1,16 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
+/// <summary> Handles changing player avatars and syncing across scenes. </summary>
 public class AvatarManager : MonoBehaviour
 {
     [Header("Paneller")]
-    public GameObject avatarPanel;       // Avatar seçme ekranı
-    public GameObject mainMenuPanel;     // YENİ: Ana Menü ekranı
+    public GameObject avatarPanel;       
+    public GameObject mainMenuPanel;     
 
     [Header("UI Referansları")]
-    public Image mainAvatarDisplay;      // Avatar panelindeki BÜYÜK resim
-    public Image mainMenuAvatarIcon;     // YENİ: Ana Menüdeki KÜÇÜK resim
+    public Image mainAvatarDisplay;      
+    public Image mainMenuAvatarIcon;     
 
     [Header("Veriler ve Butonlar")]
     public Sprite[] availableAvatars;
@@ -19,9 +19,9 @@ public class AvatarManager : MonoBehaviour
 
     private int currentSelectedIndex = 0;
 
+    /// <summary> Prepares listeners for the avatars on start. </summary>
     private void Start()
     {
-        // Oyuna ilk girişte Ana Menüdeki avatarı otomatik olarak güncelle
         currentSelectedIndex = PlayerPrefs.GetInt("SelectedAvatar", 0);
         UpdateMainMenuAvatar();
 
@@ -37,13 +37,14 @@ public class AvatarManager : MonoBehaviour
         }
     }
 
+    /// <summary> Refreshes visual state when the panel enables. </summary>
     private void OnEnable()
     {
-        // Panel açıldığında kaydedilmiş olanı seçili göster
         currentSelectedIndex = PlayerPrefs.GetInt("SelectedAvatar", 0);
         UpdateUI();
     }
 
+    /// <summary> Handles user click selection on an avatar. </summary>
     public void OnAvatarClicked(int index)
     {
         if (index < availableAvatars.Length)
@@ -53,6 +54,7 @@ public class AvatarManager : MonoBehaviour
         }
     }
 
+    /// <summary> Refreshes the large view and checkmark positions. </summary>
     private void UpdateUI()
     {
         if (availableAvatars.Length > 0)
@@ -69,7 +71,7 @@ public class AvatarManager : MonoBehaviour
         }
     }
 
-    // YENİ: Sadece Ana Menüdeki resmi güncelleyen fonksiyon
+    /// <summary> Syncs the main menu icon visual silently. </summary>
     private void UpdateMainMenuAvatar()
     {
         if (availableAvatars.Length > 0 && mainMenuAvatarIcon != null)
@@ -78,30 +80,30 @@ public class AvatarManager : MonoBehaviour
         }
     }
 
-    // YENİ: Ana menüden Avatar ekranına geçiş fonksiyonu
+    /// <summary> Transitions to avatar screen. </summary>
     public void OpenAvatarPanel()
     {
-        mainMenuPanel.SetActive(false); // Ana menüyü kapat
-        avatarPanel.SetActive(true);    // Avatar ekranını aç
+        mainMenuPanel.SetActive(false); 
+        avatarPanel.SetActive(true);    
     }
 
-    // GÜNCELLENDİ: Kaydet ve Dön
+    /// <summary> Saves preference via PlayerPrefs and applies across app. </summary>
     public void SaveAndClose()
     {
         PlayerPrefs.SetInt("SelectedAvatar", currentSelectedIndex);
         PlayerPrefs.Save();
         
-        UpdateMainMenuAvatar(); // Kaydedince Ana Menüdeki resmi de değiştir
+        UpdateMainMenuAvatar(); 
         
         avatarPanel.SetActive(false);
-        mainMenuPanel.SetActive(true);  // Ana menüyü geri aç
+        mainMenuPanel.SetActive(true);  
     }
 
-    // GÜNCELLENDİ: Kaydetmeden Çık ve Dön
+    /// <summary> Reverts to last saved profile and cancels changes. </summary>
     public void CloseWithoutSaving()
     {
         currentSelectedIndex = PlayerPrefs.GetInt("SelectedAvatar", 0);
         avatarPanel.SetActive(false);
-        mainMenuPanel.SetActive(true);  // Ana menüyü geri aç
+        mainMenuPanel.SetActive(true);  
     }
 }

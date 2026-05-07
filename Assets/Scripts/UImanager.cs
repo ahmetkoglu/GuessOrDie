@@ -2,48 +2,57 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections;
-using DG.Tweening; // YENİ: DOTween kütüphanesini ekledik
+using System.Collections.Generic;
+using DG.Tweening; 
 using Solo.MOST_IN_ONE;
 
+/// <summary> Handles main gameplay loop, quiz mechanics, and user interface transitions. </summary>
 public class UIManager : MonoBehaviour
 {
     [Header("Oyun Sonu Paneli")]
-public GameObject resultPanel;
-public Sprite successSprite;   // Yeşil (Tebrikler) görseli
-public Sprite failureSprite;   // Kırmızı (Üzgünüz) görseli
+    public GameObject resultPanel;
+    public Sprite successSprite;   
+    public Sprite failureSprite;   
+
     [Header("Ses Ayarları")]
-public AudioSource sfxSource; // Sesleri çalacak olan kaynak
-public AudioClip correctSound; // Doğru cevap sesi
-public AudioClip wrongSound;   // Yanlış cevap sesi
-public AudioClip quizCompleteSound;
+    public AudioSource sfxSource; 
+    public AudioClip correctSound; 
+    public AudioClip wrongSound;   
+    public AudioClip quizCompleteSound;
+    
     private Vector2[] originalOptionPositions;
+
     [Header("Joker Sistemi")]
-    public int jokerCost = 100; // Her bir jokerin fiyatı
+    public int jokerCost = 100; 
     public Button btnJoker50;
     public Button btnJokerTime;
-    private bool isFiftyFiftyUsedThisQuestion = false; // Bir soruda iki kere 50/50 basılmasını engeller
+    private bool isFiftyFiftyUsedThisQuestion = false; 
+
     [Header("Animasyonlu Butonlar")]
     public Transform mainPlayButtonTransform;
+
     [Header("Harita Yöneticisi")]
-    public MapManager mapManager; // Kilit açılınca haritayı yenilemek için
+    public MapManager mapManager; 
+
     [Header("Pop-up Sistemi")]
     public GameObject unlockPopupPanel;
     public TextMeshProUGUI popupMessageText;
-    private DistrictData pendingDistrictToUnlock; // Seçilen ilçeyi aklımızda tutalım
-    public GameObject popupBox; // YENİ: Asıl animasyon uygulayacağımız iç kutu
+    private DistrictData pendingDistrictToUnlock; 
+    public GameObject popupBox; 
     
     [Header("Coin UI")]
-public TextMeshProUGUI coinTextUI; // Ekranda altını gösterecek yazı
-public int rewardPerQuestion = 50;  // Her doğru cevap kaç puan?
+    public TextMeshProUGUI coinTextUI; 
+    public int rewardPerQuestion = 50;  
+
     [Header("Paneller")]
     public GameObject mainMenuPanel;
     public GameObject questionPanel;
-    public GameObject mapPanel; // Bu satırın olduğundan emin ol
+    public GameObject mapPanel; 
 
     [Header("Soru Ekranı UI Objeleri")]
     public TextMeshProUGUI questionTextUI;
     public TextMeshProUGUI[] optionTextsUI;
-    public TextMeshProUGUI questionCountTextUI; // YENİ EKLENEN SATIR
+    public TextMeshProUGUI questionCountTextUI; 
     public Image[] optionButtonsImage;
     public Image questionImageUI;
     
@@ -54,7 +63,7 @@ public int rewardPerQuestion = 50;  // Her doğru cevap kaç puan?
 
     [Header("Süre Sistemi")]
     public Image timerFillImage;     
-    public TextMeshProUGUI timerTextUI; // YENİ: Süreyi rakamla yazacağımız yer
+    public TextMeshProUGUI timerTextUI; 
     public float timePerQuestion = 15f; 
     private float currentTime;
     private bool isTimerRunning = false;
@@ -69,36 +78,48 @@ public int rewardPerQuestion = 50;  // Her doğru cevap kaç puan?
     private int currentQuestionIndex;
     private bool isAnswering = false;
     private int currentlyDisplayedCoins = -1;
+    private GameState currentGameState = GameState.MainMenu;
 
-    void Start()
+    /// <summary> Subscribes to the global coin update event. </summary>
+    private void OnEnable() => DataManager.OnCoinsChanged += HandleCoinsChanged;
+
+    /// <summary> Unsubscribes to prevent memory leaks. </summary>
+    private void OnDisable() => DataManager.OnCoinsChanged -= HandleCoinsChanged;
+
+    /// <summary> Initializes the UI state and saves original button positions. </summary>
+    private void Start()
     {
-        // (Eğer Start içinde başka kodların varsa onlar kalsın, bunu altlarına ekle)
-        UpdateCoinDisplay();
-        // Buton sayısı kadar hafıza yuvası aç
+        if (DataManager.Instance != null)
+        {
+            HandleCoinsChanged(DataManager.Instance.TotalCoins);
+        }
+
         originalOptionPositions = new Vector2[optionTextsUI.Length];
-        
-        // Oyun başlar başlamaz tüm butonların orijinal 'Anchored Position'larını kaydet
         for (int i = 0; i < optionTextsUI.Length; i++)
         {
             RectTransform btnRect = optionTextsUI[i].transform.parent.GetComponent<RectTransform>();
             originalOptionPositions[i] = btnRect.anchoredPosition;
         }
-        
     }
+
+    /// <summary> Event callback for coin changes. </summary>
+    private void HandleCoinsChanged(int targetCoins)
+    {
+        UpdateCoinDisplay(targetCoins);
+    }
+
+    /// <summary> Animates the transition into the main gameplay state. </summary>
     public void OnPlayButtonClicked()
     {
-        // 1. Önce butona tokat (Punch) animasyonu veriyoruz: %10 küçülüp 0.2 saniyede geri yaylanacak
         mainPlayButtonTransform.DOPunchScale(new Vector3(-0.5f, -0.5f, 0), 0.2f, 10, 1).OnComplete(() =>
         {
-            // 2. Bu kısımlar animasyon BİTİNCE çalışacak (0.2 saniye gecikmeli, şık bir geçiş)
             string districtToLoad = "fatih"; 
-            
             if (mapManager != null && !string.IsNullOrEmpty(mapManager.selectedDistrictId))
             {
                 districtToLoad = mapManager.selectedDistrictId;
             }
 
-            Debug.Log("🚀 OYUN BAŞLIYOR: " + districtToLoad);
+            currentGameState = GameState.Playing;
             mainMenuPanel.SetActive(false);
             questionPanel.SetActive(true);
             
@@ -109,6 +130,7 @@ public int rewardPerQuestion = 50;  // Her doğru cevap kaç puan?
         });
     }
 
+    /// <summary> Loads district data and prepares the first question. </summary>
     public void LoadDistrict(string districtId)
     {
         if (DataManager.Instance != null && DataManager.Instance.LoadedGameData != null)
@@ -119,6 +141,7 @@ public int rewardPerQuestion = 50;  // Her doğru cevap kaç puan?
         }
     }
 
+    /// <summary> Loads the specific question data and animates UI elements in. </summary>
     private void LoadQuestion()
     {
         isAnswering = false;
@@ -127,16 +150,13 @@ public int rewardPerQuestion = 50;  // Her doğru cevap kaç puan?
         {
             currentQuestion = currentDistrict.questions[currentQuestionIndex];
             
-            // --- 1. Soru Metnini Atama (Henüz göstermiyoruz, kayarak gelecek) ---
             questionTextUI.text = currentQuestion.question;
 
-            // --- 2. Soru Sayacını Güncelle ---
             if (questionCountTextUI != null)
             {
                 questionCountTextUI.text = $"Soru: {currentQuestionIndex + 1} / {currentDistrict.questions.Count}";
             }
 
-            // --- 3. Görsel Yükleme ---
             if (!string.IsNullOrEmpty(currentQuestion.questionImage))
             {
                 string cleanImageName = currentQuestion.questionImage.Replace(".png", "");
@@ -149,7 +169,6 @@ public int rewardPerQuestion = 50;  // Her doğru cevap kaç puan?
                 }
                 else
                 {
-                    Debug.LogWarning("Resim klasörde bulunamadı: " + cleanImageName);
                     questionImageUI.gameObject.SetActive(false); 
                 }
             }
@@ -158,18 +177,11 @@ public int rewardPerQuestion = 50;  // Her doğru cevap kaç puan?
                 questionImageUI.gameObject.SetActive(false); 
             }
 
-            // --- 4. DÜZELTİLMİŞ: SORU METNİ ANİMASYONU ---
-            // Önceki animasyonu anında bitir ve yazıyı gerçek yerine oturt (Bug önleyici)
             questionTextUI.transform.DOKill(true);
-            
-            // Saydamlığı 0 yap
             questionTextUI.color = new Color(questionTextUI.color.r, questionTextUI.color.g, questionTextUI.color.b, 0f);
-
-            // SİHİR BURADA: From(true) ile "Kendi yerinden 800 birim sağda başla ve gerçek yerine gel" diyoruz
             questionTextUI.transform.DOLocalMoveX(800f, 0.5f).From(true).SetEase(Ease.OutQuint);
             questionTextUI.DOFade(1f, 0.5f);
 
-            // --- 5. DÜZELTİLMİŞ VE KUSURSUZ ŞIK ANİMASYONU ---
             for (int i = 0; i < optionTextsUI.Length; i++)
             {
                 if (i < currentQuestion.options.Length)
@@ -181,21 +193,14 @@ public int rewardPerQuestion = 50;  // Her doğru cevap kaç puan?
                 Transform btnTransform = optionTextsUI[i].transform.parent;
                 RectTransform btnRect = btnTransform.GetComponent<RectTransform>();
                 
-                // Joker için boyut ve tıklanabilirlik sıfırlaması
                 btnTransform.localScale = Vector3.one; 
                 btnTransform.GetComponent<Button>().interactable = true;
 
-                // Önceki tüm titreme/hareket animasyonlarını acımasızca durdur!
                 btnTransform.DOKill(true);
-
-                // Butonu, HAFIZADAKİ kendi orijinal yerinden 800 piksel sağa ışınla
                 btnRect.anchoredPosition = new Vector2(originalOptionPositions[i].x + 800f, originalOptionPositions[i].y);
-
-                // Ve şimdi tam olarak HAFIZADAKİ o kesin koordinata geri kaydır!
                 btnRect.DOAnchorPos(originalOptionPositions[i], 0.4f).SetDelay(i * 0.1f).SetEase(Ease.OutBack);
             }
 
-            // --- 6. Süreyi Başlat ve Ekrana İlk Değeri Yaz ---
             currentTime = timePerQuestion;
             timerTextUI.text = currentTime.ToString(); 
             isTimerRunning = true;
@@ -203,23 +208,18 @@ public int rewardPerQuestion = 50;  // Her doğru cevap kaç puan?
         else
         {
             ShowResult(true);
-            Debug.Log("🎉 TEBRİKLER! BÖLÜM BİTTİ!");
             isTimerRunning = false; 
             StartCoroutine(WaitAndReturnToMenu(15f));
         }
-        
-        UpdateCoinDisplay();
     }
 
+    /// <summary> Handles countdown logic per frame. </summary>
     private void Update()
     {
         if (isTimerRunning)
         {
             currentTime -= Time.deltaTime;
-            
             timerFillImage.fillAmount = currentTime / timePerQuestion;
-
-            // YENİ: Kalan süreyi yukarı yuvarlayıp ekrana yazdırıyoruz (14.2 -> 15 görünür)
             timerTextUI.text = Mathf.CeilToInt(currentTime).ToString();
 
             if (currentTime <= 0)
@@ -227,12 +227,13 @@ public int rewardPerQuestion = 50;  // Her doğru cevap kaç puan?
                 isTimerRunning = false;
                 currentTime = 0;
                 timerFillImage.fillAmount = 0;
-                timerTextUI.text = "0"; // Süre bitince ekranda 0 yazsın
+                timerTextUI.text = "0"; 
                 OnTimeRanOut(); 
             }
         }
     }
 
+    /// <summary> Processes user answer selection and triggers feedback. </summary>
     public void OnOptionSelected(int selectedIndex)
     {
         if (isAnswering) return; 
@@ -244,53 +245,41 @@ public int rewardPerQuestion = 50;  // Her doğru cevap kaç puan?
         {
             if (selectedIndex == currentQuestion.answer)
             {   
-                if (sfxSource != null && correctSound != null)
-        {
-            sfxSource.PlayOneShot(correctSound);
-        }   
-            MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.Success);
-            Debug.Log("<color=green>Haptik Tetiklendi: SUCCESS</color>");
-                // 2. DOTWEEN ANİMASYONU (Mega Kombo)
+                if (sfxSource != null && correctSound != null) sfxSource.PlayOneShot(correctSound);
+                MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.Success);
+
                 Image btnImage = optionButtonsImage[selectedIndex];
-                Transform btnTransform = btnImage.transform; // Butonun fiziksel konumu
+                Transform btnTransform = btnImage.transform; 
 
                 Sequence correctSeq = DOTween.Sequence();
-                
-                // Küt diye değil, 0.2 saniyede yumuşakça senin belirlediğin 'correctColor' rengine dönsün
                 correctSeq.Append(btnImage.DOColor(correctColor, 0.2f));
-                
-                // Aynı anda hem biraz büyüsün hem de sevinçle yukarı zıplasın
                 correctSeq.Join(btnTransform.DOScale(1.1f, 0.2f));
                 correctSeq.Join(btnTransform.DOPunchPosition(Vector3.up * 10f, 0.4f, 5, 0.5f));
-                
-                // Son olarak eski orijinal boyutuna yavaşça geri dönsün
                 correctSeq.Append(btnTransform.DOScale(1f, 0.2f));
-                DataManager.Instance.AddCoins(rewardPerQuestion); // PARAYI EKLE!
-                UpdateCoinDisplay(); // EKRANI GÜNCELLE
+                
+                // DELEGATE/EVENT TRIGGER: Adding coins updates UI automatically[cite: 7]
+                DataManager.Instance.AddCoins(rewardPerQuestion); 
+                
                 StartCoroutine(WaitAndLoadNextQuestion(1f));
             }
             else
             {
-                if (sfxSource != null && wrongSound != null)
-        {
-            sfxSource.PlayOneShot(wrongSound);
-        }
-        MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.Failure);
-        Debug.Log("<color=red>Haptik Tetiklendi: FAILURE</color>");
+                if (sfxSource != null && wrongSound != null) sfxSource.PlayOneShot(wrongSound);
+                MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.Failure);
                 HandleWrongAnswer(selectedIndex);
             }
         }
     }
 
+    /// <summary> Handles logic when the question timer reaches zero. </summary>
     private void OnTimeRanOut()
     {
         isAnswering = true;
-        Debug.Log("⏰ SÜRE BİTTİ!");
-        
         optionButtonsImage[currentQuestion.answer].color = correctColor;
         HandleWrongAnswer(-1); 
     }
 
+    /// <summary> Handles incorrect answer state, health reduction, and game over. </summary>
     private void HandleWrongAnswer(int clickedIndex)
     {
         if (clickedIndex != -1) 
@@ -306,7 +295,6 @@ public int rewardPerQuestion = 50;  // Her doğru cevap kaç puan?
         if (currentLives <= 0)
         {
             ShowResult(false);
-            Debug.Log("💀 OYUN BİTTİ!");
             StartCoroutine(WaitAndReturnToMenu(15f));
         }
         else
@@ -315,62 +303,55 @@ public int rewardPerQuestion = 50;  // Her doğru cevap kaç puan?
         }
     }
 
+    /// <summary> Updates the health points visually on UI. </summary>
     private void UpdateLivesUI()
     {
         livesTextUI.text = currentLives.ToString();
     }
-    // Parayı her ekranda güncellemek için bir fonksiyon
-public void UpdateCoinDisplay()
-    {
-        // Hedef paramız DataManager'dan (veya PlayerPrefs'ten) gelen asıl para
-        int targetCoins = DataManager.Instance.totalCoins;
 
-        // Oyun ilk açıldığında (-1 durumu) animasyon yapmadan direkt güncel parayı yazsın
+    /// <summary> Animates rolling numbers for the coin display based on an event. </summary>
+    public void UpdateCoinDisplay(int targetCoins)
+    {
         if (currentlyDisplayedCoins == -1)
         {
             currentlyDisplayedCoins = targetCoins;
-            // Altın yazısını gösteren TextMeshPro objenin adı neyse buraya onu yaz (örneğin coinTextUI)
             coinTextUI.text = currentlyDisplayedCoins.ToString();
             return;
         }
 
-        // --- DÖNEN SAYILAR (ROLLING COUNTER) ANİMASYONU ---
-        // 1 saniye içinde ekrandaki sayıyı, hedef sayıya doğru hızla saydırır (Ease.OutExpo ile yavaşlayarak durur)
         DOTween.To(() => currentlyDisplayedCoins, x =>
         {
             currentlyDisplayedCoins = x;
             coinTextUI.text = currentlyDisplayedCoins.ToString();
         }, targetCoins, 1f).SetEase(Ease.OutExpo);
 
-        // --- EKSTRA JUICINESS: YAZININ KALP GİBİ ATARAK BÜYÜYÜP KÜÇÜLMESİ ---
-        // Altın yazısının transformunu hafifçe şişirip geri bırakıyoruz
         coinTextUI.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0), 0.5f, 5, 1);
     }
 
+    /// <summary> Delays execution before fetching the next question data. </summary>
     private IEnumerator WaitAndLoadNextQuestion(float waitTime)
-{
-    yield return new WaitForSeconds(waitTime);
-    if (currentLives > 0)
     {
-        currentQuestionIndex++;
-        
-        // --- YÖNTEM 2 BURADA ÇALIŞIR ---
-        if (btnJoker50 != null) btnJoker50.interactable = true;
-        if (btnJokerTime != null) btnJokerTime.interactable = true;
-        // (Eğer boolean değişkenlerin varsa onları da burada false yapabilirsin)
-        isFiftyFiftyUsedThisQuestion = false;
-        
-        
-        LoadQuestion(); 
+        yield return new WaitForSeconds(waitTime);
+        if (currentLives > 0)
+        {
+            currentQuestionIndex++;
+            
+            if (btnJoker50 != null) btnJoker50.interactable = true;
+            if (btnJokerTime != null) btnJokerTime.interactable = true;
+            isFiftyFiftyUsedThisQuestion = false;
+            
+            LoadQuestion(); 
+        }
     }
-}
+
+    /// <summary> Delays execution before returning safely to main menu. </summary>
     private IEnumerator WaitAndReturnToMenu(float waitTime)
     {
-        
         yield return new WaitForSeconds(waitTime);
-        questionPanel.SetActive(false);
-        mainMenuPanel.SetActive(true);
+        ReturnToMainMenu();
     }
+
+    /// <summary> Evaluates if a district can be opened, otherwise presents a popup. </summary>
     public void TryUnlockDistrict(string districtId)
     {
         DistrictData district = DataManager.Instance.LoadedGameData.districts.Find(d => d.id == districtId);
@@ -396,44 +377,44 @@ public void UpdateCoinDisplay()
             pendingDistrictToUnlock = district;
             popupMessageText.text = $"{district.name} bölgesini {district.unlockCost} Altın karşılığında açmak ister misin?";
             
-            // --- YENİ: ANİMASYONLU AÇILIŞ ---
-            unlockPopupPanel.SetActive(true); // Arka planı aç
-            popupBox.transform.localScale = Vector3.zero; // Kutuyu önce 0'a küçült
-            popupBox.transform.DOScale(1f, 0.4f).SetEase(Ease.OutBack); // 0.4 saniyede yaylanarak 1 boyutuna getir
+            unlockPopupPanel.SetActive(true); 
+            popupBox.transform.localScale = Vector3.zero; 
+            popupBox.transform.DOScale(1f, 0.4f).SetEase(Ease.OutBack); 
             MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.Selection);
         }
     }
 
-    
+    /// <summary> Transistions view to Map. </summary>
     public void OnMapButtonClicked()
     {
-        Debug.Log("🗺️ Harita açılıyor...");
-        mainMenuPanel.SetActive(false); // Ana menüyü kapat
-        mapPanel.SetActive(true);       // Harita panelini aç
+        currentGameState = GameState.Map;
+        mainMenuPanel.SetActive(false); 
+        mapPanel.SetActive(true);       
     }
+
+    /// <summary> Executes logic for unlocking a district securely and deducts cost. </summary>
     public void ConfirmUnlock()
     {
         if (pendingDistrictToUnlock != null)
         {
-            if (DataManager.Instance.totalCoins >= pendingDistrictToUnlock.unlockCost)
+            if (DataManager.Instance.TotalCoins >= pendingDistrictToUnlock.unlockCost)
             {
                 MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.HeavyImpact);
-                DataManager.Instance.totalCoins -= pendingDistrictToUnlock.unlockCost;
+                // Triggers Event automatically[cite: 7]
+                DataManager.Instance.AddCoins(-pendingDistrictToUnlock.unlockCost); 
+                
                 pendingDistrictToUnlock.is_unlocked = true;
                 DataManager.Instance.SaveProgress();
-                UpdateCoinDisplay(); 
                 
                 if (mapManager != null) mapManager.RefreshMap();
 
-                // --- YENİ: ANİMASYONLU KAPANIŞ ---
                 popupBox.transform.DOScale(0f, 0.2f).SetEase(Ease.InBack).OnComplete(() => 
                 {
-                    unlockPopupPanel.SetActive(false); // Animasyon bitince paneli tamamen kapat
+                    unlockPopupPanel.SetActive(false); 
                 });
             }
             else
             {
-                // Parası yetmiyorsa kutuyu hafifçe sars (Shake efekti)
                 popupMessageText.text = "Yetersiz bakiye!";
                 popupBox.transform.DOShakePosition(0.3f, new Vector3(15f, 0, 0), 10, 0, false, true);
                 MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.Failure);
@@ -441,43 +422,43 @@ public void UpdateCoinDisplay()
         }
     }
 
+    /// <summary> Cancels the unlock process with animation. </summary>
     public void CancelUnlock()
     {
-        // --- YENİ: ANİMASYONLU KAPANIŞ ---
         popupBox.transform.DOScale(0f, 0.2f).SetEase(Ease.InBack).OnComplete(() => 
         {
             unlockPopupPanel.SetActive(false);
             pendingDistrictToUnlock = null;
         });
-    }    public void OnBackToMenuClicked()
+    }    
+
+    /// <summary> Transistions view back to Main Menu. </summary>
+    public void OnBackToMenuClicked()
     {
+        currentGameState = GameState.MainMenu;
         mapPanel.SetActive(false);
         mainMenuPanel.SetActive(true);
     }
+
+    /// <summary> Eliminates two incorrect options at the cost of coins. </summary>
     public void UseFiftyFiftyJoker()
     {
-        // Eğer zaten basıldıysa veya soru çözülüyorsa hiçbir şey yapma
         if (isFiftyFiftyUsedThisQuestion || isAnswering) return; 
 
-        if (DataManager.Instance.totalCoins >= jokerCost)
+        if (DataManager.Instance.TotalCoins >= jokerCost)
         {
             MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.MediumImpact);
-            // Parayı kes ve altın animasyonunu tetikle
-            DataManager.Instance.totalCoins -= jokerCost;
-            UpdateCoinDisplay();
+            DataManager.Instance.AddCoins(-jokerCost); // Updates UI automatically[cite: 7]
             isFiftyFiftyUsedThisQuestion = true;
 
-            // Jokere basılma animasyonu (İçine çöküp geri yaylanma)
             btnJoker50.transform.DOPunchScale(new Vector3(-0.2f, -0.2f, 0), 0.3f, 10, 1);
 
-            // Yanlış olan 2 şıkkı bul ve listeye ekle
-            System.Collections.Generic.List<int> wrongOptions = new System.Collections.Generic.List<int>();
+            List<int> wrongOptions = new List<int>();
             for (int i = 0; i < currentQuestion.options.Length; i++)
             {
                 if (i != currentQuestion.answer) wrongOptions.Add(i);
             }
 
-            // Yanlış şıkları karıştır (Rastgele 2 tanesini seçeceğiz)
             for (int i = 0; i < wrongOptions.Count; i++)
             {
                 int temp = wrongOptions[i];
@@ -486,106 +467,87 @@ public void UpdateCoinDisplay()
                 wrongOptions[randomIndex] = temp;
             }
 
-            // Seçilen 2 yanlış şıkkı animasyonla yok et!
             for (int i = 0; i < 2; i++)
             {
                 int indexToHide = wrongOptions[i];
                 Transform btnTrans = optionTextsUI[indexToHide].transform.parent;
                 
-                // Tıklanmasını engelle
                 btnTrans.GetComponent<Button>().interactable = false;
-                
-                // DOTween ile "İçine çökerek kaybolma" (InBack) animasyonu
                 btnTrans.DOScale(Vector3.zero, 0.4f).SetEase(Ease.InBack);
             }
         }
         else
         {
-            // Para yetmiyorsa joker butonu kafa sallasın (Shake)
             btnJoker50.transform.DOShakePosition(0.3f, new Vector3(10f, 0, 0), 20);
         }
     }
 
+    /// <summary> Adds extra time to the clock at the cost of coins. </summary>
     public void UseTimeJoker()
     {
         if (isAnswering) return;
 
-        if (DataManager.Instance.totalCoins >= jokerCost)
+        if (DataManager.Instance.TotalCoins >= jokerCost)
         {
             MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.MediumImpact);
-            DataManager.Instance.totalCoins -= jokerCost;
-            UpdateCoinDisplay();
+            DataManager.Instance.AddCoins(-jokerCost);
 
-            // Jokere basılma animasyonu
             btnJokerTime.transform.DOPunchScale(new Vector3(-0.2f, -0.2f, 0), 0.3f, 10, 1);
 
-            // Süreyi ekle
             currentTime += 15f;
 
-            // SÜRE YAZISI ANİMASYONU: Zıplasın ve 0.3 saniyeliğine Yeşil olup geri beyaz olsun
             timerTextUI.transform.DOPunchScale(new Vector3(0.4f, 0.4f, 0), 0.5f, 5, 1);
             timerTextUI.DOColor(Color.green, 0.15f).OnComplete(() => timerTextUI.DOColor(Color.white, 0.3f));
         }
         else
         {
-            // Para yetmiyorsa titre
             btnJokerTime.transform.DOShakePosition(0.3f, new Vector3(10f, 0, 0), 20);
         }
     }
+
+    /// <summary> Safely resets state and transitions to Main Menu. </summary>
     public void ReturnToMainMenu()
-{
-    // 1. Eğer oyunu durdurduysan (Pause) zamanı tekrar başlat
-    Time.timeScale = 1f;
-
-    // 2. Soru panelini kapat, Ana Menü panelini aç
-    // (Panel isimlerin farklıysa kendi değişkenlerinle değiştir)
-    if (questionPanel != null) questionPanel.SetActive(false);
-    if (mainMenuPanel != null) mainMenuPanel.SetActive(true);
-
-    // 3. (Opsiyonel) Eğer her şeyi sıfırlayıp tertemiz dönmek istersen 
-    // sahneyi baştan da yükletebilirsin:
-    // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
-    Debug.Log("🏠 Ana menüye dönüldü.");
-}
-public void ShowResult(bool isWin)
-{
-    resultPanel.SetActive(true);
-    
-    // DOTween ile yaylanma efekti
-    resultPanel.transform.localScale = Vector3.zero;
-    resultPanel.transform.DOScale(1f, 0.4f).SetEase(Ease.OutBack);
-
-    if (isWin)
     {
-        // Kazandığında yeşil görseli tak
-        resultPanel.GetComponent<Image>().sprite = successSprite;
-        MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.Success);
-        // --- YENİ: Başarı Sesi Çal ---
-        if (sfxSource != null && quizCompleteSound != null)
+        Time.timeScale = 1f;
+        currentGameState = GameState.MainMenu;
+
+        if (questionPanel != null) questionPanel.SetActive(false);
+        if (mainMenuPanel != null) mainMenuPanel.SetActive(true);
+    }
+
+    /// <summary> Displays the final outcome panel of a quiz round. </summary>
+    public void ShowResult(bool isWin)
+    {
+        currentGameState = GameState.Result;
+        resultPanel.SetActive(true);
+        
+        resultPanel.transform.localScale = Vector3.zero;
+        resultPanel.transform.DOScale(1f, 0.4f).SetEase(Ease.OutBack);
+
+        if (isWin)
         {
-            // PlayOneShot yerine Play kullanabilirsin eğer ses uzunsa (müzik gibiyse)
-            sfxSource.PlayOneShot(quizCompleteSound); 
+            resultPanel.GetComponent<Image>().sprite = successSprite;
+            MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.Success);
+            if (sfxSource != null && quizCompleteSound != null)
+            {
+                sfxSource.PlayOneShot(quizCompleteSound); 
+            }
+        }
+        else
+        {
+            resultPanel.GetComponent<Image>().sprite = failureSprite;
+            MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.Failure);
         }
     }
-    else
-    {
-        // Kaybettiğinde kırmızı görseli tak
-        resultPanel.GetComponent<Image>().sprite = failureSprite;
-        MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.Failure);
-    }
-}
-public void CloseResultPanel()
-{
-    // 1. Haptik Geri Bildirimi (Hafif bir tıklama hissi)
-    MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.Selection);
 
-    // 2. Paneli Kapatma (Veya animasyonla küçültüp sonra kapatabilirsin)
-    resultPanel.transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).OnComplete(() => {
-        resultPanel.SetActive(false);
-        
-        // 3. Opsiyonel: Harita paneline geri dönmek için
-        // mapPanel.SetActive(true); 
-    });
-}
+    /// <summary> Closes the result panel safely. </summary>
+    public void CloseResultPanel()
+    {
+        MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.Selection);
+
+        resultPanel.transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).OnComplete(() => {
+            resultPanel.SetActive(false);
+            ReturnToMainMenu();
+        });
+    }
 }

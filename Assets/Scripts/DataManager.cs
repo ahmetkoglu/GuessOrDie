@@ -1,32 +1,40 @@
 using UnityEngine;
-using System.Collections.Generic;
+using System;
 
+/// <summary> Manages global game data, saving/loading, and economy using Singleton pattern. </summary>
 public class DataManager : MonoBehaviour
 {
-    public static DataManager Instance;
-    public GameDataContainer LoadedGameData;
+    // ENCAPSULATION: Property instead of public field
+    public static DataManager Instance { get; private set; }
+    public GameDataContainer LoadedGameData { get; private set; }
 
-    [Header("Oyuncu İlerlemesi")]
-    public int totalCoins;
+    // EVENTS: Broadcasts coin changes so UI can listen without tight coupling[cite: 7]
+    public static event Action<int> OnCoinsChanged;
 
+    // ENCAPSULATION: Read-only outside, write-only inside
+    [field: SerializeField] public int TotalCoins { get; private set; }
+
+    /// <summary> Initializes the Singleton and applies target frame rates. </summary>
     private void Awake()
     {
-        // 1. VSync'i (Dikey Senkronizasyon) kapat ki cihazın ekran yenileme hızıyla çatışmasın
         QualitySettings.vSyncCount = 0;
-
-        // 2. Oyunu 60 FPS'ye zorla!
         Application.targetFrameRate = 60;
+
         if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
             
             LoadJsonData();
-            LoadProgress(); // Kayıtlı parayı ve kilitleri yükle
+            LoadProgress(); 
         }
-        else { Destroy(gameObject); }
+        else 
+        { 
+            Destroy(gameObject); 
+        }
     }
     
+    /// <summary> Loads question data from the JSON resource file. </summary>
     private void LoadJsonData()
     {
         TextAsset jsonAsset = Resources.Load<TextAsset>("quiz_questions");
@@ -36,15 +44,13 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    // --- YENİ: KAYIT SİSTEMİ ---
+    /// <summary> Saves the current coin balance and district unlocks to PlayerPrefs. </summary>
     public void SaveProgress()
     {
-        PlayerPrefs.SetInt("TotalCoins", totalCoins);
+        PlayerPrefs.SetInt("TotalCoins", TotalCoins);
         
-        // Hangi ilçelerin kilidi açık? Bunları tek tek kaydet
         foreach (var district in LoadedGameData.districts)
         {
-            // district_fatih_unlocked = 1 (açık) veya 0 (kapalı)
             int unlockedState = district.is_unlocked ? 1 : 0;
             PlayerPrefs.SetInt("district_" + district.id + "_unlocked", unlockedState);
         }
@@ -52,13 +58,13 @@ public class DataManager : MonoBehaviour
         Debug.Log("💾 İlerleme kaydedildi!");
     }
 
+    /// <summary> Loads saved progress from PlayerPrefs. </summary>
     public void LoadProgress()
     {
-        totalCoins = PlayerPrefs.GetInt("TotalCoins", 0); // Varsayılan 0
+        TotalCoins = PlayerPrefs.GetInt("TotalCoins", 0);
 
         foreach (var district in LoadedGameData.districts)
         {
-            // Kayıtlı bir durum varsa onu yükle, yoksa JSON'daki varsayılanı kullan
             if (PlayerPrefs.HasKey("district_" + district.id + "_unlocked"))
             {
                 int state = PlayerPrefs.GetInt("district_" + district.id + "_unlocked");
@@ -68,10 +74,11 @@ public class DataManager : MonoBehaviour
         Debug.Log("📂 İlerleme yüklendi!");
     }
 
+    /// <summary> Adds or subtracts coins and triggers the UI update event. </summary>
     public void AddCoins(int amount)
     {
-        totalCoins += amount;
-        SaveProgress(); // Her para kazandığında kaydet
+        TotalCoins += amount;
+        SaveProgress(); 
+        OnCoinsChanged?.Invoke(TotalCoins); // Fire the event!
     }
-    
 }

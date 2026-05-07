@@ -172,8 +172,8 @@ MonoBehaviour:
   puzzleBoard: {fileID: 1307375457}
   puzzlePool: {fileID: 918971592}
   dragArea: {fileID: 255355076}
+  <IsFake>k__BackingField: 0
   snapDistance: 1000
-  isFake: 0
 --- !u!114 &26138217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -547,8 +547,8 @@ MonoBehaviour:
   puzzleBoard: {fileID: 1307375457}
   puzzlePool: {fileID: 918971592}
   dragArea: {fileID: 255355076}
+  <IsFake>k__BackingField: 0
   snapDistance: 1000
-  isFake: 0
 --- !u!114 &82537059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -730,8 +730,8 @@ MonoBehaviour:
   puzzleBoard: {fileID: 1307375457}
   puzzlePool: {fileID: 918971592}
   dragArea: {fileID: 255355076}
+  <IsFake>k__BackingField: 0
   snapDistance: 1000
-  isFake: 0
 --- !u!114 &126197291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3138,8 +3138,8 @@ MonoBehaviour:
   puzzleBoard: {fileID: 1307375457}
   puzzlePool: {fileID: 918971592}
   dragArea: {fileID: 255355076}
+  <IsFake>k__BackingField: 0
   snapDistance: 1000
-  isFake: 0
 --- !u!114 &514825017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4314,8 +4314,8 @@ MonoBehaviour:
   puzzleBoard: {fileID: 1307375457}
   puzzlePool: {fileID: 918971592}
   dragArea: {fileID: 255355076}
+  <IsFake>k__BackingField: 0
   snapDistance: 1000
-  isFake: 0
 --- !u!114 &743771607
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4614,8 +4614,8 @@ MonoBehaviour:
   puzzleBoard: {fileID: 1307375457}
   puzzlePool: {fileID: 918971592}
   dragArea: {fileID: 255355076}
+  <IsFake>k__BackingField: 0
   snapDistance: 1000
-  isFake: 0
 --- !u!114 &799579233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4809,8 +4809,8 @@ MonoBehaviour:
   puzzleBoard: {fileID: 1307375457}
   puzzlePool: {fileID: 918971592}
   dragArea: {fileID: 255355076}
+  <IsFake>k__BackingField: 0
   snapDistance: 1000
-  isFake: 0
 --- !u!114 &820862018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6995,12 +6995,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c00a39c6cc9cd6479261bce1cbf15a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DataManager
-  LoadedGameData:
-    game: 
-    version: 
-    total_questions: 0
-    districts: []
-  totalCoins: 1000
+  <TotalCoins>k__BackingField: 0
 --- !u!4 &1054713609
 Transform:
   m_ObjectHideFlags: 0
@@ -7703,8 +7698,8 @@ MonoBehaviour:
   puzzleBoard: {fileID: 1307375457}
   puzzlePool: {fileID: 918971592}
   dragArea: {fileID: 255355076}
+  <IsFake>k__BackingField: 0
   snapDistance: 1000
-  isFake: 0
 --- !u!114 &1207189103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8154,8 +8149,8 @@ MonoBehaviour:
   puzzleBoard: {fileID: 1307375457}
   puzzlePool: {fileID: 918971592}
   dragArea: {fileID: 255355076}
+  <IsFake>k__BackingField: 0
   snapDistance: 1000
-  isFake: 0
 --- !u!114 &1295829223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10082,8 +10077,8 @@ MonoBehaviour:
   puzzleBoard: {fileID: 1307375457}
   puzzlePool: {fileID: 918971592}
   dragArea: {fileID: 255355076}
+  <IsFake>k__BackingField: 0
   snapDistance: 100
-  isFake: 0
 --- !u!114 &1568037220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12226,8 +12221,8 @@ MonoBehaviour:
   puzzleBoard: {fileID: 1307375457}
   puzzlePool: {fileID: 918971592}
   dragArea: {fileID: 255355076}
+  <IsFake>k__BackingField: 0
   snapDistance: 100
-  isFake: 0
 --- !u!114 &1884248996
 MonoBehaviour:
   m_ObjectHideFlags: 0
