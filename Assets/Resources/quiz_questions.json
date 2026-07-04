@@ -4,323 +4,291 @@
   "total_questions": 160,
   "districts": [
     {
-      "id": "beyoglu",
-      "name": "Beyoğlu",
-      "description": "Galata'dan Taksim'e, İstiklal'den Tünel'e genel Beyoğlu konsepti.",
-      "unlockCost": 50,
-      "is_unlocked": false,
-      "questions": [
-        {
-          "id": 1,
-          "question": "İstiklal Caddesi'nin simgesi olan ve Tünel-Taksim arasında çalışan araç hangisidir?",
-          "options": ["Metrobüs", "Nostaljik Tramvay", "Füniküler", "Sarı Dolmuş"],
-          "answer": 1,
-          "questionImage": "Beyoglu_1.png"
-        },
-        {
-          "id": 2,
-          "question": "Dünyanın en eski ikinci metrosu kabul edilen ve Karaköy-Beyoğlu'nu bağlayan hattın adı nedir?",
-          "options": ["Marmaray", "M2", "Tünel", "Teleferik"],
-          "answer": 2,
-          "questionImage": "Beyoglu_2.png"
-        },
-        {
-          "id": 3,
-          "question": "Beyoğlu'nun en meşhur çikolatacısı olan yerin adı nedir?",
-          "options": ["Vakko", "Elit", "Meşhur Beyoğlu Çikolatacısı", "Pelit"],
-          "answer": 2,
-          "questionImage": "Beyoglu_3.png"
-        },
-        {
-          "id": 4,
-          "question": "İstiklal Caddesi üzerinde yer alan en büyük Katolik kilisesi hangisidir?",
-          "options": ["St. Antuan", "Ayasofya", "Aya Triada", "Kırım Kilisesi"],
-          "answer": 0,
-          "questionImage": "Beyoglu_4.png"
-        },
-        {
-          "id": 5,
-          "question": "Beyoğlu'nun meşhur \"Çiçek Pasajı\" eski dönemlerde ne olarak kullanılıyordu?",
-          "options": ["Tiyatro", "Hastane", "Kışla", "Pazar"],
-          "answer": 0,
-          "questionImage": "Beyoglu_5.png"
-        },
-        {
-          "id": 6,
-          "question": "Galata Kulesi hangi yüzyılda Cenevizliler tarafından inşa edilmiştir?",
-          "options": ["11.", "12.", "14.", "16."],
-          "answer": 2,
-          "questionImage": "Beyoglu_6.png"
-        },
-        {
-          "id": 7,
-          "question": "İstiklal Caddesi'nde sinema müzesine ev sahipliği yapan tarihi pasaj hangisidir?",
-          "options": ["Atlas", "Halep", "Avrupa", "Hazzopulo"],
-          "answer": 0,
-          "questionImage": "Beyoglu_7.png"
-        },
-        {
-          "id": 8,
-          "question": "Pera Müzesi'nde sergilenen \"Kaplumbağa Terbiyecisi\" tablosu kime aittir?",
-          "options": ["Şeker Ahmet Paşa", "Osman Hamdi Bey", "Abidin Dino", "Fikret Mualla"],
-          "answer": 1,
-          "questionImage": "Beyoglu_8.png"
-        },
-        {
-          "id": 9,
-          "question": "Taksim Meydanı'ndaki Cumhuriyet Anıtı hangi ünlü heykeltıraş tarafından yapılmıştır?",
-          "options": ["Pietro Canonica", "Rodin", "Zühtü Müridoğlu", "İlhan Koman"],
-          "answer": 0,
-          "questionImage": "Beyoglu_9.png"
-        },
-        {
-          "id": 10,
-          "question": "Beyoğlu'ndaki tarihi \"Mısır Apartmanı\"nda yaşayan milli şairimiz kimdir?",
-          "options": ["Nazım Hikmet", "Mehmet Akif Ersoy", "Tevfik Fikret", "Yahya Kemal"],
-          "answer": 1,
-          "questionImage": "Beyoglu_10.png"
-        },
-        {
-          "id": 11,
-          "question": "Galata'daki ünlü banker ailesinin yaptırdığı merdivenlerin adı nedir?",
-          "options": ["Ceneviz", "Kamondo", "Pera", "Galata"],
-          "answer": 1,
-          "questionImage": "Beyoglu_11.png"
-        },
-        {
-          "id": 12,
-          "question": "Beyoğlu'ndaki ünlü \"Nevizade\" sokağı neyiyle meşhurdur?",
-          "options": ["Kitapçıları", "Restoran ve eğlence mekanları", "Kuyumcuları", "Ayakkabıcıları"],
-          "answer": 1,
-          "questionImage": "Beyoglu_12.png"
-        },
-        {
-          "id": 13,
-          "question": "Hangi tarihi yapı Beyoğlu sınırları içindedir?",
-          "options": ["Dolmabahçe Sarayı", "Galata Mevlevihanesi", "Yeni Cami", "Kız Kulesi"],
-          "answer": 1,
-          "questionImage": "Beyoglu_13.png"
-        },
-        {
-          "id": 14,
-          "question": "Beyoğlu'nun eski adı olan \"Pera\" ne anlama gelir?",
-          "options": ["Karşı yaka", "Altın boynuz", "Tepedeki ev", "Büyük kale"],
-          "answer": 0,
-          "questionImage": "Beyoglu_14.png"
-        },
-        {
-          "id": 15,
-          "question": "İstiklal Caddesi'nde yer alan ve 19. yüzyıldan kalan tarihi kütüphane hangisidir?",
-          "options": ["Atatürk Kitaplığı", "İSAM", "Beyazıt Kütüphanesi", "Salt Beyoğlu"],
-          "answer": 3,
-          "questionImage": "Beyoglu_15.png"
-        },
-        {
-          "id": 16,
-          "question": "Hangisi Beyoğlu'ndaki ünlü pasajlardan biri değildir?",
-          "options": ["Aznavur", "Çiçek", "Avrupa", "Mısır Çarşısı"],
-          "answer": 3,
-          "questionImage": "Beyoglu_16.png"
-        },
-        {
-          "id": 17,
-          "question": "Beyoğlu'nda bulunan ve dünyanın ilk metro hatlarından olan Tünel kaç yılında açılmıştır?",
-          "options": ["1875", "1900", "1923", "1950"],
-          "answer": 0,
-          "questionImage": "Beyoglu_17.png"
-        },
-        {
-          "id": 18,
-          "question": "Taksim'deki tarihi \"Maksim Gazinosu\" bugün ne olarak hizmet vermektedir?",
-          "options": ["Müze", "Otel", "Otopark", "Tiyatro"],
-          "answer": 1,
-          "questionImage": "Beyoglu_18.png"
-        },
-        {
-          "id": 19,
-          "question": "Beyoğlu sahil şeridinde yer alan modern sanat müzesi hangisidir?",
-          "options": ["Arter", "İstanbul Modern", "Pera Müzesi", "Salt Galata"],
-          "answer": 1,
-          "questionImage": "Beyoglu_19.png"
-        },
-        {
-          "id": 20,
-          "question": "Galata Köprüsü hangi iki semti bağlar?",
-          "options": ["Beşiktaş-Üsküdar", "Karaköy-Eminönü", "Kadıköy-Eminönü", "Kabataş-Kasımpaşa"],
-          "answer": 1,
-          "questionImage": "Beyoglu_20.png"
-        }
-      ],
-      "penalty_animations": [
-        "Galata Kulesi'nden makaraya bağlı düşüş sahnesi",
-        "Tramvay altında çizgi film tarzı sürüklenme",
-        "Martı sürüsünün saldırısına uğrama",
-        "Kuleye tırmanırken kayıp aşağı düşme",
-        "Tarihi binaya yaslanınca bina devrilir gibi esneme"
-      ]
+  "id": "beyoglu",
+  "name": "Beyoğlu",
+  "description": "Galata'dan Taksim'e, İstiklal'den Tünel'e genel Beyoğlu konsepti.",
+  "unlockCost": 750,
+  "is_unlocked": false,
+  "questions": [
+    {
+      "id": 1,
+      "type": 0,
+      "question": "İstiklal Caddesi'nin simgesi olan ve Tünel-Taksim arasında çalışan araç hangisidir?",
+      "options": ["Metrobüs", "Nostaljik Tramvay", "Füniküler", "Sarı Dolmuş"],
+      "answer": 1,
+      "questionImage": "Beyoglu_1.png"
     },
+    {
+      "id": 2,
+      "type": 0,
+      "question": "Dünyanın en eski ikinci metrosu kabul edilen ve Karaköy-Beyoğlu'nu bağlayan hattın adı nedir?",
+      "options": ["Marmaray", "M2", "Tünel", "Teleferik"],
+      "answer": 2,
+      "questionImage": "Beyoglu_2.png"
+    },
+    {
+      "id": 3,
+      "type": 0,
+      "question": "Beyoğlu'nun en meşhur çikolatacısı olan yerin adı nedir?",
+      "options": ["Vakko", "Elit", "Meşhur Beyoğlu Çikolatacısı", "Pelit"],
+      "answer": 2,
+      "questionImage": "Beyoglu_3.png"
+    },
+    {
+      "id": 4,
+      "type": 0,
+      "question": "İstiklal Caddesi üzerinde yer alan en büyük Katolik kilisesi hangisidir?",
+      "options": ["St. Antuan", "Ayasofya", "Aya Triada", "Kırım Kilisesi"],
+      "answer": 0,
+      "questionImage": "Beyoglu_4.png"
+    },
+    {
+      "id": 5,
+      "type": 1,
+      "question": "Galata Kulesi'nden uçarak Boğaz'ı geçtiği rivayet edilen efsanevi kişinin lakabı nedir (Hezarfen Ahmet ...)?",
+      "answerWord": "ÇELEBİ",
+      "questionImage": "Beyoglu_Kelime_1.png"
+    },
+    {
+      "id": 6,
+      "type": 0,
+      "question": "Beyoğlu'nun meşhur \"Çiçek Pasajı\" eski dönemlerde ne olarak kullanılıyordu?",
+      "options": ["Tiyatro", "Hastane", "Kışla", "Pazar"],
+      "answer": 0,
+      "questionImage": "Beyoglu_5.png"
+    },
+    {
+      "id": 7,
+      "type": 0,
+      "question": "Galata Kulesi hangi yüzyılda Cenevizliler tarafından inşa edilmiştir?",
+      "options": ["11.", "12.", "14.", "16."],
+      "answer": 2,
+      "questionImage": "Beyoglu_6.png"
+    },
+    {
+      "id": 8,
+      "type": 0,
+      "question": "İstiklal Caddesi'nde sinema müzesine ev sahipliği yapan tarihi pasaj hangisidir?",
+      "options": ["Atlas", "Halep", "Avrupa", "Hazzopulo"],
+      "answer": 0,
+      "questionImage": "Beyoglu_7.png"
+    },
+    {
+      "id": 9,
+      "type": 0,
+      "question": "Pera Müzesi'nde sergilenen \"Kaplumbağa Terbiyecisi\" tablosu kime aittir?",
+      "options": ["Şeker Ahmet Paşa", "Osman Hamdi Bey", "Abidin Dino", "Fikret Mualla"],
+      "answer": 1,
+      "questionImage": "Beyoglu_8.png"
+    },
+    {
+      "id": 10,
+      "type": 1,
+      "question": "İstiklal Caddesi'ni boydan boya kesen, ortasında ünlü lisesi de bulunan tarihi semtin adı nedir?",
+      "answerWord": "GALATASARAY",
+      "questionImage": "Beyoglu_Kelime_2.png"
+    },
+    {
+      "id": 11,
+      "type": 0,
+      "question": "Taksim Meydanı'ndaki Cumhuriyet Anıtı hangi ünlü heykeltıraş tarafından yapılmıştır?",
+      "options": ["Pietro Canonica", "Rodin", "Zühtü Müridoğlu", "İlhan Koman"],
+      "answer": 0,
+      "questionImage": "Beyoglu_9.png"
+    },
+    {
+      "id": 12,
+      "type": 0,
+      "question": "Beyoğlu'ndaki tarihi \"Mısır Apartmanı\"nda yaşayan milli şairimiz kimdir?",
+      "options": ["Nazım Hikmet", "Mehmet Akif Ersoy", "Tevfik Fikret", "Yahya Kemal"],
+      "answer": 1,
+      "questionImage": "Beyoglu_10.png"
+    },
+    {
+      "id": 13,
+      "type": 0,
+      "question": "Galata'daki ünlü banker ailesinin yaptırdığı merdivenlerin adı nedir?",
+      "options": ["Ceneviz", "Kamondo", "Pera", "Galata"],
+      "answer": 1,
+      "questionImage": "Beyoglu_11.png"
+    },
+    {
+      "id": 14,
+      "type": 0,
+      "question": "Beyoğlu'ndaki ünlü \"Nevizade\" sokağı neyiyle meşhurdur?",
+      "options": ["Kitapçıları", "Restoran ve eğlence mekanları", "Kuyumcuları", "Ayakkabıcıları"],
+      "answer": 1,
+      "questionImage": "Beyoglu_12.png"
+    },
+    {
+      "id": 15,
+      "type": 1,
+      "question": "Karaköy sahilinde yer alan, kruvaziyer gemilerinin yanaştığı modern sanat ve yaşam merkezinin adı nedir?",
+      "answerWord": "GALATAPORT",
+      "questionImage": "Beyoglu_Kelime_3.png"
+    },
+    {
+      "id": 16,
+      "type": 0,
+      "question": "Hangi tarihi yapı Beyoğlu sınırları içindedir?",
+      "options": ["Dolmabahçe Sarayı", "Galata Mevlevihanesi", "Yeni Cami", "Kız Kulesi"],
+      "answer": 1,
+      "questionImage": "Beyoglu_13.png"
+    },
+    {
+      "id": 17,
+      "type": 0,
+      "question": "Beyoğlu'nun eski adı olan \"Pera\" ne anlama gelir?",
+      "options": ["Karşı yaka", "Altın boynuz", "Tepedeki ev", "Büyük kale"],
+      "answer": 0,
+      "questionImage": "Beyoglu_14.png"
+    },
+    {
+      "id": 18,
+      "type": 0,
+      "question": "İstiklal Caddesi'nde yer alan ve 19. yüzyıldan kalan tarihi kütüphane hangisidir?",
+      "options": ["Atatürk Kitaplığı", "İSAM", "Beyazıt Kütüphanesi", "Salt Beyoğlu"],
+      "answer": 3,
+      "questionImage": "Beyoglu_15.png"
+    },
+    {
+      "id": 19,
+      "type": 0,
+      "question": "Hangisi Beyoğlu'ndaki ünlü pasajlardan biri değildir?",
+      "options": ["Aznavur", "Çiçek", "Avrupa", "Mısır Çarşısı"],
+      "answer": 3,
+      "questionImage": "Beyoglu_16.png"
+    },
+    {
+      "id": 20,
+      "type": 1,
+      "question": "Eski İstanbul'da binaların arasında yer alan üstü kapalı, avlulu tarihi alışveriş mekanlarına verilen genel ad nedir (Örn: Çiçek ...)?",
+      "answerWord": "PASAJ",
+      "questionImage": "Beyoglu_Kelime_4.png"
+    },
+    {
+      "id": 21,
+      "type": 0,
+      "question": "Beyoğlu'nda bulunan ve dünyanın ilk metro hatlarından olan Tünel kaç yılında açılmıştır?",
+      "options": ["1875", "1900", "1923", "1950"],
+      "answer": 0,
+      "questionImage": "Beyoglu_17.png"
+    },
+    {
+      "id": 22,
+      "type": 0,
+      "question": "Taksim'deki tarihi \"Maksim Gazinosu\" bugün ne olarak hizmet vermektedir?",
+      "options": ["Müze", "Otel", "Otopark", "Tiyatro"],
+      "answer": 1,
+      "questionImage": "Beyoglu_18.png"
+    },
+    {
+      "id": 23,
+      "type": 0,
+      "question": "Beyoğlu sahil şeridinde yer alan modern sanat müzesi hangisidir?",
+      "options": ["Arter", "İstanbul Modern", "Pera Müzesi", "Salt Galata"],
+      "answer": 1,
+      "questionImage": "Beyoglu_19.png"
+    },
+    {
+      "id": 24,
+      "type": 0,
+      "question": "Galata Köprüsü hangi iki semti bağlar?",
+      "options": ["Beşiktaş-Üsküdar", "Karaköy-Eminönü", "Kadıköy-Eminönü", "Kabataş-Kasımpaşa"],
+      "answer": 1,
+      "questionImage": "Beyoglu_20.png"
+    },
+    {
+      "id": 25,
+      "type": 1,
+      "question": "Beyoğlu'nun İstiklal Caddesi'ne çıkan ve 'Fransız Sokağı' olarak da bilinen renkli, merdivenli sokağının resmi adı nedir?",
+      "answerWord": "CEZAYİR",
+      "questionImage": "Beyoglu_Kelime_5.png"
+    }
+  ],
+  "penalty_animations": [
+    "Galata Kulesi'nden makaraya bağlı düşüş sahnesi",
+    "Tramvay altında çizgi film tarzı sürüklenme",
+    "Martı sürüsünün saldırısına uğrama",
+    "Kuleye tırmanırken kayıp aşağı düşme",
+    "Tarihi binaya yaslanınca bina devrilir gibi esneme"
+  ],
+  "puzzles": [
+    {
+      "triggerAfterQuestionIndex": 5,
+      "puzzlePrefabName": "beyoglu_puzzle_1"
+    },
+    {
+      "triggerAfterQuestionIndex": 15,
+      "puzzlePrefabName": "beyoglu_puzzle_2"
+    }
+  ]
+},
     {
       "id": "fatih",
       "name": "Fatih",
       "description": "Ayasofya, Kapalıçarşı, Mısır Çarşısı ve Balat dahil.",
-      "unlockCost": 50,
+      "unlockCost": 750,
       "is_unlocked": true,
       "questions": [
-        {
-          "id": 1,
-          "question": "Dünyanın en büyük tarihi çarşısı olan Kapalıçarşı'da kaç giriş kapısı vardır?",
-          "options": ["5", "11", "22", "45"],
-          "answer": 2,
-          "questionImage": "Fatih_1.png"
-        },
-        {
-          "id": 2,
-          "question": "Eminönü'ndeki Mısır Çarşısı neden bu ismi almıştır?",
-          "options": ["Firavunlar kurduğu için", "Mısır'dan gelen vergilerle yapıldığı için", "Mısır satıldığı için", "Mimar Mısırlı olduğu için"],
-          "answer": 1,
-          "questionImage": "Fatih_2.png"
-        },
-        {
-          "id": 3,
-          "question": "Kapalıçarşı'nın kalbi sayılan ve en değerli antikaların bulunduğu bölüm hangisidir?",
-          "options": ["Sandal Bedesteni", "İç Bedesten", "Sahaflar", "Bakırcılar"],
-          "answer": 1,
-          "questionImage": "Fatih_3.png"
-        },
-        {
-          "id": 4,
-          "question": "Fatih'te \"Demir Kilise\" olarak bilinen ve tamamen metalden yapılan yapı hangisidir?",
-          "options": ["Sveti Stefan", "Aya İrini", "St. Antuan", "Panayia Kilisesi"],
-          "answer": 0,
-          "questionImage": "Fatih_4.png"
-        },
-        {
-          "id": 5,
-          "question": "Balat'taki meşhur kırmızı tuğlalı devasa okul binası hangisidir?",
-          "options": ["Robert Kolej", "Fener Rum Erkek Lisesi", "Galatasaray Lisesi", "Darüşşafaka"],
-          "answer": 1,
-          "questionImage": "Fatih_5.png"
-        },
-        {
-          "id": 6,
-          "question": "Mavi Cami (Blue Mosque) olarak bilinen 6 minareli yapı hangisidir?",
-          "options": ["Süleymaniye", "Sultanahmet", "Fatih", "Şehzadebaşı"],
-          "answer": 1,
-          "questionImage": "Fatih_6.png"
-        },
-        {
-          "id": 7,
-          "question": "Fatih Sultan Mehmet'in mezarı hangi caminin avlusundadır?",
-          "options": ["Ayasofya", "Fatih Camii", "Süleymaniye", "Eyüp Sultan"],
-          "answer": 1,
-          "questionImage": "Fatih_7.png"
-        },
-        {
-          "id": 8,
-          "question": "Balat'ta yer alan ve gemi pruvası şeklindeki kürsüsüyle ünlü sinagog hangisidir?",
-          "options": ["Neve Şalom", "Ahrida", "Bet İsrael", "Yanbol"],
-          "answer": 1,
-          "questionImage": "Fatih_8.png"
-        },
-        {
-          "id": 9,
-          "question": "Topkapı Sarayı'nda kutsal emanetlerin bulunduğu bölüm hangisidir?",
-          "options": ["Harem", "Arz Odası", "Has Oda", "Divan-ı Hümayun"],
-          "answer": 2,
-          "questionImage": "Fatih_9.png"
-        },
-        {
-          "id": 10,
-          "question": "Fatih'teki \"Yerebatan Sarnıcı\"nda sütunları tutan iki heykel başı hangi mitolojik karaktere aittir?",
-          "options": ["Zeus", "Medusa", "Athena", "Poseidon"],
-          "answer": 1,
-          "questionImage": "Fatih_10.png"
-        },
-        {
-          "id": 11,
-          "question": "Eminönü sahilindeki meşhur Yeni Cami'nin yapımı kaç yıl sürmüştür?",
-          "options": ["10", "25", "66", "100"],
-          "answer": 2,
-          "questionImage": "Fatih_11.png"
-        },
-        {
-          "id": 12,
-          "question": "Kapalıçarşı'da çekilen ünlü aksiyon filmi hangisidir?",
-          "options": ["Hızlı ve Öfkeli", "James Bond: Skyfall", "Görevimiz Tehlike", "Taken 2"],
-          "answer": 1,
-          "questionImage": "Fatih_12.png"
-        },
-        {
-          "id": 13,
-          "question": "Balat sokaklarındaki renkli evlerin bulunduğu yokuşun adı nedir?",
-          "options": ["Merdivenli Yokuş", "Çorbacı Sokağı", "Vodina Caddesi", "Haliç Yolu"],
-          "answer": 0,
-          "questionImage": "Fatih_13.png"
-        },
-        {
-          "id": 14,
-          "question": "Mısır Çarşısı'nın hemen yanındaki tarihi \"Yeni Cami\" hangi padişahın annesi tarafından tamamlanmıştır?",
-          "options": ["Hürrem Sultan", "Turhan Hatice Sultan", "Kösem Sultan", "Safiye Sultan"],
-          "answer": 1,
-          "questionImage": "Fatih_14.png"
-        },
-        {
-          "id": 15,
-          "question": "Süleymaniye Camii'nin dört minaresi neyi simgeler?",
-          "options": ["Dört halifeyi", "İstanbul'un fethinden sonraki dördüncü padişahı", "Dört kutsal kitabı", "Dört mezhebi"],
-          "answer": 1,
-          "questionImage": "Fatih_15.png"
-        },
-        {
-          "id": 16,
-          "question": "Fatih sınırları içindeki Bizans surlarının uzunluğu yaklaşık kaç kilometredir?",
-          "options": ["5", "12", "22", "35"],
-          "answer": 2,
-          "questionImage": "Fatih_16.png"
-        },
-        {
-          "id": 17,
-          "question": "Balat'ta eski eşyaların açık artırmayla satıldığı dükkanlara ne ad verilir?",
-          "options": ["Galeri", "Mezat", "Arasta", "Bedesten"],
-          "answer": 1,
-          "questionImage": "Fatih_17.png"
-        },
-        {
-          "id": 18,
-          "question": "İstanbul'un fethinden sonra şehre giren ilk Osmanlı birliği hangi kapıdan girmiştir?",
-          "options": ["Edirnekapı", "Topkapı", "Ahırkapı", "Belgratkapı"],
-          "answer": 1,
-          "questionImage": "Fatih_18.png"
-        },
-        {
-          "id": 19,
-          "question": "Kapalıçarşı'da en çok hangi ürünün ticareti yapılır?",
-          "options": ["Baharat", "Altın ve mücevher", "Kitap", "İpek"],
-          "answer": 1,
-          "questionImage": "Fatih_19.png"
-        },
-        {
-          "id": 20,
-          "question": "Fener semtinde bulunan ve Ortodoks dünyasının merkezi sayılan yer neresidir?",
-          "options": ["Vatikan", "Fener Rum Patrikhanesi", "Aya İrini", "Ayasofya"],
-          "answer": 1,
-          "questionImage": "Fatih_20.png"
-        }
+        {"id": 1, "type": 0, "question": "Dünyanın en büyük tarihi çarşısı olan Kapalıçarşı'da kaç giriş kapısı vardır?", "options": ["5", "11", "22", "45"], "answer": 2, "questionImage": "Fatih_1.png"},
+        {"id": 2, "type": 0, "question": "Eminönü'ndeki Mısır Çarşısı neden bu ismi almıştır?", "options": ["Firavunlar kurduğu için", "Mısır'dan gelen vergilerle yapıldığı için", "Mısır satıldığı için", "Mimar Mısırlı olduğu için"], "answer": 1, "questionImage": "Fatih_2.png"},
+        {"id": 3, "type": 0, "question": "Kapalıçarşı'nın kalbi sayılan ve en değerli antikaların bulunduğu bölüm hangisidir?", "options": ["Sandal Bedesteni", "İç Bedesten", "Sahaflar", "Bakırcılar"], "answer": 1, "questionImage": "Fatih_3.png"},
+        {"id": 4, "type": 0, "question": "Fatih'te 'Demir Kilise' olarak bilinen ve tamamen metalden yapılan yapı hangisidir?", "options": ["Sveti Stefan", "Aya İrini", "St. Antuan", "Panayia Kilisesi"], "answer": 0, "questionImage": "Fatih_4.png"},
+        {"id": 5, "type": 1, "question": "Ayasofya'nın eşsiz mimarisini tamamlayan devasa yarım küre çatı yapısına ne ad verilir?", "answerWord": "KUBBE", "questionImage": "Fatih_Kelime_1.png"},
+        {"id": 6, "type": 0, "question": "Balat'taki meşhur kırmızı tuğlalı devasa okul binası hangisidir?", "options": ["Robert Kolej", "Fener Rum Erkek Lisesi", "Galatasaray Lisesi", "Darüşşafaka"], "answer": 1, "questionImage": "Fatih_5.png"},
+        {"id": 7, "type": 0, "question": "Mavi Cami (Blue Mosque) olarak bilinen 6 minareli yapı hangisidir?", "options": ["Süleymaniye", "Sultanahmet", "Fatih", "Şehzadebaşı"], "answer": 1, "questionImage": "Fatih_6.png"},
+        {"id": 8, "type": 0, "question": "Fatih Sultan Mehmet'in mezarı hangi caminin avlusundadır?", "options": ["Ayasofya", "Fatih Camii", "Süleymaniye", "Eyüp Sultan"], "answer": 1, "questionImage": "Fatih_7.png"},
+        {"id": 9, "type": 0, "question": "Balat'ta yer alan ve gemi pruvası şeklindeki kürsüsüyle ünlü sinagog hangisidir?", "options": ["Neve Şalom", "Ahrida", "Bet İsrael", "Yanbol"], "answer": 1, "questionImage": "Fatih_8.png"},
+        {"id": 10, "type": 1, "question": "Osmanlı padişahlarının 400 yıl boyunca dünyayı yönettiği efsanevi sarayın adı nedir?", "answerWord": "TOPKAPI", "questionImage": "Fatih_Kelime_2.png"},
+        {"id": 11, "type": 0, "question": "Topkapı Sarayı'nda kutsal emanetlerin bulunduğu bölüm hangisidir?", "options": ["Harem", "Arz Odası", "Has Oda", "Divan-ı Hümayun"], "answer": 2, "questionImage": "Fatih_9.png"},
+        {"id": 12, "type": 0, "question": "Fatih'teki 'Yerebatan Sarnıcı'nda sütunları tutan iki heykel başı hangi karaktere aittir?", "options": ["Zeus", "Medusa", "Athena", "Poseidon"], "answer": 1, "questionImage": "Fatih_10.png"},
+        {"id": 13, "type": 0, "question": "Eminönü sahilindeki meşhur Yeni Cami'nin yapımı kaç yıl sürmüştür?", "options": ["10", "25", "66", "100"], "answer": 2, "questionImage": "Fatih_11.png"},
+        {"id": 14, "type": 0, "question": "Kapalıçarşı'da çekilen ünlü aksiyon filmi hangisidir?", "options": ["Hızlı ve Öfkeli", "James Bond: Skyfall", "Görevimiz Tehlike", "Taken 2"], "answer": 1, "questionImage": "Fatih_12.png"},
+        {"id": 15, "type": 1, "question": "Eminönü'nde baharat kokularıyla ünlü, turistlerin uğrak noktası tarihi çarşının adı nedir?", "answerWord": "MISIR", "questionImage": "Fatih_Kelime_3.png"},
+        {"id": 16, "type": 0, "question": "Balat sokaklarındaki renkli evlerin bulunduğu yokuşun adı nedir?", "options": ["Merdivenli Yokuş", "Çorbacı Sokağı", "Vodina Caddesi", "Haliç Yolu"], "answer": 0, "questionImage": "Fatih_13.png"},
+        {"id": 17, "type": 0, "question": "Yeni Cami hangi padişahın annesi tarafından tamamlanmıştır?", "options": ["Hürrem Sultan", "Turhan Hatice Sultan", "Kösem Sultan", "Safiye Sultan"], "answer": 1, "questionImage": "Fatih_14.png"},
+        {"id": 18, "type": 0, "question": "Süleymaniye Camii'nin dört minaresi neyi simgeler?", "options": ["Dört halifeyi", "Fetihten sonraki 4. padişahı", "Dört kutsal kitabı", "Dört mezhebi"], "answer": 1, "questionImage": "Fatih_15.png"},
+        {"id": 19, "type": 0, "question": "Fatih sınırları içindeki Bizans surlarının uzunluğu yaklaşık kaç kilometredir?", "options": ["5", "12", "22", "35"], "answer": 2, "questionImage": "Fatih_16.png"},
+        {"id": 20, "type": 1, "question": "Yerebatan Sarnıcı'nın derinliklerinde yer alan yılan saçlı mitolojik kadın figürünün adı nedir?", "answerWord": "MEDUSA", "questionImage": "Fatih_Kelime_4.png"},
+        {"id": 21, "type": 0, "question": "Balat'ta eski eşyaların açık artırmayla satıldığı dükkanlara ne ad verilir?", "options": ["Galeri", "Mezat", "Arasta", "Bedesten"], "answer": 1, "questionImage": "Fatih_17.png"},
+        {"id": 22, "type": 0, "question": "İstanbul'un fethinden sonra şehre giren ilk Osmanlı birliği hangi kapıdan girmiştir?", "options": ["Edirnekapı", "Topkapı", "Ahırkapı", "Belgratkapı"], "answer": 1, "questionImage": "Fatih_18.png"},
+        {"id": 23, "type": 0, "question": "Kapalıçarşı'da en çok hangi ürünün ticareti yapılır?", "options": ["Baharat", "Altın ve mücevher", "Kitap", "İpek"], "answer": 1, "questionImage": "Fatih_19.png"},
+        {"id": 24, "type": 0, "question": "Fener semtinde bulunan ve Ortodoks dünyasının merkezi sayılan yer neresidir?", "options": ["Vatikan", "Fener Rum Patrikhanesi", "Aya İrini", "Ayasofya"], "answer": 1, "questionImage": "Fatih_20.png"},
+        {"id": 25, "type": 1, "question": "İstanbul'un su ihtiyacını karşılamak için Bizans döneminde yapılan Bozdoğan kemerinin orijinal adı nedir?", "answerWord": "VALENS", "questionImage": "Fatih_Kelime_5.png"},
+        {"id": 26, "type": 0, "question": "İstanbul Üniversitesi'nin tarihi ana kapısı hangi semttedir?", "options": ["Beyazıt", "Balat", "Fener", "Aksaray"], "answer": 0, "questionImage": "Fatih_Yeni_1.png"},
+        {"id": 27, "type": 0, "question": "Eminönü denince akla gelen meşhur lezzet hangisidir?", "options": ["Kumpir", "Balık ekmek", "Mantı", "Kokoreç"], "answer": 1, "questionImage": "Fatih_Yeni_2.png"},
+        {"id": 28, "type": 0, "question": "Gülhane Parkı geçmişte hangi sarayın bahçesiydi?", "options": ["Dolmabahçe Sarayı", "Topkapı Sarayı", "Beylerbeyi Sarayı", "Çırağan Sarayı"], "answer": 1, "questionImage": "Fatih_Yeni_3.png"},
+        {"id": 29, "type": 0, "question": "Laleli bölgesi günümüzde en çok hangi sektörle bilinir?", "options": ["Tekstil ve ticaret", "Balıkçılık", "Tarım", "Madencilik"], "answer": 0, "questionImage": "Fatih_Yeni_4.png"},
+        {"id": 30, "type": 1, "question": "İstanbul'u fetheden yedinci Osmanlı padişahının kullandığı ünlü unvanı nedir?", "answerWord": "FATİH", "questionImage": "Fatih_Kelime_6.png"},
+        {"id": 31, "type": 0, "question": "Bozdoğan Kemeri hangi döneme aittir?", "options": ["Osmanlı", "Roma/Bizans", "Selçuklu", "Cumhuriyet"], "answer": 1, "questionImage": "Fatih_Yeni_5.png"},
+        {"id": 32, "type": 0, "question": "Görseldeki emoji hangi ulaşım noktasını temsil eder?", "options": ["Sirkeci Garı", "Eminönü İskelesi", "Beyazıt Meydanı", "Gülhane Parkı"], "answer": 0, "questionImage": "Fatih_Yeni_6.png"},
+        {"id": 33, "type": 0, "question": "Alman Çeşmesi hangi meydandadır?", "options": ["Taksim", "Sultanahmet", "Beyazıt", "Aksaray"], "answer": 1, "questionImage": "Fatih_Yeni_7.png"},
+        {"id": 34, "type": 0, "question": "Fatih'teki tarihi yer altı su yapılarından biri hangisidir?", "options": ["Şerefiye Sarnıcı", "Galata Sarnıcı", "Valens Sarnıcı", "Kasımpaşa Sarnıcı"], "answer": 0, "questionImage": "Fatih_Yeni_8.png"},
+        {"id": 35, "type": 1, "question": "Kapalıçarşı'nın merkezinde yer alan ve en değerli antika eşyaların satıldığı tarihi bölüme ne ad verilir?", "answerWord": "BEDESTEN", "questionImage": "Fatih_Kelime_7.png"},
+        {"id": 36, "type": 0, "question": "Süleymaniye Camii'nin mimarı kimdir?", "options": ["Vedat Tek", "Mimar Sinan", "Kemalettin Bey", "D'Aronco"], "answer": 1, "questionImage": "Fatih_Yeni_9.png"},
+        {"id": 37, "type": 0, "question": "Beyazıt Kulesi ilk olarak hangi amaçla kullanılmıştır?", "options": ["Yangın gözetleme", "Deniz feneri", "Saat kulesi", "Karakol"], "answer": 0, "questionImage": "Fatih_Yeni_10.png"},
+        {"id": 38, "type": 0, "question": "Sirkeci Garı hangi ulaşım türüyle ilişkilidir?", "options": ["Deniz yolu", "Demir yolu", "Hava yolu", "Teleferik"], "answer": 1, "questionImage": "Fatih_Yeni_11.png"},
+        {"id": 39, "type": 0, "question": "İstanbul Üniversitesi Türkiye'nin hangi alandaki en eski kurumlarından biridir?", "options": ["Üniversite eğitimi", "Denizcilik", "Savunma sanayi", "Havacılık"], "answer": 0, "questionImage": "Fatih_Yeni_12.png"},
+        {"id": 40, "type": 1, "question": "Fatih Sultan Mehmet'in İstanbul'u alarak açtığı tarihi çağın adı nedir?", "answerWord": "YENİÇAĞ", "questionImage": "Fatih_Kelime_8.png"}
       ],
       "penalty_animations": [
         "Karakter kırmızı pul biber çuvalına düşer ve hapşırarak ekrandan roket gibi çıkar",
         "Kapalıçarşı'da bir halı karakterin üzerine yuvarlanır, onu içine hapseder",
-        "Karakter dev bir çifte kavrulmuş lokuma basar, ayağını kurtaramaz",
-        "Simitçiden kaçarken tente üzerinden düşüş",
-        "Vapurdan denize atlama",
-        "Yeni Cami merdivenlerinden kayarak düşme"
+        "Vapurdan denize atlama"
+      ],
+      "puzzles": [
+        {"triggerAfterQuestionIndex": 8, "puzzlePrefabName": "fatih_puzzle_1"},
+        {"triggerAfterQuestionIndex": 18, "puzzlePrefabName": "fatih_puzzle_2"},
+        {"triggerAfterQuestionIndex": 28, "puzzlePrefabName": "fatih_puzzle_3"},
+        {"triggerAfterQuestionIndex": 38, "puzzlePrefabName": "fatih_puzzle_4"}
       ]
     },
     {
       "id": "besiktas",
       "name": "Beşiktaş",
       "description": "Dolmabahçe, Ortaköy, Bebek ve Boğaz kıyısı.",
-      "unlockCost": 50,
+      "unlockCost": 750,
       "is_unlocked": false,
       "questions": [
         {
@@ -467,13 +435,22 @@
       "penalty_animations": [
         "Beşiktaş kartalı karakteri tepesinden yakalayıp stadın ortasına bırakır",
         "Ortaköy'de dev bir kumpir karakterin üzerine devrilir, malzemeler (mısır, zeytin) karakteri kaplar"
-      ]
+      ],"puzzles": [
+    {
+      "triggerAfterQuestionIndex": 5,
+      "puzzlePrefabName": "besiktas_puzzle_1"
+    },
+    {
+      "triggerAfterQuestionIndex": 15,
+      "puzzlePrefabName": "besiktas_puzzle_2"
+    }
+  ]
     },
     {
       "id": "sisli",
       "name": "Şişli",
       "is_unlocked": false,
-      "unlockCost": 50,
+      "unlockCost": 750,
       "questions": [
         {
           "id": 1,
@@ -727,7 +704,7 @@
       "id": "uskudar",
       "name": "Üsküdar",
       "description": "Kız Kulesi, Çamlıca ve Boğaz'ın Anadolu kıyısı.",
-      "unlockCost": 50,
+      "unlockCost": 750,
       "is_unlocked": false,
       "questions": [
         {
@@ -877,13 +854,22 @@
         "Sahilde çay içerken rüzgarla semaver uçar, karakteri kovalar",
         "Çamlıca Tepesi'nde selfie çekerken sırtı dönük şekilde yuvarlanır",
         "Marmaray çıkışında hızla gelen kalabalık karakteri sürükler"
-      ]
+      ],"puzzles": [
+    {
+      "triggerAfterQuestionIndex": 5,
+      "puzzlePrefabName": "uskudar_puzzle_1"
+    },
+    {
+      "triggerAfterQuestionIndex": 15,
+      "puzzlePrefabName": "uskudar_puzzle_2"
+    }
+  ]
     },
     {
       "id": "kadikoy",
       "name": "Kadıköy",
       "description": "Moda, Bağdat Caddesi, Haydarpaşa ve Anadolu Yakası'nın kalbi.",
-      "unlockCost": 50,
+      "unlockCost": 750,
       "is_unlocked": false,
       "questions": [
         {
@@ -1037,13 +1023,22 @@
         "Graffiti yaparken polisten kaçarken düşme",
         "Kitapçının üst rafından kitapların üzerine düşmesi",
         "Kedilerle poz verirken tırmalanma"
-      ]
+      ],"puzzles": [
+    {
+      "triggerAfterQuestionIndex": 5,
+      "puzzlePrefabName": "kadikoy_puzzle_1"
+    },
+    {
+      "triggerAfterQuestionIndex": 15,
+      "puzzlePrefabName": "kadikoy_puzzle_2"
+    }
+  ]
     },
     {
       "id": "new_york",
       "name": "New York",
       "description": "Manhattan, Brooklyn, Times Square ve Big Apple.",
-      "unlockCost": 50,
+      "unlockCost": 750,
       "is_unlocked": false,
       "questions": [
         {
@@ -1198,7 +1193,7 @@
       "id": "london",
       "name": "London",
       "description": "Big Ben, Thames, Buckingham Palace ve klasik İngiliz kültürü.",
-      "unlockCost": 50,
+      "unlockCost": 750,
       "is_unlocked": false,
       "questions": [
         {
@@ -1348,6 +1343,166 @@
         "Piccadilly ışıkları bir anda \"FAIL\" yazıyor",
         "Görünmez Londra sisi seni yok ediyor"
       ]
+    },{
+      "id": "beykoz",
+      "name": "Beykoz",
+      "description": "Anadolu Yakası - Yenilenen bölge.",
+      "unlockCost": 750,
+      "is_unlocked": false,
+      "questions": [
+        {
+          "id": 1,
+          "question": "Beykoz'un en meşhur ve tescilli yiyeceği hangisidir?",
+          "options": ["Yoğurt", "Paça Çorbası", "Kanlıca Yoğurdu", "Beykoz Peyniri"],
+          "answer": 2,
+          "questionImage": "Beykoz_1.png"
+        },
+        {
+          "id": 2,
+          "question": "Beykoz'da yer alan ve cam işçiliğiyle ünlenen bölgenin adı nedir?",
+          "options": ["Paşabahçe", "Çubuklu", "Kanlıca", "Anadoluhisarı"],
+          "answer": 0,
+          "questionImage": "Beykoz_2.png"
+        },
+        {
+          "id": 3,
+          "question": "Boğaz'ın en dar noktasına Yıldırım Bayezid tarafından yaptırılan hisar hangisidir?",
+          "options": ["Rumeli Hisarı", "Anadoluhisarı", "Yoros Kalesi", "Riva Kalesi"],
+          "answer": 1,
+          "questionImage": "Beykoz_3.png"
+        },
+        {
+          "id": 4,
+          "question": "Beykoz'un Karadeniz kıyısında yer alan popüler plaj semti hangisidir?",
+          "options": ["Riva", "Poyrazköy", "Anadolu Kavağı", "Tokatköy"],
+          "answer": 0,
+          "questionImage": "Beykoz_4.png"
+        },
+        {
+          "id": 5,
+          "question": "Boğaz'ın Karadeniz'e açıldığı noktada, tepede yer alan tarihi kale hangisidir?",
+          "options": ["Galata Kalesi", "Yoros Kalesi", "Rumeli Feneri", "Şile Kalesi"],
+          "answer": 1,
+          "questionImage": "Beykoz_5.png"
+        },
+        {
+          "id": 6,
+          "question": "Beykoz'da yer alan ve eskiden \"Eski Kundura Fabrikası\" olan yer bugün ne amaçla kullanılır?",
+          "options": ["AVM", "Dizi/Film Platosu", "Üniversite", "Hastane"],
+          "answer": 1,
+          "questionImage": "Beykoz_6.png"
+        },
+        {
+          "id": 7,
+          "question": "Beykoz sahilinde bulunan ve mimarisiyle dikkat çeken \"Hidiv Kasrı\" hangi ülkenin yöneticisi için yapılmıştır?",
+          "options": ["Suriye", "Mısır", "Fas", "Tunus"],
+          "answer": 1,
+          "questionImage": "Beykoz_7.png"
+        },
+        {
+          "id": 8,
+          "question": "Beykoz'da Polonyalılar tarafından kurulan köyün adı nedir?",
+          "options": ["Polonezköy", "Cumhuriyet Köyü", "Akbaba", "İshaklı"],
+          "answer": 0,
+          "questionImage": "Beykoz_8.png"
+        },
+        {
+          "id": 9,
+          "question": "Yuşa Tepesi'nde bulunan türbenin uzunluğu yaklaşık kaç metredir?",
+          "options": ["5", "10", "17", "30"],
+          "answer": 2,
+          "questionImage": "Beykoz_9.png"
+        },
+        {
+          "id": 10,
+          "question": "Anadoluhisarı hangi dere üzerine kurulmuştur?",
+          "options": ["Göksu Deresi", "Kurbağalıdere", "Kağıthane Deresi", "Ayamama Deresi"],
+          "answer": 0,
+          "questionImage": "Beykoz_10.png"
+        },
+        {
+          "id": 11,
+          "question": "Beykoz'da Boğaz manzarasına hakim en ünlü koru hangisidir?",
+          "options": ["Emirgan", "Mihrabat Korusu", "Fethi Paşa", "Gülhane"],
+          "answer": 1,
+          "questionImage": "Beykoz_11.png"
+        },
+        {
+          "id": 12,
+          "question": "Beykoz'da bulunan ve cam/kristal sanatıyla özdeşleşen müze hangisidir?",
+          "options": ["Deniz Müzesi", "Cam ve Billur Müzesi", "Sabancı Müzesi", "Rahmi Koç Müzesi"],
+          "answer": 1,
+          "questionImage": "Beykoz_12.png"
+        },
+        {
+          "id": 13,
+          "question": "Anadolu Kavağı semti neyi ile meşhurdur?",
+          "options": ["Tekstil", "Balık restoranları", "Mobilya", "Deri işçiliği"],
+          "answer": 1,
+          "questionImage": "Beykoz_13.png"
+        },
+        {
+          "id": 14,
+          "question": "Beykoz'da bulunan Türk-Alman Üniversitesi hangi yıl kurulmuştur?",
+          "options": ["1990", "2000", "2010", "2015"],
+          "answer": 2,
+          "questionImage": "Beykoz_14.png"
+        },
+        {
+          "id": 15,
+          "question": "Beykoz sahilindeki \"Küçüksu Kasrı\" hangi dönemde inşa edilmiştir?",
+          "options": ["Bizans", "Erken Osmanlı", "Tanzimat", "Cumhuriyet"],
+          "answer": 2,
+          "questionImage": "Beykoz_15.png"
+        },
+        {
+          "id": 16,
+          "question": "Hangisi Beykoz sınırları içinde yer alan bir semttir?",
+          "options": ["Çengelköy", "Kandilli", "Çubuklu", "Kuzguncuk"],
+          "answer": 2,
+          "questionImage": "Beykoz_16.png"
+        },
+        {
+          "id": 17,
+          "question": "Beykoz'un futbol takımı olan Beykozspor'un renkleri nedir?",
+          "options": ["Sarı-Lacivert", "Sarı-Siyah", "Yeşil-Beyaz", "Kırmızı-Sarı"],
+          "answer": 1,
+          "questionImage": "Beykoz_17.png"
+        },
+        {
+          "id": 18,
+          "question": "Polonezköy'de her yıl düzenlenen meşhur festivalin adı nedir?",
+          "options": ["Elma Festivali", "Kiraz Festivali", "Arıcılık Festivali", "Kış Festivali"],
+          "answer": 1,
+          "questionImage": "Beykoz_18.png"
+        },
+        {
+          "id": 19,
+          "question": "Beykoz'da yer alan \"Otağtepe\" parkının tam adı nedir?",
+          "options": ["Fatih Korusu", "Kanuni Parkı", "Mihrabat Parkı", "Beykoz Sahili"],
+          "answer": 0,
+          "questionImage": "Beykoz_19.png"
+        },
+        {
+          "id": 20,
+          "question": "Beykoz'da Karadeniz'e dökülen en büyük dere hangisidir?",
+          "options": ["Göksu", "Riva Deresi", "Küçüksu", "Kurbağalıdere"],
+          "answer": 1,
+          "questionImage": "Beykoz_20.png"
+        }
+      ],
+      "penalty_animations": [
+        "Karakter dev bir Kanlıca yoğurdu kasesinin içine gömülür, sadece kafası dışarıda kalır",
+        "Yoros Kalesi'nden atılan hayali bir gülle karakteri Karadeniz'e fırlatır",
+        "Karakter tepeden aşağı sonsuz bir takla atarak iner"
+      ],
+      "puzzles": [
+        {
+          "triggerAfterQuestionIndex": 5,
+          "puzzlePrefabName": "beykoz_puzzle_1"
+        }
+      ]
     }
   ]
+  
 }

@@ -17,7 +17,16 @@ public class MapManager : MonoBehaviour
 
     public DistrictUI[] districtButtons;
     public string selectedDistrictId = ""; 
+    private void Start()
+    {
+        // Oyun ilk açıldığında hafızadan çek, yoksa varsayılan olarak "fatih" yap
+        selectedDistrictId = PlayerPrefs.GetString("SavedDistrict", "fatih");
+        
+        // Veriyi çektikten hemen sonra haritayı o seçime göre güncelle
+        RefreshMap(); 
+    }
 
+    
     private void OnEnable()
     {
         RefreshMap(); 

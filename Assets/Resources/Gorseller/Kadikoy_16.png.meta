@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 40edc9e9d59298744a4490d8d4b70c29
+guid: ffc0a60a42a0ed549a03dc1e91abf345
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1707555187374387386
-    second: Kadikoy_16_0
+      213: -4398217377967528003
+    second: "Kad\u0131koy_16_0"
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -97,7 +97,33 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
     buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -113,7 +139,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Kadikoy_16_0
+      name: "Kad\u0131koy_16_0"
       rect:
         serializedVersion: 2
         x: 0
@@ -128,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ab073d9556472b710800000000000000
-      internalID: 1707555187374387386
+      spriteID: db7ab45f89466f2c0800000000000000
+      internalID: -4398217377967528003
       vertices: []
       indices: 
       edges: []
@@ -148,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Kadikoy_16_0: 1707555187374387386
+      "Kad\u0131koy_16_0": -4398217377967528003
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

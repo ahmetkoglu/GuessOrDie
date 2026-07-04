@@ -1,161 +1,144 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using DG.Tweening;
-using Solo.MOST_IN_ONE;
 using System;
+using DG.Tweening;
 
-/// <summary> Handles individual puzzle piece logic, drag events, and broadcasts its state. </summary>
-public class PuzzlePiece : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IResettable
+[RequireComponent(typeof(CanvasGroup))]
+public class PuzzlePiece : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    [Header("References")]
-    public Transform puzzleBoard;
-    public Transform puzzlePool;
-    public Transform dragArea;
+    public Action<PuzzlePiece> OnPiecePickedUp;
+    public Action<PuzzlePiece> OnPiecePlacedCorrectly;
+    public Action<PuzzlePiece> OnPieceFailed;
 
-    // EVENTS: The piece shouts its state to anyone listening (PuzzleManager)
-    public event Action<PuzzlePiece> OnPiecePickedUp;
-    public event Action<PuzzlePiece> OnPiecePlacedCorrectly;
-    public event Action<PuzzlePiece> OnPieceFailed;
+    public bool IsFake { get; set; } = false;
+    private bool isPlaced = false;
+    
+    private Vector3 originalLocalPosition; // YENİ: Çapalardan bağımsız, kesin lokal pozisyon
+    private Vector2 originalSize; 
+    private Transform originalParent; 
+    private Vector3 dragOffset; // YENİ: Farenin objeyi tam tuttuğu noktayı hafızada tutar
+    
+    private float snapDistance = 150f; 
 
-    [field: SerializeField] public bool IsFake { get; set; } = false;
-    public float snapDistance = 60f; 
+    [HideInInspector] public RectTransform dragArea; 
+    [HideInInspector] public Transform poolArea;     
 
-    private RectTransform rect;
-    private Image image;
-    private Vector3 correctLocalPos; 
-    private PuzzlePieceState currentState = PuzzlePieceState.Idle;
+    private RectTransform rectTransform;
+    private CanvasGroup canvasGroup;
 
-    /// <summary> Initializes core component references. </summary>
-    private void Awake()
+    public void InitPiece()
     {
-        rect = GetComponent<RectTransform>();
-        image = GetComponent<Image>();
-        image.alphaHitTestMinimumThreshold = 0.1f; 
+        if (rectTransform == null) rectTransform = GetComponent<RectTransform>();
+        if (canvasGroup == null) canvasGroup = GetComponent<CanvasGroup>();
+
+        originalParent = transform.parent;
+        
+        // KİLİT 1: Unity'nin kafa karıştırıcı Anchor pozisyonunu değil, GERÇEK 3D lokal pozisyonu alıyoruz.
+        originalLocalPosition = transform.localPosition; 
+        originalSize = rectTransform.sizeDelta; 
+        
+        transform.localScale = Vector3.one;
     }
 
-    /// <summary> Saves the initial anchored position for snapping validation. </summary>
-    public void SaveStartingPosition()
-    {
-        correctLocalPos = transform.localPosition;
-    }
-
-    /// <summary> Triggered when the user begins dragging the piece. </summary>
     public void OnBeginDrag(PointerEventData eventData)
     {
-        currentState = PuzzlePieceState.Dragging;
-        transform.SetParent(dragArea, true); 
-        transform.SetAsLastSibling(); 
+        if (isPlaced) return; 
+
+        OnPiecePickedUp?.Invoke(this);
         
+        transform.SetParent(dragArea, true); 
+        
+        // KİLİT 2: Sürüklerken boyutu zorla eski büyük haline getir ve büyümesini engelle
         transform.localScale = Vector3.one; 
-        image.SetNativeSize(); 
-        SetImageAlpha(0.8f);
-        image.raycastTarget = false; 
-
-        OnPiecePickedUp?.Invoke(this); // Broadcast pickup[cite: 1]
-    }
-
-    /// <summary> Updates the piece position to follow the pointer/finger. </summary>
-    public void OnDrag(PointerEventData eventData)
-    {
+        rectTransform.sizeDelta = originalSize; 
+        
+        canvasGroup.blocksRaycasts = false;  
+        // KİLİT NOKTA: Obje orijinal büyük boyutuna döndükten HEMEN SONRA farenin 
+        // objenin neresinde kaldığını hesaplayıp hafızaya alıyoruz.
         if (RectTransformUtility.ScreenPointToWorldPointInRectangle(
-            dragArea.GetComponent<RectTransform>(), 
+            dragArea, 
             eventData.position, 
             eventData.pressEventCamera, 
             out Vector3 globalMousePos))
         {
-            rect.position = globalMousePos;
+            dragOffset = rectTransform.position - globalMousePos;
         }
     }
 
-    /// <summary> Validates the placement position when the drag ends. </summary>
-    public void OnEndDrag(PointerEventData eventData)
+    public void OnDrag(PointerEventData eventData)
     {
-        SetImageAlpha(1f);
-        image.raycastTarget = true;
-        transform.SetParent(puzzleBoard, true);
+        if (isPlaced) return;
 
-        float distance = Vector3.Distance(transform.localPosition, correctLocalPos);
-
-        if (!IsFake && distance <= snapDistance)
+        // KİLİT 3: Senin eski kodundaki kurşungeçirmez Dünya Koordinatı sistemi! 
+        // Fare neredeyse parçanın merkezini milimetrik olarak oraya taşır, UI kaymalarını sıfırlar.
+        if (RectTransformUtility.ScreenPointToWorldPointInRectangle(
+            dragArea, 
+            eventData.position, 
+            eventData.pressEventCamera, 
+            out Vector3 globalMousePos))
         {
-            HandleCorrectPlacement();
+            rectTransform.position = globalMousePos + dragOffset;
+        }
+    }
+public void OnEndDrag(PointerEventData eventData)
+    {
+        if (isPlaced) return;
+        canvasGroup.blocksRaycasts = true; 
+
+        // Önce kendi asıl Prefab'ının içine geri al
+        if (originalParent != null)
+        {
+            transform.SetParent(originalParent, true); 
+        }
+
+        // Bırakınca boyutların bozulmasını tekrar kilitle
+        transform.localScale = Vector3.one; 
+        rectTransform.sizeDelta = originalSize; 
+
+        // KİLİT 4: Mesafeyi Anchor'lar ile değil, GERÇEK lokal pozisyonlar ile ölç!
+        float distanceToTarget = Vector3.Distance(transform.localPosition, originalLocalPosition);
+
+        if (!IsFake && distanceToTarget <= snapDistance)
+        {
+            // DOĞRU YER: Parçayı kilitliyoruz ki animasyon sırasında oyuncu tekrar tutamasın
+            isPlaced = true;
+            
+            // --- YENİ EKLENEN DOTWEEN ANİMASYONU ---
+            rectTransform.DOKill(); 
+            Sequence snapSeq = DOTween.Sequence();
+
+            // 1. Orijinal lokal pozisyonuna "OutBack" (hafif yaylanarak) gitsin
+            snapSeq.Append(transform.DOLocalMove(originalLocalPosition, 0.25f).SetEase(Ease.OutBack, 1.5f));
+
+            // 2. Yuvaya otururken aynı anda %15 şişsin (Büyüsün)
+            snapSeq.Join(transform.DOScale(new Vector3(1.15f, 1.15f, 1f), 0.15f).SetEase(Ease.OutQuad));
+
+            // 3. Vurma hissi için kendi boyutuna (Vector3.one) geri dönsün
+            snapSeq.Append(transform.DOScale(Vector3.one, 0.1f).SetEase(Ease.InQuad));
+            // ----------------------------------------
+
+            OnPiecePlacedCorrectly?.Invoke(this);
         }
         else
         {
-            HandleWrongPlacement();
+            // YANLIŞ YER: Havuza geri gönder
+            transform.SetParent(poolArea, false);
+            transform.localScale = Vector3.one; 
+            OnPieceFailed?.Invoke(this);
         }
     }
-
-    /// <summary> Animates the piece snapping into the correct slot. </summary>
-    private void HandleCorrectPlacement()
+    // Tahtada baştan beri var olan parçaları sürüklenmeye karşı kilitler
+    public void LockPiece()
     {
-        currentState = PuzzlePieceState.Placed;
-        DisableInteraction();
-
-        transform.DOLocalMove(correctLocalPos, 0.3f).SetEase(Ease.OutBack);
-        transform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBack).OnComplete(() => 
-        {
-            OnPiecePlacedCorrectly?.Invoke(this); // Broadcast success[cite: 1]
-        });
+        isPlaced = true;
+        if (canvasGroup != null) canvasGroup.blocksRaycasts = false;
     }
 
-    /// <summary> Animates the piece returning to the pool upon failure. </summary>
-    private void HandleWrongPlacement()
+    // Sahte parçalar kilitli objelerden kopyalandığı için onların kilidini açar
+    public void UnlockFakePiece()
     {
-        OnPieceFailed?.Invoke(this); // Broadcast failure[cite: 1]
-        DisableInteraction();
-
-        transform.DOMove(puzzlePool.position, 0.3f).SetEase(Ease.OutQuad);
-        transform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutQuad).OnComplete(() => 
-        {
-            transform.SetParent(puzzlePool, false);
-            EnableInteraction(); 
-        });
-    }
-
-    /// <summary> Adjusts the transparency of the piece image. </summary>
-    private void SetImageAlpha(float alpha)
-    {
-        Color c = image.color;
-        c.a = alpha;
-        image.color = c;
-    }
-
-    /// <summary> Disables raycasts and script execution to freeze the piece. </summary>
-    private void DisableInteraction()
-    {
-        enabled = false; 
-        image.raycastTarget = false; 
-        image.SetNativeSize();
-    }
-
-    /// <summary> Re-enables interaction capabilities. </summary>
-    private void EnableInteraction()
-    {
-        enabled = true; 
-        image.raycastTarget = true;
-    }
-
-    /// <summary> Returns the piece to its original board state and clears animations. </summary>
-    public void ResetToOriginalState()
-    {
-        transform.DOKill(); 
-        transform.SetParent(puzzleBoard, false); 
-        transform.localPosition = correctLocalPos; 
-        transform.localScale = Vector3.one; 
-        image.SetNativeSize(); 
-        
-        SetImageAlpha(1f);
-        currentState = PuzzlePieceState.Idle;
-        DisableInteraction(); 
-        IsFake = false;
-    }
-
-    /// <summary> Specifically resets a fake piece back to the pool silently. </summary>
-    public void ResetFake()
-    {
-        transform.DOKill();
-        DisableInteraction();
+        isPlaced = false;
+        if (canvasGroup != null) canvasGroup.blocksRaycasts = true;
     }
 }

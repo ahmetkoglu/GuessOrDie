@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 33416535361e89f4ba58b1b902cfa6c9
+guid: 2e083a99c158c2744a78d6b89f1f9d93
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -24,7 +24,7 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
     flipGreenChannel: 0
-  isReadable: 1
+  isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
@@ -48,7 +48,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -142,10 +142,10 @@ TextureImporter:
       name: piece_r1_c1_0
       rect:
         serializedVersion: 2
-        x: 75
-        y: 15
-        width: 351
-        height: 582
+        x: 91
+        y: 91
+        width: 428
+        height: 428
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
