@@ -15,6 +15,7 @@ public class WordScrambleManager : MonoBehaviour
     public TextMeshProUGUI questionTextUI;
     public Transform slotsContainer;
     public Transform lettersContainer;
+    public UnityEngine.UI.Image questionImageUI;
 
     [Header("Prefablar")]
     public GameObject slotPrefab; // İçinde sadece çerçeve olan boş kare obje
@@ -33,11 +34,52 @@ public class WordScrambleManager : MonoBehaviour
         currentAnswerWord = data.answerWord.ToUpper();
         questionTextUI.text = data.question;
 
+        if (questionImageUI != null)
+        {
+            if (!string.IsNullOrEmpty(data.questionImage))
+            {
+                string cleanImageName = data.questionImage.Replace(".png", "");
+                Sprite loadedSprite = Resources.Load<Sprite>("Gorseller/" + cleanImageName);
+                if (loadedSprite != null)
+                {
+                    questionImageUI.sprite = loadedSprite;
+                    questionImageUI.gameObject.SetActive(true);
+                }
+                else
+                {
+                    questionImageUI.gameObject.SetActive(false);
+                }
+            }
+            else
+            {
+                questionImageUI.gameObject.SetActive(false);
+            }
+        }
+
         // 1. Cevap uzunluğu kadar boş slot (kutu) oluştur
         for (int i = 0; i < currentAnswerWord.Length; i++)
         {
             GameObject slotObj = Instantiate(slotPrefab, slotsContainer);
             activeSlots.Add(slotObj.transform);
+        }
+
+        // KİLİT NOKTA: Harf sayısı çoksa kutuları küçült ki ekrana sığsın
+        Canvas.ForceUpdateCanvases();
+        RectTransform containerRT = slotsContainer.GetComponent<RectTransform>();
+        float slotWidth = slotPrefab.GetComponent<RectTransform>().rect.width;
+        float spacing = slotsContainer.GetComponent<HorizontalLayoutGroup>().spacing;
+        
+        float containerWidth = containerRT.rect.width;
+        float totalWidth = currentAnswerWord.Length * slotWidth + (currentAnswerWord.Length - 1) * spacing;
+        
+        if (totalWidth > containerWidth && containerWidth > 0)
+        {
+            float scale = containerWidth / totalWidth;
+            slotsContainer.localScale = new Vector3(scale, scale, 1f);
+        }
+        else
+        {
+            slotsContainer.localScale = Vector3.one;
         }
 
         // 2. Cevabı harflere böl ve karıştır (Fisher-Yates)
@@ -48,6 +90,14 @@ public class WordScrambleManager : MonoBehaviour
         foreach (char c in scrambledChars)
         {
             GameObject letterObj = Instantiate(letterButtonPrefab, lettersContainer);
+            
+            // Havuzda (Grid) düzgün görünmesi için stretch yapıyoruz
+            RectTransform rt = letterObj.GetComponent<RectTransform>();
+            rt.anchorMin = Vector2.zero;
+            rt.anchorMax = Vector2.one;
+            rt.offsetMin = Vector2.zero;
+            rt.offsetMax = Vector2.zero;
+
             letterObj.GetComponent<LetterButton>().Init(c);
         }
     }
@@ -67,8 +117,17 @@ public class WordScrambleManager : MonoBehaviour
         // KİLİT NOKTA: Grid Layout'un etkisinden kurtarmak için parent'ı slot yapıyoruz
         letter.transform.SetParent(targetSlot);
         
+        // Harfin slotu tam kaplaması için RectTransform ayarlarını yapıyoruz
+        RectTransform rt = letter.GetComponent<RectTransform>();
+        rt.anchorMin = Vector2.zero;
+        rt.anchorMax = Vector2.one;
+        rt.offsetMin = Vector2.zero;
+        rt.offsetMax = Vector2.zero;
+        rt.localScale = Vector3.one;
+
         // DOTween ile "Cuk" oturma animasyonu
-        letter.transform.DOLocalMove(Vector3.zero, 0.25f).SetEase(Ease.OutBack);
+        // Not: Stretched olduğu için LocalMove(zero) zaten merkezler
+        letter.transform.localScale = Vector3.zero; // Başta küçük olsun ki büyüme animasyonu görünsün
         letter.transform.DOScale(new Vector3(1.1f, 1.1f, 1f), 0.15f).OnComplete(() =>
         {
             letter.transform.DOScale(Vector3.one, 0.1f);
@@ -127,6 +186,7 @@ public class WordScrambleManager : MonoBehaviour
         foreach (Transform child in lettersContainer) Destroy(child.gameObject);
         activeSlots.Clear();
         placedLetters.Clear();
+        slotsContainer.localScale = Vector3.one;
     }
 
     private void ShuffleList(List<char> list)

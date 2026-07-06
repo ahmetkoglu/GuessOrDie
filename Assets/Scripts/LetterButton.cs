@@ -34,6 +34,14 @@ public class LetterButton : MonoBehaviour
     {
         button.interactable = true;
         transform.SetParent(originalParent);
+        
+        // Havuza döndüğünde Grid Layout'a uyum sağlaması için stretch ayarlarını koruyoruz
+        RectTransform rt = GetComponent<RectTransform>();
+        rt.anchorMin = Vector2.zero;
+        rt.anchorMax = Vector2.one;
+        rt.offsetMin = Vector2.zero;
+        rt.offsetMax = Vector2.zero;
+
         transform.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutBack);
     }
 }

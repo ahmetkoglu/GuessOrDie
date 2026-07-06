@@ -1,0 +1,38 @@
+{
+    "asset": "20165056ab11dfe45a596a443749d2ef",
+    "fileName": "019f2d0e-d0b1-7436-b0ec-2075e7361732.png",
+    "prompt": "An oil painting of the ancient stone Medusa head column base inside the dark, water-filled Basilica Cistern (Yerebatan Sarnıcı) with mysterious red-glowing ambient lights, warm shadows, painterly texture. Hand-painted historical aesthetic matching reference image style.",
+    "negativePrompt": "",
+    "model": "gemini-3.1-flash",
+    "modelName": "Gemini 3.1 Nano Banana 2",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "refinementMode": "Generation",
+    "pixelateTargetSize": 0,
+    "pixelateKeepImageSize": false,
+    "pixelatePixelBlockSize": 0,
+    "pixelatePixelGridSize": 0,
+    "pixelateMode": 0,
+    "pixelateOutlineThickness": 0,
+    "doodles": {
+        "m_Items": [
+            {
+                "doodleReferenceType": 7,
+                "doodle": [],
+                "label": "Image",
+                "strength": 0.25,
+                "invertStrength": false,
+                "assetReferenceGuid": "df17885aeb63f7d4296c303892703996",
+                "unlabeledIndex": -1
+            }
+        ]
+    },
+    "upscaleFactor": 0,
+    "dimensions": {
+        "width": 1024,
+        "height": 1024
+    },
+    "spriteSheet": false,
+    "duration": 0.0
+}

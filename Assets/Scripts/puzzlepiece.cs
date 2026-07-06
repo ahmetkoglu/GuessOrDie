@@ -49,8 +49,13 @@ public class PuzzlePiece : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         
         transform.SetParent(dragArea, true); 
         
-        // KİLİT 2: Sürüklerken boyutu zorla eski büyük haline getir ve büyümesini engelle
-        transform.localScale = Vector3.one; 
+        // KİLİT 2: Sürüklerken boyutu board'un ölçeğiyle eşitleyerek büyümesini engelle
+        Vector3 boardScale = Vector3.one;
+        if (PuzzleManager.Instance != null && PuzzleManager.Instance.puzzleBoard != null)
+        {
+            boardScale = PuzzleManager.Instance.puzzleBoard.localScale;
+        }
+        transform.localScale = boardScale; 
         rectTransform.sizeDelta = originalSize; 
         
         canvasGroup.blocksRaycasts = false;  

@@ -49,8 +49,24 @@ public class UIManager : MonoBehaviour
     public GameObject questionPanel;
     public GameObject mapPanel; 
     public GameObject puzzlePanel; // YENİ EKLENDİ
+    
+    [Header("Ayarlar Paneli")]
+    public GameObject settingsPanel;
+    public UnityEngine.UI.Slider volumeSlider;
+    public TMPro.TextMeshProUGUI volumePercentText;
+    public UnityEngine.UI.Toggle muteToggle;
+    public UnityEngine.UI.Toggle vibrationToggle;
+
+    [Header("Can Bitti Pop-up Sistemi")]
+    public GameObject outOfLivesPopupPanel;
+
     [Header("Kelime Oyunu Paneli")]
     public GameObject wordScramblePanel;
+
+    [Header("Kelime Oyunu Süre/Sayaç Elemanları")]
+    public Image scrambleTimerFillImage;     
+    public TextMeshProUGUI scrambleTimerTextUI; 
+    public TextMeshProUGUI scrambleQuestionCountTextUI;
 
     [Header("Soru Ekranı UI Objeleri")]
     public TextMeshProUGUI questionTextUI;
@@ -61,7 +77,7 @@ public class UIManager : MonoBehaviour
     
     [Header("Can Sistemi")]
     public TextMeshProUGUI livesTextUI;
-    public int maxLives = 3;
+    public int maxLives = 5;
     private int currentLives;
 
     [Header("Süre Sistemi")]
@@ -85,6 +101,10 @@ public class UIManager : MonoBehaviour
     private bool isAnswering = false;
     private int currentlyDisplayedCoins = -1;
     private GameState currentGameState = GameState.MainMenu;
+    private Coroutine returnToMenuCoroutine;
+    private TMPro.TextMeshProUGUI puzzleLivesTextUI;
+    private UnityEngine.UI.Image puzzleTimerFillImage;
+    private TMPro.TextMeshProUGUI puzzleTimerTextUI;
 
     /// <summary> Subscribes to the global coin update event. </summary>
     private void OnEnable() => DataManager.OnCoinsChanged += HandleCoinsChanged;
@@ -99,6 +119,16 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         if (Instance == null) Instance = this;
+
+        // Ensure resultPanel is a child of Canvas so it's not hidden by its parent panels
+        if (resultPanel != null && resultPanel.transform.parent != null && resultPanel.transform.parent.name != "Canvas")
+        {
+            Transform canvasTrans = GetComponentInParent<Canvas>()?.transform;
+            if (canvasTrans != null)
+            {
+                resultPanel.transform.SetParent(canvasTrans, false);
+            }
+        }
     }
 
     /// <summary> Initializes the UI state and saves original button positions. </summary>
@@ -116,6 +146,193 @@ public class UIManager : MonoBehaviour
             originalOptionPositions[i] = btnRect.anchoredPosition;
         }
         StartCoroutine(FlickerPanelsForDataLoad());
+        
+        InitializeSettings();
+    }
+
+    private void InitializeSettings()
+    {
+        // Find Settings Panel and elements automatically if null
+        if (settingsPanel == null)
+        {
+            Transform canvasTrans = GetComponentInParent<Canvas>()?.transform;
+            if (canvasTrans != null)
+            {
+                Transform spTrans = canvasTrans.Find("SettingsPanel");
+                if (spTrans != null)
+                {
+                    settingsPanel = spTrans.gameObject;
+                    volumeSlider = spTrans.Find("VolumeSection/VolumeSlider")?.GetComponent<UnityEngine.UI.Slider>();
+                    volumePercentText = spTrans.Find("VolumeSection/PercentText")?.GetComponent<TMPro.TextMeshProUGUI>();
+                    muteToggle = spTrans.Find("VolumeSection/MuteToggle")?.GetComponent<UnityEngine.UI.Toggle>();
+                    vibrationToggle = spTrans.Find("VibrationSection/VibrationToggle")?.GetComponent<UnityEngine.UI.Toggle>();
+                }
+            }
+        }
+
+        // Apply saved values to systems
+        float savedVolume = PlayerPrefs.GetFloat("SavedVolume", 1.0f);
+        bool savedMute = PlayerPrefs.GetInt("SavedMute", 0) == 1;
+        bool savedHaptics = Solo.MOST_IN_ONE.MOST_HapticFeedback.HapticsEnabled;
+
+        AudioListener.volume = savedMute ? 0f : savedVolume;
+        Solo.MOST_IN_ONE.MOST_HapticFeedback.HapticsEnabled = savedHaptics;
+
+        // Apply saved values to UI controls
+        if (volumeSlider != null)
+        {
+            volumeSlider.value = savedVolume;
+            volumeSlider.onValueChanged.RemoveAllListeners();
+            volumeSlider.onValueChanged.AddListener(OnVolumeChanged);
+        }
+        if (muteToggle != null)
+        {
+            muteToggle.isOn = savedMute;
+            muteToggle.onValueChanged.RemoveAllListeners();
+            muteToggle.onValueChanged.AddListener(OnMuteToggled);
+        }
+        if (vibrationToggle != null)
+        {
+            vibrationToggle.isOn = savedHaptics;
+            vibrationToggle.onValueChanged.RemoveAllListeners();
+            vibrationToggle.onValueChanged.AddListener(OnVibrationToggled);
+        }
+        if (volumePercentText != null)
+        {
+            volumePercentText.text = Mathf.RoundToInt(savedVolume * 100) + "%";
+        }
+
+        // Settings Button in Top Panel
+        Button settingsBtn = GameObject.Find("Canvas/TopPanel/settings")?.GetComponent<Button>();
+        if (settingsBtn == null) settingsBtn = GameObject.Find("TopPanel/settings")?.GetComponent<Button>();
+        if (settingsBtn != null)
+        {
+            settingsBtn.onClick.RemoveAllListeners();
+            settingsBtn.onClick.AddListener(OpenSettingsPanel);
+        }
+
+        // Close Button in Settings Panel
+        Button spCloseBtn = settingsPanel?.transform.Find("CloseButton")?.GetComponent<Button>();
+        if (spCloseBtn != null)
+        {
+            spCloseBtn.onClick.RemoveAllListeners();
+            spCloseBtn.onClick.AddListener(CloseSettingsPanel);
+        }
+
+        // Find Puzzle Panel elements automatically if assigned
+        if (puzzlePanel != null)
+        {
+            puzzleLivesTextUI = puzzlePanel.transform.Find("lives (1)/livestext")?.GetComponent<TMPro.TextMeshProUGUI>();
+            puzzleTimerFillImage = puzzlePanel.transform.Find("TimerBackground/TimerFill")?.GetComponent<UnityEngine.UI.Image>();
+            puzzleTimerTextUI = puzzlePanel.transform.Find("TimerBackground/TimerFill/TimerText")?.GetComponent<TMPro.TextMeshProUGUI>();
+        }
+
+        // Find Out of Lives Popup Panel automatically if null
+        if (outOfLivesPopupPanel == null)
+        {
+            Transform canvasTrans = GetComponentInParent<Canvas>()?.transform;
+            if (canvasTrans != null)
+            {
+                Transform oolTrans = canvasTrans.Find("OutOfLivesPopup");
+                if (oolTrans != null)
+                {
+                    outOfLivesPopupPanel = oolTrans.gameObject;
+                    
+                    Button yesBtn = oolTrans.Find("Yes")?.GetComponent<Button>();
+                    if (yesBtn != null)
+                    {
+                        yesBtn.onClick.RemoveAllListeners();
+                        yesBtn.onClick.AddListener(BuyLivesAndContinue);
+                    }
+                    Button noBtn = oolTrans.Find("no")?.GetComponent<Button>();
+                    if (noBtn != null)
+                    {
+                        noBtn.onClick.RemoveAllListeners();
+                        noBtn.onClick.AddListener(DeclineOutOfLives);
+                    }
+                }
+            }
+        }
+    }
+
+    public void OpenSettingsPanel()
+    {
+        if (settingsPanel == null) return;
+        
+        float savedVolume = PlayerPrefs.GetFloat("SavedVolume", 1.0f);
+        bool savedMute = PlayerPrefs.GetInt("SavedMute", 0) == 1;
+        bool savedHaptics = Solo.MOST_IN_ONE.MOST_HapticFeedback.HapticsEnabled;
+
+        if (volumeSlider != null)
+        {
+            volumeSlider.onValueChanged.RemoveAllListeners();
+            volumeSlider.value = savedVolume;
+            volumeSlider.onValueChanged.AddListener(OnVolumeChanged);
+        }
+        if (muteToggle != null)
+        {
+            muteToggle.onValueChanged.RemoveAllListeners();
+            muteToggle.isOn = savedMute;
+            muteToggle.onValueChanged.AddListener(OnMuteToggled);
+        }
+        if (vibrationToggle != null)
+        {
+            vibrationToggle.onValueChanged.RemoveAllListeners();
+            vibrationToggle.isOn = savedHaptics;
+            vibrationToggle.onValueChanged.AddListener(OnVibrationToggled);
+        }
+        if (volumePercentText != null)
+        {
+            volumePercentText.text = Mathf.RoundToInt(savedVolume * 100) + "%";
+        }
+
+        settingsPanel.SetActive(true);
+        settingsPanel.transform.localScale = Vector3.zero;
+        settingsPanel.transform.DOScale(1f, 0.4f).SetEase(Ease.OutBack).SetUpdate(true);
+        
+        Solo.MOST_IN_ONE.MOST_HapticFeedback.Generate(Solo.MOST_IN_ONE.MOST_HapticFeedback.HapticTypes.Selection);
+    }
+
+    public void CloseSettingsPanel()
+    {
+        if (settingsPanel == null) return;
+        
+        Solo.MOST_IN_ONE.MOST_HapticFeedback.Generate(Solo.MOST_IN_ONE.MOST_HapticFeedback.HapticTypes.Selection);
+        
+        settingsPanel.transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).SetUpdate(true).OnComplete(() =>
+        {
+            settingsPanel.SetActive(false);
+        });
+    }
+
+    private void OnVolumeChanged(float value)
+    {
+        if (muteToggle != null && !muteToggle.isOn)
+        {
+            AudioListener.volume = value;
+        }
+        if (volumePercentText != null)
+        {
+            volumePercentText.text = Mathf.RoundToInt(value * 100) + "%";
+        }
+        PlayerPrefs.SetFloat("SavedVolume", value);
+        PlayerPrefs.Save();
+    }
+
+    private void OnMuteToggled(bool isMuted)
+    {
+        AudioListener.volume = isMuted ? 0f : (volumeSlider != null ? volumeSlider.value : 1.0f);
+        PlayerPrefs.SetInt("SavedMute", isMuted ? 1 : 0);
+        PlayerPrefs.Save();
+        
+        Solo.MOST_IN_ONE.MOST_HapticFeedback.Generate(Solo.MOST_IN_ONE.MOST_HapticFeedback.HapticTypes.Selection);
+    }
+
+    private void OnVibrationToggled(bool isEnabled)
+    {
+        Solo.MOST_IN_ONE.MOST_HapticFeedback.HapticsEnabled = isEnabled;
+        
+        Solo.MOST_IN_ONE.MOST_HapticFeedback.Generate(Solo.MOST_IN_ONE.MOST_HapticFeedback.HapticTypes.Selection);
     }
 
     /// <summary> Event callback for coin changes. </summary>
@@ -194,29 +411,41 @@ public class UIManager : MonoBehaviour
             {
                 questionCountTextUI.text = $"Soru: {currentQuestionIndex + 1} / {activeQuestions.Count}";
             }
+            if (scrambleQuestionCountTextUI != null)
+            {
+                scrambleQuestionCountTextUI.text = $"Soru: {currentQuestionIndex + 1} / {activeQuestions.Count}";
+            }
             // YENİ: Soru tipine göre ilgili paneli açan "Switch-Case" yönlendiricisi
             switch (currentQuestion.type)
             {
                 case QuestionType.StandardQuiz:
                     currentGameState = GameState.Playing; 
-                    questionPanel.SetActive(true);
-                    if (wordScramblePanel != null) wordScramblePanel.SetActive(false);
-                    
-                    // Eski uzun kodları bu metodun içine hapsettik
-                    LoadStandardQuizUI(); 
+                    if (wordScramblePanel != null && wordScramblePanel.activeSelf)
+                    {
+                        LoadStandardQuizUI();
+                        TransitionPanels(wordScramblePanel, questionPanel, null);
+                    }
+                    else
+                    {
+                        questionPanel.SetActive(true);
+                        if (wordScramblePanel != null) wordScramblePanel.SetActive(false);
+                        LoadStandardQuizUI();
+                    }
                     break;
                     
                 case QuestionType.WordScramble:
                     currentGameState = GameState.WordScramble; 
-                    questionPanel.SetActive(false);
-                    if (wordScramblePanel != null) wordScramblePanel.SetActive(true);
-                    
-                    // YENİ: Süreyi Kelime oyunu için de başlatıyoruz!
-                    currentTime = timePerQuestion;
-                    timerTextUI.text = currentTime.ToString(); 
-                    isTimerRunning = true; 
-                    
-                    WordScrambleManager.Instance.LoadWordPuzzle(currentQuestion);
+                    if (questionPanel.activeSelf)
+                    {
+                        LoadWordScrambleUI();
+                        TransitionPanels(questionPanel, wordScramblePanel, null);
+                    }
+                    else
+                    {
+                        questionPanel.SetActive(false);
+                        if (wordScramblePanel != null) wordScramblePanel.SetActive(true);
+                        LoadWordScrambleUI();
+                    }
                     break;
             }
         }
@@ -224,8 +453,83 @@ public class UIManager : MonoBehaviour
         {
             ShowResult(true);
             isTimerRunning = false; 
-            StartCoroutine(WaitAndReturnToMenu(15f));
         }
+    }
+
+    private void LoadWordScrambleUI()
+    {
+        // YENİ: Süreyi Kelime oyunu için de başlatıyoruz!
+        currentTime = timePerQuestion;
+        if (timerTextUI != null) timerTextUI.text = currentTime.ToString(); 
+        if (scrambleTimerTextUI != null) scrambleTimerTextUI.text = currentTime.ToString(); 
+        if (timerFillImage != null) timerFillImage.fillAmount = 1f;
+        if (scrambleTimerFillImage != null) scrambleTimerFillImage.fillAmount = 1f;
+        isTimerRunning = true; 
+
+        // Fix: Ensure WordScrambleManager instance exists even if panel was inactive
+        WordScrambleManager manager = WordScrambleManager.Instance;
+        if (manager == null && wordScramblePanel != null)
+        {
+            manager = wordScramblePanel.GetComponent<WordScrambleManager>();
+        }
+
+        if (manager != null)
+        {
+            manager.LoadWordPuzzle(currentQuestion);
+        }
+    }
+
+    private void TransitionPanels(GameObject fromPanel, GameObject toPanel, System.Action onComplete)
+    {
+        if (fromPanel == null || toPanel == null)
+        {
+            if (fromPanel != null) fromPanel.SetActive(false);
+            if (toPanel != null) toPanel.SetActive(true);
+            onComplete?.Invoke();
+            return;
+        }
+
+        CanvasGroup fromGroup = GetOrAddCanvasGroup(fromPanel);
+        CanvasGroup toGroup = GetOrAddCanvasGroup(toPanel);
+
+        // Ensure toPanel is active but transparent initially
+        toPanel.SetActive(true);
+        toGroup.alpha = 0f;
+        
+        // Slightly scale down fromPanel and scale up toPanel for a gorgeous Zoom/Fade transition
+        RectTransform fromRect = fromPanel.GetComponent<RectTransform>();
+        RectTransform toRect = toPanel.GetComponent<RectTransform>();
+
+        // Set initial states
+        fromGroup.alpha = 1f;
+        fromRect.localScale = Vector3.one;
+        toRect.localScale = new Vector3(0.9f, 0.9f, 1f);
+
+        // Slide/Fade/Scale animation
+        fromGroup.DOKill();
+        toGroup.DOKill();
+        fromRect.DOKill();
+        toRect.DOKill();
+
+        Sequence seq = DOTween.Sequence();
+        seq.SetUpdate(true); // Run even if timeScale is paused
+        
+        // Animate fromPanel out
+        seq.Join(fromGroup.DOFade(0f, 0.4f).SetEase(Ease.OutQuad));
+        seq.Join(fromRect.DOScale(0.95f, 0.4f).SetEase(Ease.OutQuad));
+        
+        // Animate toPanel in
+        seq.Join(toGroup.DOFade(1f, 0.4f).SetEase(Ease.OutQuad));
+        seq.Join(toRect.DOScale(1f, 0.4f).SetEase(Ease.OutBack));
+
+        seq.OnComplete(() =>
+        {
+            fromPanel.SetActive(false);
+            // Reset scales for future use
+            fromRect.localScale = Vector3.one;
+            fromGroup.alpha = 1f;
+            onComplete?.Invoke();
+        });
     }
 
     /// <summary> Klasik 4 şıklı quiz ekranını ve animasyonlarını hazırlar. </summary>
@@ -236,6 +540,10 @@ public class UIManager : MonoBehaviour
         if (questionCountTextUI != null)
         {
             questionCountTextUI.text = $"Soru: {currentQuestionIndex + 1} / {activeQuestions.Count}";
+        }
+        if (scrambleQuestionCountTextUI != null)
+        {
+            scrambleQuestionCountTextUI.text = $"Soru: {currentQuestionIndex + 1} / {activeQuestions.Count}";
         }
         
         if (!string.IsNullOrEmpty(currentQuestion.questionImage))
@@ -283,7 +591,10 @@ public class UIManager : MonoBehaviour
         }
 
         currentTime = timePerQuestion;
-        timerTextUI.text = currentTime.ToString(); 
+        if (timerTextUI != null) timerTextUI.text = currentTime.ToString(); 
+        if (scrambleTimerTextUI != null) scrambleTimerTextUI.text = currentTime.ToString(); 
+        if (timerFillImage != null) timerFillImage.fillAmount = 1f;
+        if (scrambleTimerFillImage != null) scrambleTimerFillImage.fillAmount = 1f;
         isTimerRunning = true;
     }
     /// <summary> WordScrambleManager'dan çağrılır. Başarı durumunda sıradaki soruyu yükler. </summary>
@@ -303,21 +614,32 @@ public class UIManager : MonoBehaviour
     /// <summary> Handles countdown logic per frame. </summary>
     private void Update()
     {
-        // KİLİT NOKTA: Artık hem Playing (Quiz) hem de WordScramble durumunda süre akacak
-        if (currentGameState != GameState.Playing && currentGameState != GameState.WordScramble) return;
+        // KİLİT NOKTA: Artık Playing (Quiz), WordScramble ve Puzzle durumunda süre akacak
+        if (currentGameState != GameState.Playing && currentGameState != GameState.WordScramble && currentGameState != GameState.Puzzle) return;
         
         if (isTimerRunning)
         {
             currentTime -= Time.deltaTime;
-            timerFillImage.fillAmount = currentTime / timePerQuestion;
-            timerTextUI.text = Mathf.CeilToInt(currentTime).ToString();
+            
+            if (timerFillImage != null) timerFillImage.fillAmount = currentTime / timePerQuestion;
+            if (timerTextUI != null) timerTextUI.text = Mathf.CeilToInt(currentTime).ToString();
+
+            if (scrambleTimerFillImage != null) scrambleTimerFillImage.fillAmount = currentTime / timePerQuestion;
+            if (scrambleTimerTextUI != null) scrambleTimerTextUI.text = Mathf.CeilToInt(currentTime).ToString();
+
+            if (puzzleTimerFillImage != null) puzzleTimerFillImage.fillAmount = currentTime / timePerQuestion;
+            if (puzzleTimerTextUI != null) puzzleTimerTextUI.text = Mathf.CeilToInt(currentTime).ToString();
 
             if (currentTime <= 0)
             {
                 isTimerRunning = false;
                 currentTime = 0;
-                timerFillImage.fillAmount = 0;
-                timerTextUI.text = "0"; 
+                if (timerFillImage != null) timerFillImage.fillAmount = 0;
+                if (timerTextUI != null) timerTextUI.text = "0"; 
+                if (scrambleTimerFillImage != null) scrambleTimerFillImage.fillAmount = 0;
+                if (scrambleTimerTextUI != null) scrambleTimerTextUI.text = "0"; 
+                if (puzzleTimerFillImage != null) puzzleTimerFillImage.fillAmount = 0;
+                if (puzzleTimerTextUI != null) puzzleTimerTextUI.text = "0"; 
                 OnTimeRanOut(); 
             }
         }
@@ -390,12 +712,80 @@ public class UIManager : MonoBehaviour
 
         if (currentLives <= 0)
         {
-            ShowResult(false);
-            StartCoroutine(WaitAndReturnToMenu(15f));
+            if (outOfLivesPopupPanel != null)
+            {
+                OpenOutOfLivesPopup();
+            }
+            else
+            {
+                ShowResult(false);
+            }
         }
         else
         {
-            StartCoroutine(WaitAndLoadNextQuestion(1.5f)); 
+            if (currentGameState == GameState.Puzzle)
+            {
+                HidePuzzlePanel();
+            }
+            else
+            {
+                StartCoroutine(WaitAndLoadNextQuestion(1.5f)); 
+            }
+        }
+    }
+
+    public void OpenOutOfLivesPopup()
+    {
+        isTimerRunning = false; // Pause timer!
+        if (outOfLivesPopupPanel != null)
+        {
+            outOfLivesPopupPanel.SetActive(true);
+            outOfLivesPopupPanel.transform.localScale = Vector3.zero;
+            outOfLivesPopupPanel.transform.DOScale(1f, 0.4f).SetEase(Ease.OutBack).SetUpdate(true);
+            MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.Selection);
+        }
+    }
+
+    public void BuyLivesAndContinue()
+    {
+        int cost = 150; // Buy 5 lives for 150 coins
+        if (DataManager.Instance != null && DataManager.Instance.TotalCoins >= cost)
+        {
+            MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.HeavyImpact);
+            DataManager.Instance.AddCoins(-cost);
+            currentLives = maxLives;
+            UpdateLivesUI();
+
+            if (outOfLivesPopupPanel != null)
+            {
+                outOfLivesPopupPanel.transform.DOScale(0f, 0.2f).SetEase(Ease.InBack).OnComplete(() =>
+                {
+                    outOfLivesPopupPanel.SetActive(false);
+                    isTimerRunning = true;
+                    isAnswering = false;
+                });
+            }
+        }
+        else
+        {
+            MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.Failure);
+            if (outOfLivesPopupPanel != null)
+            {
+                outOfLivesPopupPanel.transform.DOShakePosition(0.3f, new Vector3(15f, 0, 0), 10, 0, false, true);
+            }
+        }
+    }
+
+    public void DeclineOutOfLives()
+    {
+        MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.Selection);
+        if (outOfLivesPopupPanel != null)
+        {
+            outOfLivesPopupPanel.transform.DOScale(0f, 0.2f).SetEase(Ease.InBack).OnComplete(() =>
+            {
+                outOfLivesPopupPanel.SetActive(false);
+                ReturnToMainMenu();
+            });
         }
     }
 
@@ -403,6 +793,10 @@ public class UIManager : MonoBehaviour
     private void UpdateLivesUI()
     {
         livesTextUI.text = currentLives.ToString();
+        if (puzzleLivesTextUI != null)
+        {
+            puzzleLivesTextUI.text = currentLives.ToString();
+        }
     }
 
     /// <summary> Animates rolling numbers for the coin display based on an event. </summary>
@@ -461,6 +855,7 @@ public class UIManager : MonoBehaviour
     private IEnumerator WaitAndReturnToMenu(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
+        returnToMenuCoroutine = null;
         ReturnToMainMenu();
     }
 
@@ -520,11 +915,18 @@ public class UIManager : MonoBehaviour
                 pendingDistrictToUnlock.is_unlocked = true;
                 DataManager.Instance.SaveProgress();
                 
-                if (mapManager != null) mapManager.RefreshMap();
+                if (mapManager != null)
+                {
+                    mapManager.selectedDistrictId = pendingDistrictToUnlock.id;
+                    PlayerPrefs.SetString("SavedDistrict", pendingDistrictToUnlock.id);
+                    PlayerPrefs.Save();
+                    mapManager.RefreshMap();
+                }
 
                 popupBox.transform.DOScale(0f, 0.2f).SetEase(Ease.InBack).OnComplete(() => 
                 {
                     unlockPopupPanel.SetActive(false); 
+                    pendingDistrictToUnlock = null;
                 });
             }
             else
@@ -610,8 +1012,17 @@ public class UIManager : MonoBehaviour
 
             currentTime += 15f;
 
-            timerTextUI.transform.DOPunchScale(new Vector3(0.4f, 0.4f, 0), 0.5f, 5, 1);
-            timerTextUI.DOColor(Color.green, 0.15f).OnComplete(() => timerTextUI.DOColor(Color.white, 0.3f));
+            if (timerTextUI != null)
+            {
+                timerTextUI.transform.DOPunchScale(new Vector3(0.4f, 0.4f, 0), 0.5f, 5, 1);
+                timerTextUI.DOColor(Color.green, 0.15f).OnComplete(() => timerTextUI.DOColor(Color.white, 0.3f));
+            }
+
+            if (scrambleTimerTextUI != null)
+            {
+                scrambleTimerTextUI.transform.DOPunchScale(new Vector3(0.4f, 0.4f, 0), 0.5f, 5, 1);
+                scrambleTimerTextUI.DOColor(Color.green, 0.15f).OnComplete(() => scrambleTimerTextUI.DOColor(Color.white, 0.3f));
+            }
         }
         else
         {
@@ -623,6 +1034,12 @@ public class UIManager : MonoBehaviour
     /// <summary> Safely resets state, forcefully closes ALL panels, and transitions to Main Menu. </summary>
     public void ReturnToMainMenu()
     {
+        if (returnToMenuCoroutine != null)
+        {
+            StopCoroutine(returnToMenuCoroutine);
+            returnToMenuCoroutine = null;
+        }
+
         // YENİ: WordScramble durumu da kayıt işlemine eklendi
         if ((currentGameState == GameState.Playing || currentGameState == GameState.Puzzle || currentGameState == GameState.WordScramble) && currentDistrict != null)
         {
@@ -653,14 +1070,24 @@ public class UIManager : MonoBehaviour
         PlayerPrefs.SetInt("HasSavedSession", 0);
         PlayerPrefs.Save();
         currentGameState = GameState.Result;
-        resultPanel.SetActive(true);
         
-        resultPanel.transform.localScale = Vector3.zero;
-        resultPanel.transform.DOScale(1f, 0.4f).SetEase(Ease.OutBack);
+        if (resultPanel != null)
+        {
+            resultPanel.SetActive(true);
+            resultPanel.transform.SetAsLastSibling();
+            
+            resultPanel.transform.localScale = Vector3.zero;
+            resultPanel.transform.DOScale(1f, 0.4f).SetEase(Ease.OutBack);
+
+            Image panelImage = resultPanel.GetComponent<Image>();
+            if (panelImage != null)
+            {
+                panelImage.sprite = isWin ? successSprite : failureSprite;
+            }
+        }
 
         if (isWin)
         {
-            resultPanel.GetComponent<Image>().sprite = successSprite;
             MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.Success);
             if (sfxSource != null && quizCompleteSound != null)
             {
@@ -669,7 +1096,6 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            resultPanel.GetComponent<Image>().sprite = failureSprite;
             MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.Failure);
         }
     }
@@ -678,6 +1104,12 @@ public class UIManager : MonoBehaviour
     public void CloseResultPanel()
     {
         MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.Selection);
+
+        if (returnToMenuCoroutine != null)
+        {
+            StopCoroutine(returnToMenuCoroutine);
+            returnToMenuCoroutine = null;
+        }
 
         resultPanel.transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).OnComplete(() => {
             resultPanel.SetActive(false);
@@ -715,6 +1147,17 @@ public class UIManager : MonoBehaviour
             
             // 2. Puzzle Paneli Fade In (Belirme)
             pGroup.DOFade(1f, 0.4f);
+
+            if (puzzleLivesTextUI != null)
+            {
+                puzzleLivesTextUI.text = currentLives.ToString();
+            }
+
+            // Initialize timer for puzzle
+            currentTime = timePerQuestion;
+            if (puzzleTimerTextUI != null) puzzleTimerTextUI.text = currentTime.ToString();
+            if (puzzleTimerFillImage != null) puzzleTimerFillImage.fillAmount = 1f;
+            isTimerRunning = true;
             
             MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.MediumImpact);
         }
@@ -724,6 +1167,7 @@ public class UIManager : MonoBehaviour
     public void HidePuzzlePanel()
     {
         currentGameState = GameState.Playing;
+        isTimerRunning = false;
         
         if (questionPanel != null && puzzlePanel != null) 
         {
@@ -746,6 +1190,8 @@ public class UIManager : MonoBehaviour
             
             // 2. Soru Paneli Fade In
             qGroup.DOFade(1f, 0.4f);
+
+            LoadQuestion();
         }
     }
 
