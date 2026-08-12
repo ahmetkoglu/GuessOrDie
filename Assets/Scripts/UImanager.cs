@@ -60,6 +60,9 @@ public class UIManager : MonoBehaviour
     [Header("Can Bitti Pop-up Sistemi")]
     public GameObject outOfLivesPopupPanel;
 
+    [Header("Süre Bitti Pop-up Sistemi")]
+    public GameObject timeOutPopupPanel;
+
     [Header("Kelime Oyunu Paneli")]
     public GameObject wordScramblePanel;
 
@@ -99,6 +102,7 @@ public class UIManager : MonoBehaviour
     private DistrictData currentDistrict;
     private int currentQuestionIndex;
     private bool isAnswering = false;
+    private bool isWaitingForTimeOutDecision = false;
     private int currentlyDisplayedCoins = -1;
     private GameState currentGameState = GameState.MainMenu;
     private Coroutine returnToMenuCoroutine;
@@ -253,6 +257,38 @@ public class UIManager : MonoBehaviour
                 }
             }
         }
+
+        if (timeOutPopupPanel == null)
+        {
+            Transform canvasTrans = GetComponentInParent<Canvas>()?.transform;
+            if (canvasTrans != null)
+            {
+                Transform timeoutTrans = canvasTrans.Find("TimeOutPopup");
+                if (timeoutTrans != null)
+                {
+                    timeOutPopupPanel = timeoutTrans.gameObject;
+                }
+            }
+        }
+
+        if (timeOutPopupPanel != null)
+        {
+            Button continueBtn = timeOutPopupPanel.transform.Find("Yes")?.GetComponent<Button>();
+            if (continueBtn != null)
+            {
+                continueBtn.onClick.RemoveAllListeners();
+                continueBtn.onClick.AddListener(ContinueAfterTimeOut);
+            }
+
+            Button closeBtn = timeOutPopupPanel.transform.Find("no")?.GetComponent<Button>();
+            if (closeBtn != null)
+            {
+                closeBtn.onClick.RemoveAllListeners();
+                closeBtn.onClick.AddListener(CloseTimeOutPopupToMenu);
+            }
+        }
+
+        HideTimeOutPopup();
     }
 
     public void OpenSettingsPanel()
@@ -402,6 +438,7 @@ public class UIManager : MonoBehaviour
     private void LoadQuestion()
     {
         isAnswering = false;
+        HideTimeOutPopup();
 
         if (currentDistrict != null && currentQuestionIndex < activeQuestions.Count)
         {
@@ -687,19 +724,82 @@ public class UIManager : MonoBehaviour
     private void OnTimeRanOut()
     {
         isAnswering = true;
+        isTimerRunning = false;
+        isWaitingForTimeOutDecision = true;
+
+        ShowTimeOutPopup();
         
         // YENİ: Sadece standart quizdeysek şıkkı yeşile boya. Kelime oyunundaysa direkt can düş.
         if (currentQuestion != null && currentQuestion.type == QuestionType.StandardQuiz)
         {
             optionButtonsImage[currentQuestion.answer].color = correctColor;
         }
+    }
 
-        HandleWrongAnswer(-1); 
+    private void ShowTimeOutPopup()
+    {
+        if (timeOutPopupPanel == null) return;
+
+        timeOutPopupPanel.SetActive(true);
+        timeOutPopupPanel.transform.DOKill();
+        timeOutPopupPanel.transform.localScale = Vector3.zero;
+        timeOutPopupPanel.transform.DOScale(1f, 0.25f).SetEase(Ease.OutBack).SetUpdate(true);
+    }
+
+    private void HideTimeOutPopup()
+    {
+        isWaitingForTimeOutDecision = false;
+
+        if (timeOutPopupPanel == null) return;
+
+        timeOutPopupPanel.transform.DOKill();
+        timeOutPopupPanel.SetActive(false);
+        timeOutPopupPanel.transform.localScale = Vector3.one;
+    }
+
+    public void ContinueAfterTimeOut()
+    {
+        if (!isWaitingForTimeOutDecision) return;
+
+        MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.Selection);
+        HideTimeOutPopup();
+        HandleWrongAnswer(-1);
+    }
+
+    public void CloseTimeOutPopupToMenu()
+    {
+        if (!isWaitingForTimeOutDecision) return;
+
+        MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.Selection);
+        HideTimeOutPopup();
+        ReturnToMainMenu(false);
+    }
+
+    private void PlayCorrectAnswerBlink(int correctIndex)
+    {
+        if (correctIndex < 0 || correctIndex >= optionButtonsImage.Length) return;
+
+        Image correctButtonImage = optionButtonsImage[correctIndex];
+        if (correctButtonImage == null) return;
+
+        correctButtonImage.DOKill();
+
+        Sequence blinkSequence = DOTween.Sequence();
+        blinkSequence.Append(correctButtonImage.DOColor(correctColor, 0.15f));
+        blinkSequence.Append(correctButtonImage.DOColor(normalColor, 0.15f));
+        blinkSequence.Append(correctButtonImage.DOColor(correctColor, 0.15f));
+        blinkSequence.Append(correctButtonImage.DOColor(normalColor, 0.15f));
+        blinkSequence.Append(correctButtonImage.DOColor(correctColor, 0.15f));
     }
 
     /// <summary> Handles incorrect answer state, health reduction, and game over. </summary>
     private void HandleWrongAnswer(int clickedIndex)
     {
+        if (clickedIndex != -1 && currentQuestion != null && currentQuestion.type == QuestionType.StandardQuiz)
+        {
+            PlayCorrectAnswerBlink(currentQuestion.answer);
+        }
+
         if (clickedIndex != -1) 
         {
             optionButtonsImage[clickedIndex].color = wrongColor;
@@ -737,6 +837,7 @@ public class UIManager : MonoBehaviour
     public void OpenOutOfLivesPopup()
     {
         isTimerRunning = false; // Pause timer!
+        HideTimeOutPopup();
         if (outOfLivesPopupPanel != null)
         {
             outOfLivesPopupPanel.SetActive(true);
@@ -784,9 +885,34 @@ public class UIManager : MonoBehaviour
             outOfLivesPopupPanel.transform.DOScale(0f, 0.2f).SetEase(Ease.InBack).OnComplete(() =>
             {
                 outOfLivesPopupPanel.SetActive(false);
-                ReturnToMainMenu();
+                ReturnToMainMenuAfterOutOfLivesDeclined();
             });
         }
+        else
+        {
+            ReturnToMainMenuAfterOutOfLivesDeclined();
+        }
+    }
+
+    /// <summary>
+    /// Handles the "No" action on the out-of-lives popup as a fresh restart path:
+    /// clear saved quiz session, restore lives, then return to the main menu.
+    /// </summary>
+    private void ReturnToMainMenuAfterOutOfLivesDeclined()
+    {
+        currentLives = maxLives;
+        currentQuestionIndex = 0;
+        isAnswering = false;
+        isTimerRunning = false;
+
+        PlayerPrefs.SetInt("HasSavedSession", 0);
+        PlayerPrefs.DeleteKey("SessionDistrict");
+        PlayerPrefs.DeleteKey("SavedIndex");
+        PlayerPrefs.DeleteKey("SavedLives");
+        PlayerPrefs.Save();
+
+        UpdateLivesUI();
+        ReturnToMainMenu(false);
     }
 
     /// <summary> Updates the health points visually on UI. </summary>
@@ -1034,6 +1160,11 @@ public class UIManager : MonoBehaviour
     /// <summary> Safely resets state, forcefully closes ALL panels, and transitions to Main Menu. </summary>
     public void ReturnToMainMenu()
     {
+        ReturnToMainMenu(true);
+    }
+
+    public void ReturnToMainMenu(bool saveSession)
+    {
         if (returnToMenuCoroutine != null)
         {
             StopCoroutine(returnToMenuCoroutine);
@@ -1041,7 +1172,7 @@ public class UIManager : MonoBehaviour
         }
 
         // YENİ: WordScramble durumu da kayıt işlemine eklendi
-        if ((currentGameState == GameState.Playing || currentGameState == GameState.Puzzle || currentGameState == GameState.WordScramble) && currentDistrict != null)
+        if (saveSession && (currentGameState == GameState.Playing || currentGameState == GameState.Puzzle || currentGameState == GameState.WordScramble) && currentDistrict != null)
         {
             PlayerPrefs.SetInt("HasSavedSession", 1);
             PlayerPrefs.SetString("SessionDistrict", currentDistrict.id);
@@ -1060,6 +1191,7 @@ public class UIManager : MonoBehaviour
         if (mapPanel != null) mapPanel.SetActive(false);
         if (resultPanel != null) resultPanel.SetActive(false);
         if (unlockPopupPanel != null) unlockPopupPanel.SetActive(false);
+        HideTimeOutPopup();
 
         if (mainMenuPanel != null) mainMenuPanel.SetActive(true);
     }
@@ -1067,6 +1199,7 @@ public class UIManager : MonoBehaviour
     /// <summary> Displays the final outcome panel of a quiz round. </summary>
     public void ShowResult(bool isWin)
     {
+        HideTimeOutPopup();
         PlayerPrefs.SetInt("HasSavedSession", 0);
         PlayerPrefs.Save();
         currentGameState = GameState.Result;

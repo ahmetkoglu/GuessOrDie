@@ -1,7 +1,7 @@
 {
   "game": "TriviaHunt",
   "version": "1.0",
-  "total_questions": 211,
+  "total_questions": 307,
   "districts": [
     {
       "id": "beyoglu",
@@ -317,6 +317,136 @@
           ],
           "answer": 0,
           "questionImage": "Beyoglu_21.png"
+        },
+        {
+          "id": 27,
+          "type": 0,
+          "question": "İstanbul Modern bugün hangi bölgede yer almaktadır?",
+          "options": [
+            "Karaköy Sahili",
+            "Galataport",
+            "Hasköy",
+            "Tophane"
+          ],
+          "answer": 1,
+          "questionImage": "Beyoglu_22.png"
+        },
+        {
+          "id": 28,
+          "type": 0,
+          "question": "Madame Tussauds İstanbul'da ağırlıklı olarak ne sergilenir?",
+          "options": [
+            "Balmumu figürler",
+            "Osmanlı eserleri",
+            "Denizcilik tarihi",
+            "Arkeolojik eserler"
+          ],
+          "answer": 0,
+          "questionImage": "Beyoglu_23.png"
+        },
+        {
+          "id": 29,
+          "type": 0,
+          "question": "Pera Palace aşağıdakilerden hangisidir?",
+          "options": [
+            "Müze",
+            "Otel",
+            "Üniversite",
+            "Tiyatro"
+          ],
+          "answer": 1,
+          "questionImage": "Beyoglu_24.png"
+        },
+        {
+          "id": 30,
+          "type": 0,
+          "question": "Pera Müzesi'nin en bilinen koleksiyonlarından biri hangisidir?",
+          "options": [
+            "Osmanlı ağırlık ölçüleri",
+            "Oryantalist resimler",
+            "Deniz haritaları",
+            "Futbol kupaları"
+          ],
+          "answer": 1,
+          "questionImage": "Beyoglu_25.png"
+        },
+        {
+          "id": 31,
+          "type": 0,
+          "question": "Asmalımescit bugün en çok hangi özelliğiyle bilinir?",
+          "options": [
+            "Gece hayatı ve restoranlar",
+            "Sanayi tesisleri",
+            "Üniversiteler",
+            "Limanlar"
+          ],
+          "answer": 0,
+          "questionImage": "Beyoglu_26.png"
+        },
+        {
+          "id": 32,
+          "type": 0,
+          "question": "Narmanlı Han günümüzde daha çok hangi amaçla ziyaret edilir?",
+          "options": [
+            "Kültür ve sanat etkinlikleri",
+            "Futbol maçları",
+            "Tekstil üretimi",
+            "Deniz taşımacılığı"
+          ],
+          "answer": 0,
+          "questionImage": "Beyoglu_27.png"
+        },
+        {
+          "id": 33,
+          "type": 0,
+          "question": "Fransız Sokağı hangi özelliğiyle tanınır?",
+          "options": [
+            "Renkli cepheleri ve kafeleri",
+            "Tersaneleri",
+            "Fabrikaları",
+            "Stadyumu"
+          ],
+          "answer": 0,
+          "questionImage": "Beyoglu_28.png"
+        },
+        {
+          "id": 34,
+          "type": 0,
+          "question": "Atlas Sineması ağırlıklı olarak hangi sanat dalıyla ilişkilidir?",
+          "options": [
+            "Sinema",
+            "Opera",
+            "Bale",
+            "Resim"
+          ],
+          "answer": 0,
+          "questionImage": "Beyoglu_29.png"
+        },
+        {
+          "id": 35,
+          "type": 0,
+          "question": "Salt Galata'nın bulunduğu bina geçmişte hangi kurum olarak kullanılmıştır?",
+          "options": [
+            "Osmanlı Bankası",
+            "Belediye Sarayı",
+            "Adliye",
+            "Gar"
+          ],
+          "answer": 0,
+          "questionImage": "Beyoglu_30.png"
+        },
+        {
+          "id": 36,
+          "type": 0,
+          "question": "Pera Palace'ın en ünlü misafirlerinden biri olarak kim anılır?",
+          "options": [
+            "Agatha Christie",
+            "Picasso",
+            "Einstein",
+            "Mozart"
+          ],
+          "answer": 0,
+          "questionImage": "Beyoglu_31.png"
         }
       ],
       "penalty_animations": [
@@ -1079,6 +1209,171 @@
           ],
           "answer": 1,
           "questionImage": "Besiktas_20.png"
+        },
+        {
+          "id": 21,
+          "type": 0,
+          "question": "İstanbul Boğazı kıyısındaki tarihi ahşap yalılarıyla ünlü semt hangisidir?",
+          "options": [
+            "Arnavutköy",
+            "Levent",
+            "Gayrettepe",
+            "Dikilitaş"
+          ],
+          "answer": 0,
+          "questionImage": "Besiktas_21.png"
+        },
+        {
+          "id": 22,
+          "type": 0,
+          "question": "Boğaz kıyısındaki restoranları ve gece hayatıyla öne çıkan semt hangisidir?",
+          "options": [
+            "Kuruçeşme",
+            "Feriköy",
+            "Laleli",
+            "Aksaray"
+          ],
+          "answer": 0,
+          "questionImage": "Besiktas_22.png"
+        },
+        {
+          "id": 23,
+          "type": 0,
+          "question": "Beşiktaş'ta bulunan Abbasağa Parkı en çok hangi amaçla kullanılır?",
+          "options": [
+            "Deniz ulaşımı",
+            "Açık hava dinlenme alanı",
+            "Sanayi üretimi",
+            "Spor kompleksi"
+          ],
+          "answer": 1,
+          "questionImage": "Besiktas_23.png"
+        },
+        {
+          "id": 24,
+          "type": 0,
+          "question": "Osmanlı döneminde porselen üretimiyle tanınan yapı hangisidir?",
+          "options": [
+            "Feshane",
+            "Hereke Fabrikası",
+            "Yıldız Porselen Fabrikası",
+            "Tekfur Sarayı"
+          ],
+          "answer": 2,
+          "questionImage": "Besiktas_24.png"
+        },
+        {
+          "id": 25,
+          "type": 0,
+          "question": "Aşağıdaki eğitim kurumlarından hangisi Beşiktaş'ta yer alır?",
+          "options": [
+            "Kabataş Erkek Lisesi",
+            "İstanbul Erkek Lisesi",
+            "Pertevniyal Lisesi",
+            "Vefa Lisesi"
+          ],
+          "answer": 0,
+          "questionImage": "Besiktas_25.png"
+        },
+        {
+          "id": 26,
+          "type": 0,
+          "question": "Beşiktaş sahilinden vapurla en sık ulaşılan Anadolu Yakası ilçesi hangisidir?",
+          "options": [
+            "Pendik",
+            "Kartal",
+            "Üsküdar",
+            "Tuzla"
+          ],
+          "answer": 2,
+          "questionImage": "Besiktas_26.png"
+        },
+        {
+          "id": 27,
+          "type": 0,
+          "question": "Beşiktaş'taki önemli kültür ve sanat etkinliklerine ev sahipliği yapan merkez hangisidir?",
+          "options": [
+            "Zorlu PSM",
+            "Haliç Kongre Merkezi",
+            "Atatürk Kültür Merkezi",
+            "CKM"
+          ],
+          "answer": 0,
+          "questionImage": "Besiktas_27.png"
+        },
+        {
+          "id": 28,
+          "type": 0,
+          "question": "Yahya Efendi Türbesi hangi semtte yer alır?",
+          "options": [
+            "Beşiktaş",
+            "Fatih",
+            "Kadıköy",
+            "Eyüpsultan"
+          ],
+          "answer": 0,
+          "questionImage": "Besiktas_28.png"
+        },
+        {
+          "id": 29,
+          "type": 0,
+          "question": "Bahçeşehir Üniversitesi'nin ana kampüslerinden biri hangi ilçededir?",
+          "options": [
+            "Şişli",
+            "Beşiktaş",
+            "Sarıyer",
+            "Fatih"
+          ],
+          "answer": 1,
+          "questionImage": "Besiktas_29.png"
+        },
+        {
+          "id": 30,
+          "type": 0,
+          "question": "Aşağıdakilerden hangisi İstanbul Boğazı manzarasıyla bilinen Beşiktaş semtlerinden biridir?",
+          "options": [
+            "Arnavutköy",
+            "Merter",
+            "Güngören",
+            "Esenler"
+          ],
+          "answer": 0,
+          "questionImage": "Besiktas_30.png"
+        },
+        {
+          "id": 31,
+          "type": 1,
+          "question": "Beşiktaş sahilinde lüks kafeleri ve Boğaz kıyısıyla bilinen semt hangisidir?",
+          "answerWord": "BEBEK",
+          "questionImage": "Besiktas_Kelime_1.png"
+        },
+        {
+          "id": 32,
+          "type": 1,
+          "question": "Beşiktaş’ın Boğaz kıyısında camisi ve kumpiriyle ünlü semti hangisidir?",
+          "answerWord": "ORTAKÖY",
+          "questionImage": "Besiktas_Kelime_2.png"
+        },
+        {
+          "id": 33,
+          "type": 1,
+          "question": "Beşiktaş’ta saray, park ve korusuyla bilinen tarihi bölge hangisidir?",
+          "answerWord": "YILDIZ",
+          "questionImage": "Besiktas_Kelime_3.png"
+        },
+        {
+          "id": 34,
+          "type": 1,
+          "question": "Beşiktaş futbol kulübünün sembol hayvanı nedir?",
+          "answerWord": "KARTAL",
+          "questionImage": "Besiktas_Kelime_4.png"
+        },
+        {
+          "id": 35,
+          "type": 1,
+          "question": "Ortaköy denince akla gelen meşhur sokak lezzeti nedir?",
+          "answerWord": "KUMPİR",
+          "questionImage": "Besiktas_Kelime_5.png"
         }
       ],
       "penalty_animations": [
@@ -1376,6 +1671,149 @@
           "questionImage": "Sisli_Kelime_5.png",
           "question": "Osmanlı döneminde askeri okul olarak kullanılan ve Şişli'nin bir semtine adını veren bölge neresidir?",
           "answerWord": "HARBİYE"
+        },
+        {
+          "id": 26,
+          "type": 0,
+          "questionImage": "Sisli_21.png",
+          "question": "Osmanbey semti özellikle hangi sektörle ilişkilendirilir?",
+          "options": [
+            "Tekstil ve hazır giyim",
+            "Denizcilik",
+            "Madencilik",
+            "Tarım"
+          ],
+          "answer": 0
+        },
+        {
+          "id": 27,
+          "type": 0,
+          "questionImage": "Sisli_22.png",
+          "question": "Şişli Etfal Hastanesi hangi alanda hizmet vermektedir?",
+          "options": [
+            "Turizm",
+            "Sağlık",
+            "Ulaşım",
+            "Finans"
+          ],
+          "answer": 1
+        },
+        {
+          "id": 28,
+          "type": 0,
+          "questionImage": "Sisli_23.png",
+          "question": "Şişli'de bulunan ve bir dönem Avrupa'nın en büyük alışveriş merkezlerinden biri olarak gösterilen AVM hangisidir?",
+          "options": [
+            "Akmerkez",
+            "Kanyon",
+            "İstanbul Cevahir",
+            "Metrocity"
+          ],
+          "answer": 2
+        },
+        {
+          "id": 29,
+          "type": 0,
+          "questionImage": "Sisli_24.png",
+          "question": "Şişli'de bulunan Lütfi Kırdar Kongre Merkezi en çok hangi amaçla kullanılır?",
+          "options": [
+            "Kongre ve fuarlar",
+            "Futbol maçları",
+            "Deniz taşımacılığı",
+            "Üniversite eğitimi"
+          ],
+          "answer": 0
+        },
+        {
+          "id": 30,
+          "type": 0,
+          "questionImage": "Sisli_25.png",
+          "question": "TRT İstanbul Radyoevi aşağıdaki hangi kurumun yapısıdır?",
+          "options": [
+            "TRT",
+            "İBB",
+            "Kültür A.Ş.",
+            "RTÜK"
+          ],
+          "answer": 0
+        },
+        {
+          "id": 31,
+          "type": 0,
+          "questionImage": "Sisli_26.png",
+          "question": "Fulya denince akla gelen önemli yapılardan biri aşağıdakilerden hangisidir?",
+          "options": [
+            "Acıbadem Hastanesi Kompleksi",
+            "Galata Kulesi",
+            "Kapalıçarşı",
+            "Kız Kulesi"
+          ],
+          "answer": 0
+        },
+        {
+          "id": 32,
+          "type": 0,
+          "questionImage": "Sisli_27.png",
+          "question": "Abdi İpekçi Caddesi en çok hangi özelliğiyle bilinir?",
+          "options": [
+            "Balık restoranları",
+            "Lüks alışveriş mağazaları",
+            "Sanayi tesisleri",
+            "Üniversiteleri"
+          ],
+          "answer": 1
+        },
+        {
+          "id": 33,
+          "type": 0,
+          "questionImage": "Sisli_28.png",
+          "question": "Valikonağı Caddesi hangi iki bölgeyi birbirine bağlayan önemli güzergâhlardan biridir?",
+          "options": [
+            "Eminönü–Sirkeci",
+            "Osmanbey–Nişantaşı çevresi",
+            "Beşiktaş–Ortaköy",
+            "Fatih–Aksaray"
+          ],
+          "answer": 1
+        },
+        {
+          "id": 34,
+          "type": 0,
+          "questionImage": "Sisli_29.png",
+          "question": "Şişli'de bulunan İstanbul Kongre Merkezi hangi tür etkinliklerle öne çıkar?",
+          "options": [
+            "Tarım fuarları",
+            "Kongre ve zirveler",
+            "At yarışları",
+            "Deniz festivalleri"
+          ],
+          "answer": 1
+        },
+        {
+          "id": 35,
+          "type": 0,
+          "questionImage": "Sisli_30.png",
+          "question": "Şişli'de bulunan Cemal Reşit Rey Konser Salonu ağırlıklı olarak hangi etkinliklere ev sahipliği yapar?",
+          "options": [
+            "Basketbol maçları",
+            "Otomobil fuarları",
+            "Konserler",
+            "Kitap satışları"
+          ],
+          "answer": 2
+        },
+        {
+          "id": 36,
+          "type": 0,
+          "questionImage": "Sisli_31.png",
+          "question": "TRT İstanbul Radyoevi aşağıdaki hangi kurumun yapısıdır?",
+          "options": [
+            "TRT",
+            "İBB",
+            "Kültür A.Ş.",
+            "RTÜK"
+          ],
+          "answer": 0
         }
       ],
       "penalty_animations": [
@@ -1630,6 +2068,171 @@
           ],
           "answer": 2,
           "questionImage": "Uskudar_20.png"
+        },
+        {
+          "id": 21,
+          "type": 0,
+          "question": "İstanbul'un en büyük camilerinden biri hangi ilçededir?",
+          "options": [
+            "Fatih",
+            "Üsküdar",
+            "Şişli",
+            "Beyoğlu"
+          ],
+          "answer": 1,
+          "questionImage": "Uskudar_21.png"
+        },
+        {
+          "id": 22,
+          "type": 0,
+          "question": "Boğaz kıyısındaki tarihi saray hangisidir?",
+          "options": [
+            "Dolmabahçe Sarayı",
+            "Çırağan Sarayı",
+            "Beylerbeyi Sarayı",
+            "Ihlamur Kasrı"
+          ],
+          "answer": 2,
+          "questionImage": "Uskudar_22.png"
+        },
+        {
+          "id": 23,
+          "type": 0,
+          "question": "Avrupa ve Anadolu yakasını araç trafiğiyle deniz altından bağlayan yapı hangisidir?",
+          "options": [
+            "Marmaray",
+            "Avrasya Tüneli",
+            "Metrobüs",
+            "Teleferik"
+          ],
+          "answer": 1,
+          "questionImage": "Uskudar_23.png"
+        },
+        {
+          "id": 24,
+          "type": 0,
+          "question": "Üsküdar'da bulunan Aziz Mahmud Hüdayi hangi yapıyla ilişkilidir?",
+          "options": [
+            "Saray",
+            "Türbe ve Külliye",
+            "Gar",
+            "Köprü"
+          ],
+          "answer": 1,
+          "questionImage": "Uskudar_24.png"
+        },
+        {
+          "id": 25,
+          "type": 0,
+          "question": "Çengelköy denince akla gelen meşhur ürün hangisidir?",
+          "options": [
+            "Simit",
+            "Salatalık",
+            "Lokum",
+            "Kestane"
+          ],
+          "answer": 1,
+          "questionImage": "Uskudar_25.png"
+        },
+        {
+          "id": 26,
+          "type": 0,
+          "question": "Nakkaştepe günümüzde en çok hangi özelliğiyle ziyaret edilmektedir?",
+          "options": [
+            "Kayak pisti",
+            "Boğaz manzarası",
+            "Plaj",
+            "Lunapark"
+          ],
+          "answer": 1,
+          "questionImage": "Uskudar_26.png"
+        },
+        {
+          "id": 27,
+          "type": 0,
+          "question": "Marmaray hangi ulaşım türüdür?",
+          "options": [
+            "Deniz yolu",
+            "Demiryolu sistemi",
+            "Teleferik",
+            "Tramvay"
+          ],
+          "answer": 1,
+          "questionImage": "Uskudar_27.png"
+        },
+        {
+          "id": 28,
+          "type": 0,
+          "question": "Bağlarbaşı günümüzde hangi özelliğiyle öne çıkar?",
+          "options": [
+            "Kültür ve etkinlik alanları",
+            "Liman faaliyetleri",
+            "Sanayi üretimi",
+            "Tarım"
+          ],
+          "answer": 0,
+          "questionImage": "Uskudar_28.png"
+        },
+        {
+          "id": 29,
+          "type": 0,
+          "question": "Kısıklı hangi yakada yer alır?",
+          "options": [
+            "Avrupa Yakası",
+            "Anadolu Yakası",
+            "Adalar",
+            "Haliç"
+          ],
+          "answer": 1,
+          "questionImage": "Uskudar_29.png"
+        },
+        {
+          "id": 30,
+          "type": 0,
+          "question": "Çamlıca Kulesi'nin temel kullanım amacı nedir?",
+          "options": [
+            "Otel",
+            "Yayıncılık ve iletişim",
+            "Müze",
+            "Üniversite"
+          ],
+          "answer": 1,
+          "questionImage": "Uskudar_30.png"
+        },
+        {
+          "id": 31,
+          "type": 1,
+          "question": "Üsküdar’da Kız Kulesi manzarasıyla ünlü sahil semti hangisidir?",
+          "answerWord": "SALACAK",
+          "questionImage": "Uskudar_Kelime_1.png"
+        },
+        {
+          "id": 32,
+          "type": 1,
+          "question": "Üsküdar’da şehir hatları ve otobüs ulaşımıyla bilinen bölge hangisidir?",
+          "answerWord": "HAREM",
+          "questionImage": "Uskudar_Kelime_2.png"
+        },
+        {
+          "id": 33,
+          "type": 1,
+          "question": "Üsküdar’da Çamlıca’ya yakın tepeleriyle bilinen semt hangisidir?",
+          "answerWord": "KISIKLI",
+          "questionImage": "Uskudar_Kelime_3.png"
+        },
+        {
+          "id": 34,
+          "type": 1,
+          "question": "Üsküdar’ın yüksek tepesi ve kulesiyle bilinen bölgesi hangisidir?",
+          "answerWord": "ÇAMLICA",
+          "questionImage": "Uskudar_Kelime_4.png"
+        },
+        {
+          "id": 35,
+          "type": 1,
+          "question": "Üsküdar’daki Aziz Mahmud türbesi hangi isimle anılır?",
+          "answerWord": "HÜDAYİ",
+          "questionImage": "Uskudar_Kelime_5.png"
         }
       ],
       "penalty_animations": [
@@ -1896,6 +2499,171 @@
           ],
           "answer": 0,
           "questionImage": "Kadikoy_20.png"
+        },
+        {
+          "id": 21,
+          "type": 0,
+          "question": "Fenerbahçe semti hangi spor kulübüyle özdeşleşmiştir?",
+          "options": [
+            "Galatasaray",
+            "Beşiktaş",
+            "Fenerbahçe",
+            "İstanbulspor"
+          ],
+          "answer": 2,
+          "questionImage": "Kadikoy_21.png"
+        },
+        {
+          "id": 22,
+          "type": 0,
+          "question": "Kadıköy'den Adalar'a ulaşım için en sık kullanılan ulaşım türü hangisidir?",
+          "options": [
+            "Tramvay",
+            "Teleferik",
+            "Vapur",
+            "Metrobüs"
+          ],
+          "answer": 2,
+          "questionImage": "Kadikoy_22.png"
+        },
+        {
+          "id": 23,
+          "type": 0,
+          "question": "Bağdat Caddesi en çok hangi özelliğiyle bilinir?",
+          "options": [
+            "Alışveriş ve sosyal yaşam",
+            "Sanayi tesisleri",
+            "Limanlar",
+            "Tarım alanları"
+          ],
+          "answer": 0,
+          "questionImage": "Kadikoy_23.png"
+        },
+        {
+          "id": 24,
+          "type": 0,
+          "question": "Kalamış Marina ağırlıklı olarak hangi amaçla kullanılmaktadır?",
+          "options": [
+            "Yat ve tekne bağlama",
+            "Futbol müsabakaları",
+            "Tarım faaliyetleri",
+            "Hava ulaşımı"
+          ],
+          "answer": 0,
+          "questionImage": "Kadikoy_24.png"
+        },
+        {
+          "id": 25,
+          "type": 0,
+          "question": "Caddebostan en çok hangi özelliğiyle bilinir?",
+          "options": [
+            "Sahili",
+            "Havalimanı",
+            "Tersanesi",
+            "Kalesi"
+          ],
+          "answer": 0,
+          "questionImage": "Kadikoy_25.png"
+        },
+        {
+          "id": 26,
+          "type": 0,
+          "question": "Fenerbahçe Parkı hangi kıyıda yer alır?",
+          "options": [
+            "Haliç",
+            "İstanbul Boğazı",
+            "Marmara Denizi kıyısı",
+            "Karadeniz kıyısı"
+          ],
+          "answer": 2,
+          "questionImage": "Kadikoy_26.png"
+        },
+        {
+          "id": 27,
+          "type": 0,
+          "question": "Bostancı'dan aşağıdakilerden hangisine doğrudan deniz ulaşımı sağlanabilir?",
+          "options": [
+            "Adalar",
+            "Esenler",
+            "Bayrampaşa",
+            "Başakşehir"
+          ],
+          "answer": 0,
+          "questionImage": "Kadikoy_27.png"
+        },
+        {
+          "id": 28,
+          "type": 0,
+          "question": "Ayrılık Çeşmesi günümüzde hangi ulaşım sistemiyle öne çıkar?",
+          "options": [
+            "Metro ve Marmaray bağlantısı",
+            "Teleferik",
+            "Deniz otobüsü",
+            "Tramvay"
+          ],
+          "answer": 0,
+          "questionImage": "Kadikoy_28.png"
+        },
+        {
+          "id": 29,
+          "type": 0,
+          "question": "Moda Sahili en çok hangi aktiviteyle ilişkilendirilir?",
+          "options": [
+            "Sahil yürüyüşü",
+            "Kayak",
+            "Kampçılık",
+            "Dağcılık"
+          ],
+          "answer": 0,
+          "questionImage": "Kadikoy_29.png"
+        },
+        {
+          "id": 30,
+          "type": 0,
+          "question": "Kadıköy denince akla gelen sarı-lacivert renklerle özdeş spor kulübü hangisidir?",
+          "options": [
+            "Galatasaray",
+            "Beşiktaş",
+            "Fenerbahçe",
+            "İstanbulspor"
+          ],
+          "answer": 2,
+          "questionImage": "Kadikoy_30.png"
+        },
+        {
+          "id": 31,
+          "type": 1,
+          "question": "Kadıköy’ün sahili ve nostaljik tramvayıyla bilinen semti hangisidir?",
+          "answerWord": "MODA",
+          "questionImage": "Kadikoy_Kelime_1.png"
+        },
+        {
+          "id": 32,
+          "type": 1,
+          "question": "Kadıköy Altıyol’daki ünlü heykelde hangi hayvan vardır?",
+          "answerWord": "BOĞA",
+          "questionImage": "Kadikoy_Kelime_2.png"
+        },
+        {
+          "id": 33,
+          "type": 1,
+          "question": "Kadıköy’ün vapur iskeleleriyle bilinen sahil bölgesi hangisidir?",
+          "answerWord": "RIHTIM",
+          "questionImage": "Kadikoy_Kelime_3.png"
+        },
+        {
+          "id": 34,
+          "type": 1,
+          "question": "Kadıköy’ün sarı-lacivert kulübünün kısa adı nedir?",
+          "answerWord": "FENER",
+          "questionImage": "Kadikoy_Kelime_4.png"
+        },
+        {
+          "id": 35,
+          "type": 1,
+          "question": "Kadıköy’de marina ve deniz kıyısıyla bilinen semt hangisidir?",
+          "answerWord": "KALAMIŞ",
+          "questionImage": "Kadikoy_Kelime_5.png"
         }
       ],
       "penalty_animations": [
@@ -2166,6 +2934,136 @@
           ],
           "answer": 1,
           "questionImage": "NewYork_20.png"
+        },
+        {
+          "id": 21,
+          "type": 0,
+          "question": "New York’taki ünlü üçgen biçimli tarihi bina hangisidir?",
+          "options": [
+            "Chrysler Building",
+            "Flatiron Building",
+            "One World Trade Center",
+            "Rockefeller Center"
+          ],
+          "answer": 1,
+          "questionImage": "NewYork_21.png"
+        },
+        {
+          "id": 22,
+          "type": 0,
+          "question": "The Met olarak bilinen büyük sanat müzesinin tam adı nedir?",
+          "options": [
+            "Museum of Modern Art",
+            "Metropolitan Museum of Art",
+            "Whitney Museum",
+            "Guggenheim Museum"
+          ],
+          "answer": 1,
+          "questionImage": "NewYork_22.png"
+        },
+        {
+          "id": 23,
+          "type": 0,
+          "question": "New York Public Library en çok hangi sembolik yapısıyla tanınır?",
+          "options": [
+            "Aslan heykelleri",
+            "Cam piramidi",
+            "Saat kulesi",
+            "Deniz feneri"
+          ],
+          "answer": 0,
+          "questionImage": "NewYork_23.png"
+        },
+        {
+          "id": 24,
+          "type": 0,
+          "question": "Radio City Music Hall en çok hangi etkinliklerle ilişkilidir?",
+          "options": [
+            "Sahne gösterileri ve konserler",
+            "Beyzbol maçları",
+            "Deniz yarışları",
+            "Tarım fuarları"
+          ],
+          "answer": 0,
+          "questionImage": "NewYork_24.png"
+        },
+        {
+          "id": 25,
+          "type": 0,
+          "question": "SoHo semti en çok hangi özelliğiyle bilinir?",
+          "options": [
+            "Sanat galerileri ve butik mağazalar",
+            "Hayvanat bahçesi",
+            "Liman işletmeleri",
+            "Kayak merkezi"
+          ],
+          "answer": 0,
+          "questionImage": "NewYork_25.png"
+        },
+        {
+          "id": 26,
+          "type": 0,
+          "question": "Chinatown New York’ta en çok neyle bilinir?",
+          "options": [
+            "Çin kültürü ve restoranları",
+            "Futbol stadyumları",
+            "Plajları",
+            "Gökdelen gözlem katları"
+          ],
+          "answer": 0,
+          "questionImage": "NewYork_26.png"
+        },
+        {
+          "id": 27,
+          "type": 0,
+          "question": "Madison Square Garden hangi tür etkinliklere ev sahipliği yapar?",
+          "options": [
+            "Spor ve konser etkinlikleri",
+            "Sadece müze sergileri",
+            "Deniz turları",
+            "Üniversite dersleri"
+          ],
+          "answer": 0,
+          "questionImage": "NewYork_27.png"
+        },
+        {
+          "id": 28,
+          "type": 0,
+          "question": "Little Italy semti hangi mutfak kültürüyle öne çıkar?",
+          "options": [
+            "İtalyan mutfağı",
+            "Japon mutfağı",
+            "Meksika mutfağı",
+            "Hint mutfağı"
+          ],
+          "answer": 0,
+          "questionImage": "NewYork_28.png"
+        },
+        {
+          "id": 29,
+          "type": 0,
+          "question": "Fifth Avenue en çok hangi özelliğiyle tanınır?",
+          "options": [
+            "Alışveriş caddesi olması",
+            "Balıkçı limanı olması",
+            "Kayak merkezi olması",
+            "Tren garı olması"
+          ],
+          "answer": 0,
+          "questionImage": "NewYork_29.png"
+        },
+        {
+          "id": 30,
+          "type": 0,
+          "question": "Guggenheim Museum hangi alanla ilişkilidir?",
+          "options": [
+            "Modern ve çağdaş sanat",
+            "Denizcilik tarihi",
+            "Otomobil yarışı",
+            "Doğa sporları"
+          ],
+          "answer": 0,
+          "questionImage": "NewYork_30.png"
         }
       ],
       "penalty_animations": [
@@ -2421,6 +3319,136 @@
           ],
           "answer": 0,
           "questionImage": "London_20.png"
+        },
+        {
+          "id": 21,
+          "type": 0,
+          "question": "İngiltere Başbakanı'nın resmi çalışma ofisi hangi adrestedir?",
+          "options": [
+            "221B Baker Street",
+            "10 Downing Street",
+            "Oxford Street",
+            "Whitehall Palace"
+          ],
+          "answer": 1,
+          "questionImage": "London_21.png"
+        },
+        {
+          "id": 22,
+          "type": 0,
+          "question": "Londra'da kraliyet ailesinin resmi konutlarından biri hangisidir?",
+          "options": [
+            "Buckingham Palace",
+            "Windsor Castle",
+            "Kensington Palace",
+            "Hampton Court"
+          ],
+          "answer": 0,
+          "questionImage": "London_22.png"
+        },
+        {
+          "id": 23,
+          "type": 0,
+          "question": "Londra'nın en ünlü alışveriş caddelerinden biri hangisidir?",
+          "options": [
+            "Oxford Street",
+            "Wall Street",
+            "Abbey Road",
+            "Fleet Street"
+          ],
+          "answer": 0,
+          "questionImage": "London_23.png"
+        },
+        {
+          "id": 24,
+          "type": 0,
+          "question": "The Shard nedir?",
+          "options": [
+            "Gökdelen",
+            "Köprü",
+            "Saray",
+            "Müze"
+          ],
+          "answer": 0,
+          "questionImage": "London_24.png"
+        },
+        {
+          "id": 25,
+          "type": 0,
+          "question": "Madame Tussauds'da ağırlıklı olarak ne sergilenir?",
+          "options": [
+            "Balmumu figürler",
+            "Dinozorlar",
+            "Gemiler",
+            "Kraliyet mücevherleri"
+          ],
+          "answer": 0,
+          "questionImage": "London_25.png"
+        },
+        {
+          "id": 26,
+          "type": 0,
+          "question": "Londra'nın içinden geçen nehir hangisidir?",
+          "options": [
+            "Seine",
+            "Thames",
+            "Hudson",
+            "Danube"
+          ],
+          "answer": 1,
+          "questionImage": "London_26.png"
+        },
+        {
+          "id": 27,
+          "type": 0,
+          "question": "Abbey Road hangi müzik grubuyla özdeşleşmiştir?",
+          "options": [
+            "Queen",
+            "The Beatles",
+            "Oasis",
+            "Coldplay"
+          ],
+          "answer": 1,
+          "questionImage": "London_27.png"
+        },
+        {
+          "id": 28,
+          "type": 0,
+          "question": "Hyde Park en çok hangi özelliğiyle bilinir?",
+          "options": [
+            "Büyük şehir parkı olması",
+            "Havalimanı olması",
+            "Liman olması",
+            "Saray olması"
+          ],
+          "answer": 0,
+          "questionImage": "London_28.png"
+        },
+        {
+          "id": 29,
+          "type": 0,
+          "question": "Covent Garden günümüzde en çok hangi özelliğiyle bilinir?",
+          "options": [
+            "Alışveriş ve sokak sanatçıları",
+            "Futbol stadyumu",
+            "Liman faaliyetleri",
+            "Üniversite kampüsü"
+          ],
+          "answer": 0,
+          "questionImage": "London_29.png"
+        },
+        {
+          "id": 30,
+          "type": 0,
+          "question": "Londra'daki kraliyet parklarından biri hangisidir?",
+          "options": [
+            "Hyde Park",
+            "Central Park",
+            "Gülhane Parkı",
+            "Tiergarten"
+          ],
+          "answer": 0,
+          "questionImage": "London_30.png"
         }
       ],
       "penalty_animations": [
@@ -2676,6 +3704,136 @@
           ],
           "answer": 1,
           "questionImage": "Beykoz_20.png"
+        },
+        {
+          "id": 21,
+          "type": 0,
+          "question": "Beykoz'da bulunan Türk-Alman Üniversitesi hangi ülke ile ortak eğitim modeliyle öne çıkar?",
+          "options": [
+            "Fransa",
+            "Almanya",
+            "İtalya",
+            "Hollanda"
+          ],
+          "answer": 1,
+          "questionImage": "Beykoz_21.png"
+        },
+        {
+          "id": 22,
+          "type": 0,
+          "question": "Otağtepe hangi özelliğiyle ziyaret edilir?",
+          "options": [
+            "Boğaz manzarası",
+            "Kayak merkezi",
+            "Plaj",
+            "Lunapark"
+          ],
+          "answer": 0,
+          "questionImage": "Beykoz_22.png"
+        },
+        {
+          "id": 23,
+          "type": 0,
+          "question": "Beykoz'da bulunan Abraham Paşa Korusu günümüzde ne olarak kullanılmaktadır?",
+          "options": [
+            "Yeşil alan ve park",
+            "Liman",
+            "Stadyum",
+            "Fabrika"
+          ],
+          "answer": 0,
+          "questionImage": "Beykoz_23.png"
+        },
+        {
+          "id": 24,
+          "type": 0,
+          "question": "Kavacık günümüzde en çok hangi özelliğiyle bilinir?",
+          "options": [
+            "İş merkezleri ve ofisler",
+            "Tarım",
+            "Balıkçılık",
+            "Tersane"
+          ],
+          "answer": 0,
+          "questionImage": "Beykoz_24.png"
+        },
+        {
+          "id": 25,
+          "type": 0,
+          "question": "Akbaba semti aşağıdakilerden hangisiyle tanınır?",
+          "options": [
+            "Köftesi",
+            "Midyesi",
+            "Balık ekmeği",
+            "Kokoreci"
+          ],
+          "answer": 0,
+          "questionImage": "Beykoz_25.png"
+        },
+        {
+          "id": 26,
+          "type": 0,
+          "question": "Beykoz'un önemli mahallelerinden Tokatköy hangi ilçededir?",
+          "options": [
+            "Üsküdar",
+            "Beykoz",
+            "Şile",
+            "Sarıyer"
+          ],
+          "answer": 1,
+          "questionImage": "Beykoz_26.png"
+        },
+        {
+          "id": 27,
+          "type": 0,
+          "question": "Soğuksu bölgesi en çok hangi özelliğiyle bilinir?",
+          "options": [
+            "Koruları ve doğal alanları",
+            "Limanı",
+            "Sanayi tesisleri",
+            "Tersanesi"
+          ],
+          "answer": 0,
+          "questionImage": "Beykoz_27.png"
+        },
+        {
+          "id": 28,
+          "type": 0,
+          "question": "Beykoz Kundura günümüzde ağırlıklı olarak hangi alanda kullanılmaktadır?",
+          "options": [
+            "Film ve etkinlik alanı",
+            "Havalimanı",
+            "Stadyum",
+            "Hastane"
+          ],
+          "answer": 0,
+          "questionImage": "Beykoz_28.png"
+        },
+        {
+          "id": 29,
+          "type": 0,
+          "question": "Tokatköy'de son yıllarda yapılan dönüşüm çalışmaları en çok hangi alanla ilgilidir?",
+          "options": [
+            "Kentsel dönüşüm",
+            "Tarım",
+            "Denizcilik",
+            "Madencilik"
+          ],
+          "answer": 0,
+          "questionImage": "Beykoz_29.png"
+        },
+        {
+          "id": 30,
+          "type": 0,
+          "question": "Beykoz'un iş merkezleriyle öne çıkan bölgesi hangisidir?",
+          "options": [
+            "Kavacık",
+            "Akbaba",
+            "Soğuksu",
+            "Tokatköy"
+          ],
+          "answer": 0,
+          "questionImage": "Beykoz_30.png"
         }
       ],
       "penalty_animations": [
