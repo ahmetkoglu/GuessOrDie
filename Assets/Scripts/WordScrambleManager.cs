@@ -21,9 +21,14 @@ public class WordScrambleManager : MonoBehaviour
     public GameObject slotPrefab; // İçinde sadece çerçeve olan boş kare obje
     public GameObject letterButtonPrefab; // Üzerinde LetterButton.cs olan obje
 
+    [Header("Yerleşim Ayarları")]
+    [SerializeField] private int horizontalSafePadding = 40;
+    [SerializeField] private float minimumBoxSize = 50f;
+
     private string currentAnswerWord;
     private List<Transform> activeSlots = new List<Transform>();
     private List<LetterButton> placedLetters = new List<LetterButton>();
+    private bool isResolvingAnswer = false;
 
     private void Awake() => Instance = this;
 
@@ -31,6 +36,8 @@ public class WordScrambleManager : MonoBehaviour
     public void LoadWordPuzzle(QuestionData data)
     {
         CleanUp();
+        ApplyHorizontalSafePadding();
+
         currentAnswerWord = data.answerWord.ToUpper();
         questionTextUI.text = data.question;
 
@@ -56,31 +63,18 @@ public class WordScrambleManager : MonoBehaviour
             }
         }
 
+        Canvas.ForceUpdateCanvases();
+        float boxSize = CalculateFittingBoxSize(currentAnswerWord.Length);
+        ApplyLetterGridBoxSize(boxSize);
+
         // 1. Cevap uzunluğu kadar boş slot (kutu) oluştur
         for (int i = 0; i < currentAnswerWord.Length; i++)
         {
             GameObject slotObj = Instantiate(slotPrefab, slotsContainer);
+            ApplySlotBoxSize(slotObj, boxSize);
             activeSlots.Add(slotObj.transform);
         }
-
-        // KİLİT NOKTA: Harf sayısı çoksa kutuları küçült ki ekrana sığsın
-        Canvas.ForceUpdateCanvases();
-        RectTransform containerRT = slotsContainer.GetComponent<RectTransform>();
-        float slotWidth = slotPrefab.GetComponent<RectTransform>().rect.width;
-        float spacing = slotsContainer.GetComponent<HorizontalLayoutGroup>().spacing;
-        
-        float containerWidth = containerRT.rect.width;
-        float totalWidth = currentAnswerWord.Length * slotWidth + (currentAnswerWord.Length - 1) * spacing;
-        
-        if (totalWidth > containerWidth && containerWidth > 0)
-        {
-            float scale = containerWidth / totalWidth;
-            slotsContainer.localScale = new Vector3(scale, scale, 1f);
-        }
-        else
-        {
-            slotsContainer.localScale = Vector3.one;
-        }
+        slotsContainer.localScale = Vector3.one;
 
         // 2. Cevabı harflere böl ve karıştır (Fisher-Yates)
         List<char> scrambledChars = currentAnswerWord.ToList();
@@ -102,13 +96,114 @@ public class WordScrambleManager : MonoBehaviour
         }
     }
 
+    /// <summary> Uzun kelimelerde kutu boyutunu safe area içinde kalacak şekilde küçültür. </summary>
+    private float CalculateFittingBoxSize(int letterCount)
+    {
+        RectTransform containerRT = slotsContainer != null ? slotsContainer.GetComponent<RectTransform>() : null;
+        RectTransform prefabRT = slotPrefab != null ? slotPrefab.GetComponent<RectTransform>() : null;
+        HorizontalLayoutGroup slotsLayout = slotsContainer != null ? slotsContainer.GetComponent<HorizontalLayoutGroup>() : null;
+
+        float baseSize = GetRectWidth(prefabRT, 120f);
+        float spacing = slotsLayout != null ? slotsLayout.spacing : 0f;
+        float containerWidth = GetRectWidth(containerRT, 0f);
+        float availableWidth = Mathf.Max(0f, containerWidth - (horizontalSafePadding * 2f));
+
+        if (letterCount <= 0 || availableWidth <= 0f)
+        {
+            return baseSize;
+        }
+
+        float spacingWidth = Mathf.Max(0, letterCount - 1) * spacing;
+        float fittingSize = (availableWidth - spacingWidth) / letterCount;
+
+        // Ekrana tam sığma önceliklidir; minimum değer yalnızca yeterli alan varsa korunur.
+        if (fittingSize < minimumBoxSize)
+        {
+            return Mathf.Max(1f, fittingSize);
+        }
+
+        return Mathf.Min(baseSize, fittingSize);
+    }
+
+    private float GetRectWidth(RectTransform rectTransform, float fallback)
+    {
+        if (rectTransform == null) return fallback;
+
+        if (rectTransform.rect.width > 0f) return rectTransform.rect.width;
+        if (rectTransform.sizeDelta.x > 0f) return rectTransform.sizeDelta.x;
+
+        return fallback;
+    }
+
+    private void ApplySlotBoxSize(GameObject slotObj, float boxSize)
+    {
+        if (slotObj == null) return;
+
+        RectTransform rt = slotObj.GetComponent<RectTransform>();
+        if (rt != null)
+        {
+            rt.sizeDelta = new Vector2(boxSize, boxSize);
+        }
+
+        LayoutElement layoutElement = slotObj.GetComponent<LayoutElement>();
+        if (layoutElement == null)
+        {
+            layoutElement = slotObj.AddComponent<LayoutElement>();
+        }
+
+        layoutElement.minWidth = boxSize;
+        layoutElement.minHeight = boxSize;
+        layoutElement.preferredWidth = boxSize;
+        layoutElement.preferredHeight = boxSize;
+        layoutElement.flexibleWidth = 0f;
+        layoutElement.flexibleHeight = 0f;
+    }
+
+    private void ApplyLetterGridBoxSize(float boxSize)
+    {
+        GridLayoutGroup lettersLayout = lettersContainer != null ? lettersContainer.GetComponent<GridLayoutGroup>() : null;
+        if (lettersLayout != null)
+        {
+            lettersLayout.cellSize = new Vector2(boxSize, boxSize);
+        }
+    }
+
+    /// <summary> Slot ve harf havuzlarının sol/sağ kenarlara yapışmasını engeller. </summary>
+    private void ApplyHorizontalSafePadding()
+    {
+        int safePadding = Mathf.Max(0, horizontalSafePadding);
+
+        HorizontalLayoutGroup slotsLayout = slotsContainer != null ? slotsContainer.GetComponent<HorizontalLayoutGroup>() : null;
+        if (slotsLayout != null)
+        {
+            slotsLayout.padding.left = safePadding;
+            slotsLayout.padding.right = safePadding;
+        }
+
+        GridLayoutGroup lettersLayout = lettersContainer != null ? lettersContainer.GetComponent<GridLayoutGroup>() : null;
+        if (lettersLayout != null)
+        {
+            lettersLayout.padding.left = safePadding;
+            lettersLayout.padding.right = safePadding;
+        }
+    }
+
     /// <summary> Bir harfe tıklandığında çalışır </summary>
     public void HandleLetterSelection(LetterButton letter)
     {
+        if (letter == null || isResolvingAnswer) return;
+
+        if (letter.IsPlaced)
+        {
+            TryUndoLastLetter(letter);
+            return;
+        }
+
         if (placedLetters.Count >= activeSlots.Count) return; // Tüm slotlar doluysa işlem yapma
 
-        // Tıklanan butonu etkisizleştir ki bir daha tıklanmasın
-        letter.button.interactable = false;
+        // Harf slota yerleştiğinde tıklanabilir kalır; böylece en son harfe tekrar tıklayıp geri alabiliriz.
+        letter.button.interactable = true;
+        letter.IsPlaced = true;
 
         // Sıradaki ilk boş slotu bul
         Transform targetSlot = activeSlots[placedLetters.Count];
@@ -140,8 +235,22 @@ public class WordScrambleManager : MonoBehaviour
         });
     }
 
+    /// <summary> Sadece en son yerleştirilen harfe tekrar tıklanınca onu havuza geri alır. </summary>
+    private void TryUndoLastLetter(LetterButton letter)
+    {
+        if (placedLetters.Count == 0) return;
+
+        LetterButton lastLetter = placedLetters[placedLetters.Count - 1];
+        if (lastLetter != letter) return;
+
+        placedLetters.RemoveAt(placedLetters.Count - 1);
+        letter.ReturnToPool();
+    }
+
     private void CheckWinCondition()
     {
+        isResolvingAnswer = true;
+
         string playerWord = "";
         foreach (var letter in placedLetters)
         {
@@ -172,6 +281,7 @@ public class WordScrambleManager : MonoBehaviour
             letter.ReturnToPool();
         }
         placedLetters.Clear();
+        isResolvingAnswer = false;
     }
 
     private IEnumerator WaitAndComplete()
@@ -186,6 +296,7 @@ public class WordScrambleManager : MonoBehaviour
         foreach (Transform child in lettersContainer) Destroy(child.gameObject);
         activeSlots.Clear();
         placedLetters.Clear();
+        isResolvingAnswer = false;
         slotsContainer.localScale = Vector3.one;
     }
 

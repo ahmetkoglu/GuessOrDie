@@ -102,6 +102,7 @@ public class UIManager : MonoBehaviour
     private DistrictData currentDistrict;
     private int currentQuestionIndex;
     private bool isAnswering = false;
+    private bool hasTimedOutThisQuestion = false;
     private bool isWaitingForTimeOutDecision = false;
     private int currentlyDisplayedCoins = -1;
     private GameState currentGameState = GameState.MainMenu;
@@ -109,6 +110,8 @@ public class UIManager : MonoBehaviour
     private TMPro.TextMeshProUGUI puzzleLivesTextUI;
     private UnityEngine.UI.Image puzzleTimerFillImage;
     private TMPro.TextMeshProUGUI puzzleTimerTextUI;
+    private TMPro.TextMeshProUGUI timeOutIconTextUI;
+    private TMPro.TextMeshProUGUI timeOutPopupMessageTextUI;
 
     /// <summary> Subscribes to the global coin update event. </summary>
     private void OnEnable() => DataManager.OnCoinsChanged += HandleCoinsChanged;
@@ -124,14 +127,40 @@ public class UIManager : MonoBehaviour
     {
         if (Instance == null) Instance = this;
 
-        // Ensure resultPanel is a child of Canvas so it's not hidden by its parent panels
-        if (resultPanel != null && resultPanel.transform.parent != null && resultPanel.transform.parent.name != "Canvas")
+        EnsureResultPanelOnCanvas();
+    }
+
+    /// <summary>
+    /// Keeps the final result popup directly under Canvas so it remains visible even when
+    /// QuestionPanel or WordScramblePanel gets disabled at the end of a district.
+    /// </summary>
+    private void EnsureResultPanelOnCanvas()
+    {
+        if (resultPanel == null) return;
+
+        Transform canvasTrans = null;
+        Canvas resultCanvas = resultPanel.GetComponentInParent<Canvas>(true);
+        if (resultCanvas != null)
         {
-            Transform canvasTrans = GetComponentInParent<Canvas>()?.transform;
-            if (canvasTrans != null)
+            canvasTrans = resultCanvas.transform;
+        }
+        else
+        {
+            Canvas managerCanvas = GetComponentInParent<Canvas>();
+            if (managerCanvas != null)
             {
-                resultPanel.transform.SetParent(canvasTrans, false);
+                canvasTrans = managerCanvas.transform;
             }
+            else
+            {
+                GameObject canvasObj = GameObject.Find("Canvas");
+                if (canvasObj != null) canvasTrans = canvasObj.transform;
+            }
+        }
+
+        if (canvasTrans != null && resultPanel.transform.parent != canvasTrans)
+        {
+            resultPanel.transform.SetParent(canvasTrans, false);
         }
     }
 
@@ -273,6 +302,9 @@ public class UIManager : MonoBehaviour
 
         if (timeOutPopupPanel != null)
         {
+            timeOutIconTextUI = timeOutPopupPanel.transform.Find("Icon/Text (TMP)")?.GetComponent<TMPro.TextMeshProUGUI>();
+            timeOutPopupMessageTextUI = timeOutPopupPanel.transform.Find("popuptext")?.GetComponent<TMPro.TextMeshProUGUI>();
+
             Button continueBtn = timeOutPopupPanel.transform.Find("Yes")?.GetComponent<Button>();
             if (continueBtn != null)
             {
@@ -371,6 +403,42 @@ public class UIManager : MonoBehaviour
         Solo.MOST_IN_ONE.MOST_HapticFeedback.Generate(Solo.MOST_IN_ONE.MOST_HapticFeedback.HapticTypes.Selection);
     }
 
+    private void SaveSessionProgress()
+    {
+        if (currentDistrict == null) return;
+
+        PlayerPrefs.SetInt("HasSavedSession", 1);
+        PlayerPrefs.SetString("SessionDistrict", currentDistrict.id);
+        PlayerPrefs.SetInt("SavedIndex", Mathf.Max(0, currentQuestionIndex));
+        PlayerPrefs.SetInt("SavedLives", currentLives);
+        PlayerPrefs.Save();
+    }
+
+    private void ClearSavedSession()
+    {
+        PlayerPrefs.SetInt("HasSavedSession", 0);
+        PlayerPrefs.DeleteKey("SessionDistrict");
+        PlayerPrefs.DeleteKey("SavedIndex");
+        PlayerPrefs.DeleteKey("SavedLives");
+        PlayerPrefs.Save();
+    }
+
+    private void OnApplicationPause(bool pauseStatus)
+    {
+        if (pauseStatus && currentDistrict != null && (currentGameState == GameState.Playing || currentGameState == GameState.Puzzle || currentGameState == GameState.WordScramble))
+        {
+            SaveSessionProgress();
+        }
+    }
+
+    private void OnApplicationQuit()
+    {
+        if (currentDistrict != null && (currentGameState == GameState.Playing || currentGameState == GameState.Puzzle || currentGameState == GameState.WordScramble))
+        {
+            SaveSessionProgress();
+        }
+    }
+
     /// <summary> Event callback for coin changes. </summary>
     private void HandleCoinsChanged(int targetCoins)
     {
@@ -438,11 +506,13 @@ public class UIManager : MonoBehaviour
     private void LoadQuestion()
     {
         isAnswering = false;
+        hasTimedOutThisQuestion = false;
         HideTimeOutPopup();
 
         if (currentDistrict != null && currentQuestionIndex < activeQuestions.Count)
         {
             currentQuestion = activeQuestions[currentQuestionIndex];
+            SaveSessionProgress();
             // YENİ: Sayaç güncellemesi Switch-Case'in Dışına ve Üstüne Alındı! (İkisi için de çalışır)
             if (questionCountTextUI != null)
             {
@@ -723,9 +793,13 @@ public class UIManager : MonoBehaviour
     /// <summary> Handles logic when the question timer reaches zero. </summary>
     private void OnTimeRanOut()
     {
+        if (hasTimedOutThisQuestion || isWaitingForTimeOutDecision) return;
+
+        hasTimedOutThisQuestion = true;
         isAnswering = true;
         isTimerRunning = false;
         isWaitingForTimeOutDecision = true;
+        SaveSessionProgress();
 
         ShowTimeOutPopup();
         
@@ -739,6 +813,24 @@ public class UIManager : MonoBehaviour
     private void ShowTimeOutPopup()
     {
         if (timeOutPopupPanel == null) return;
+
+        int remainingLivesAfterPenalty = Mathf.Max(currentLives - 1, 0);
+
+        if (timeOutIconTextUI != null)
+        {
+            timeOutIconTextUI.text = remainingLivesAfterPenalty.ToString();
+        }
+
+        if (timeOutPopupMessageTextUI != null)
+        {
+            timeOutPopupMessageTextUI.text = $"Süre bitti! <b>1 can kaybedeceksin.</b> Devam edersen kalan canın: <b>{remainingLivesAfterPenalty}</b>";
+        }
+
+        Button continueBtn = timeOutPopupPanel.transform.Find("Yes")?.GetComponent<Button>();
+        if (continueBtn != null)
+        {
+            continueBtn.interactable = true;
+        }
 
         timeOutPopupPanel.SetActive(true);
         timeOutPopupPanel.transform.DOKill();
@@ -760,6 +852,12 @@ public class UIManager : MonoBehaviour
     public void ContinueAfterTimeOut()
     {
         if (!isWaitingForTimeOutDecision) return;
+
+        Button continueBtn = timeOutPopupPanel != null ? timeOutPopupPanel.transform.Find("Yes")?.GetComponent<Button>() : null;
+        if (continueBtn != null)
+        {
+            continueBtn.interactable = false;
+        }
 
         MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.Selection);
         HideTimeOutPopup();
@@ -809,6 +907,7 @@ public class UIManager : MonoBehaviour
 
         currentLives--;
         UpdateLivesUI();
+        SaveSessionProgress();
 
         if (currentLives <= 0)
         {
@@ -840,6 +939,12 @@ public class UIManager : MonoBehaviour
         HideTimeOutPopup();
         if (outOfLivesPopupPanel != null)
         {
+            Button continueBtn = outOfLivesPopupPanel.transform.Find("Yes")?.GetComponent<Button>();
+            if (continueBtn != null)
+            {
+                continueBtn.interactable = true;
+            }
+
             outOfLivesPopupPanel.SetActive(true);
             outOfLivesPopupPanel.transform.localScale = Vector3.zero;
             outOfLivesPopupPanel.transform.DOScale(1f, 0.4f).SetEase(Ease.OutBack).SetUpdate(true);
@@ -852,6 +957,12 @@ public class UIManager : MonoBehaviour
         int cost = 150; // Buy 5 lives for 150 coins
         if (DataManager.Instance != null && DataManager.Instance.TotalCoins >= cost)
         {
+            Button continueBtn = outOfLivesPopupPanel != null ? outOfLivesPopupPanel.transform.Find("Yes")?.GetComponent<Button>() : null;
+            if (continueBtn != null)
+            {
+                continueBtn.interactable = false;
+            }
+
             MOST_HapticFeedback.Generate(MOST_HapticFeedback.HapticTypes.HeavyImpact);
             DataManager.Instance.AddCoins(-cost);
             currentLives = maxLives;
@@ -862,9 +973,16 @@ public class UIManager : MonoBehaviour
                 outOfLivesPopupPanel.transform.DOScale(0f, 0.2f).SetEase(Ease.InBack).OnComplete(() =>
                 {
                     outOfLivesPopupPanel.SetActive(false);
-                    isTimerRunning = true;
                     isAnswering = false;
+                    isTimerRunning = false;
+                    StartCoroutine(WaitAndLoadNextQuestion(0f));
                 });
+            }
+            else
+            {
+                isAnswering = false;
+                isTimerRunning = false;
+                StartCoroutine(WaitAndLoadNextQuestion(0f));
             }
         }
         else
@@ -905,11 +1023,7 @@ public class UIManager : MonoBehaviour
         isAnswering = false;
         isTimerRunning = false;
 
-        PlayerPrefs.SetInt("HasSavedSession", 0);
-        PlayerPrefs.DeleteKey("SessionDistrict");
-        PlayerPrefs.DeleteKey("SavedIndex");
-        PlayerPrefs.DeleteKey("SavedLives");
-        PlayerPrefs.Save();
+        ClearSavedSession();
 
         UpdateLivesUI();
         ReturnToMainMenu(false);
@@ -952,6 +1066,10 @@ public class UIManager : MonoBehaviour
         if (currentLives > 0)
         {
             currentQuestionIndex++;
+            if (currentQuestionIndex < activeQuestions.Count)
+            {
+                SaveSessionProgress();
+            }
             // --- YENİ: ARADA PUZZLE VAR MI KONTROLÜ ---
         if (currentDistrict.puzzles != null)
         {
@@ -1174,11 +1292,7 @@ public class UIManager : MonoBehaviour
         // YENİ: WordScramble durumu da kayıt işlemine eklendi
         if (saveSession && (currentGameState == GameState.Playing || currentGameState == GameState.Puzzle || currentGameState == GameState.WordScramble) && currentDistrict != null)
         {
-            PlayerPrefs.SetInt("HasSavedSession", 1);
-            PlayerPrefs.SetString("SessionDistrict", currentDistrict.id);
-            PlayerPrefs.SetInt("SavedIndex", currentQuestionIndex);
-            PlayerPrefs.SetInt("SavedLives", currentLives);
-            PlayerPrefs.Save();
+            SaveSessionProgress();
         }
 
         Time.timeScale = 1f;
@@ -1200,9 +1314,10 @@ public class UIManager : MonoBehaviour
     public void ShowResult(bool isWin)
     {
         HideTimeOutPopup();
-        PlayerPrefs.SetInt("HasSavedSession", 0);
-        PlayerPrefs.Save();
+        ClearSavedSession();
         currentGameState = GameState.Result;
+        isTimerRunning = false;
+        EnsureResultPanelOnCanvas();
         
         if (resultPanel != null)
         {

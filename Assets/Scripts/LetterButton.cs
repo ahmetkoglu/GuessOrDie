@@ -11,12 +11,14 @@ public class LetterButton : MonoBehaviour
     
     [HideInInspector] public char CharValue;
     [HideInInspector] public Transform originalParent; // Yanlış yapınca geri dönmesi için
+    [HideInInspector] public bool IsPlaced;
 
     public void Init(char c)
     {
         CharValue = c;
         letterText.text = c.ToString();
         originalParent = transform.parent;
+        IsPlaced = false;
         
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(OnLetterClicked);
@@ -32,7 +34,9 @@ public class LetterButton : MonoBehaviour
     // Harf yanlışsa orijinal havuzuna geri dönme animasyonu
     public void ReturnToPool()
     {
+        IsPlaced = false;
         button.interactable = true;
+        transform.DOKill();
         transform.SetParent(originalParent);
         
         // Havuza döndüğünde Grid Layout'a uyum sağlaması için stretch ayarlarını koruyoruz

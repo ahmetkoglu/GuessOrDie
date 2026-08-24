@@ -1345,35 +1345,35 @@
           "type": 1,
           "question": "Beşiktaş sahilinde lüks kafeleri ve Boğaz kıyısıyla bilinen semt hangisidir?",
           "answerWord": "BEBEK",
-          "questionImage": "Besiktas_Kelime_1.png"
+          "questionImage": "Besiktas_21.png"
         },
         {
           "id": 32,
           "type": 1,
           "question": "Beşiktaş’ın Boğaz kıyısında camisi ve kumpiriyle ünlü semti hangisidir?",
           "answerWord": "ORTAKÖY",
-          "questionImage": "Besiktas_Kelime_2.png"
+          "questionImage": "Besiktas_5.png"
         },
         {
           "id": 33,
           "type": 1,
           "question": "Beşiktaş’ta saray, park ve korusuyla bilinen tarihi bölge hangisidir?",
           "answerWord": "YILDIZ",
-          "questionImage": "Besiktas_Kelime_3.png"
+          "questionImage": "Besiktas_26.png"
         },
         {
           "id": 34,
           "type": 1,
           "question": "Beşiktaş futbol kulübünün sembol hayvanı nedir?",
           "answerWord": "KARTAL",
-          "questionImage": "Besiktas_Kelime_4.png"
+          "questionImage": "Besiktas_3.png"
         },
         {
           "id": 35,
           "type": 1,
           "question": "Ortaköy denince akla gelen meşhur sokak lezzeti nedir?",
           "answerWord": "KUMPİR",
-          "questionImage": "Besiktas_Kelime_5.png"
+          "questionImage": "Besiktas_21.png"
         }
       ],
       "penalty_animations": [
@@ -2204,35 +2204,35 @@
           "type": 1,
           "question": "Üsküdar’da Kız Kulesi manzarasıyla ünlü sahil semti hangisidir?",
           "answerWord": "SALACAK",
-          "questionImage": "Uskudar_Kelime_1.png"
+          "questionImage": "Uskudar_13.png"
         },
         {
           "id": 32,
           "type": 1,
           "question": "Üsküdar’da şehir hatları ve otobüs ulaşımıyla bilinen bölge hangisidir?",
           "answerWord": "HAREM",
-          "questionImage": "Uskudar_Kelime_2.png"
+          "questionImage": "Uskudar_15.png"
         },
         {
           "id": 33,
           "type": 1,
           "question": "Üsküdar’da Çamlıca’ya yakın tepeleriyle bilinen semt hangisidir?",
           "answerWord": "KISIKLI",
-          "questionImage": "Uskudar_Kelime_3.png"
+          "questionImage": "Uskudar_13.png"
         },
         {
           "id": 34,
           "type": 1,
           "question": "Üsküdar’ın yüksek tepesi ve kulesiyle bilinen bölgesi hangisidir?",
           "answerWord": "ÇAMLICA",
-          "questionImage": "Uskudar_Kelime_4.png"
+          "questionImage": "Uskudar_6.png"
         },
         {
           "id": 35,
           "type": 1,
           "question": "Üsküdar’daki Aziz Mahmud türbesi hangi isimle anılır?",
           "answerWord": "HÜDAYİ",
-          "questionImage": "Uskudar_Kelime_5.png"
+          "questionImage": "Uskudar_3.png"
         }
       ],
       "penalty_animations": [
@@ -2635,35 +2635,35 @@
           "type": 1,
           "question": "Kadıköy’ün sahili ve nostaljik tramvayıyla bilinen semti hangisidir?",
           "answerWord": "MODA",
-          "questionImage": "Kadikoy_Kelime_1.png"
+          "questionImage": "Kadikoy_6.png"
         },
         {
           "id": 32,
           "type": 1,
           "question": "Kadıköy Altıyol’daki ünlü heykelde hangi hayvan vardır?",
           "answerWord": "BOĞA",
-          "questionImage": "Kadikoy_Kelime_2.png"
+          "questionImage": "Kadikoy_15.png"
         },
         {
           "id": 33,
           "type": 1,
           "question": "Kadıköy’ün vapur iskeleleriyle bilinen sahil bölgesi hangisidir?",
           "answerWord": "RIHTIM",
-          "questionImage": "Kadikoy_Kelime_3.png"
+          "questionImage": "Kadikoy_12.png"
         },
         {
           "id": 34,
           "type": 1,
           "question": "Kadıköy’ün sarı-lacivert kulübünün kısa adı nedir?",
           "answerWord": "FENER",
-          "questionImage": "Kadikoy_Kelime_4.png"
+          "questionImage": "Kadikoy_20.png"
         },
         {
           "id": 35,
           "type": 1,
           "question": "Kadıköy’de marina ve deniz kıyısıyla bilinen semt hangisidir?",
           "answerWord": "KALAMIŞ",
-          "questionImage": "Kadikoy_Kelime_5.png"
+          "questionImage": "Kadikoy_21.png"
         }
       ],
       "penalty_animations": [
